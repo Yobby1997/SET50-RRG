@@ -378,6 +378,7 @@ function compactRelDisplayName(text){
     .replace(/\bCompany Limited\b/gi,'')
     .replace(/\bCo\.,?\s*Ltd\.?\b/gi,'')
     .replace(/\bLimited\b/gi,'')
+    .replace(/\./g,'')
     .replace(/\s+,/g,',')
     .replace(/\s{2,}/g,' ')
     .replace(/\s+\)/g,')')
@@ -1202,6 +1203,7 @@ function renderRelationships(){
   const nodeById=new Map(currentRel.nodes.map(n=>[n.id,n]));
   const nodeLinesCache=new Map();
   const nodeBoxCache=new Map();
+  const nodePctLabelCache=new Map();
 
   const getNodeLines=(nodeId)=>{
     if(nodeLinesCache.has(nodeId)) return nodeLinesCache.get(nodeId);
@@ -1223,12 +1225,33 @@ function renderRelationships(){
     nodeBoxCache.set(nodeId,box);
     return box;
   };
+  const getNodePctLabel=(nodeId)=>{
+    if(nodePctLabelCache.has(nodeId)) return nodePctLabelCache.get(nodeId);
+    const placement=placements.get(nodeId);
+    let label='';
+    if(placement?.side==='incoming'){
+      const edgeGroup=allEdges.find(group=>group[0]?.source===nodeId&&group[0]?.target===focus.id);
+      if(edgeGroup) label=edgeLabel(edgeGroup);
+    }else if(placement?.side==='outgoing'){
+      const edgeGroup=allEdges.find(group=>group[0]?.source===focus.id&&group[0]?.target===nodeId);
+      if(edgeGroup) label=edgeLabel(edgeGroup);
+    }else if(placement?.side==='secondary'){
+      const edgeGroup=allEdges.find(group=>group[0]?.target===nodeId);
+      if(edgeGroup) label=edgeLabel(edgeGroup);
+    }
+    nodePctLabelCache.set(nodeId,label);
+    return label;
+  };
 
   const renderListNode=(node,placement)=>{
     const clickable=node.symbol&&hasRelationships(node.symbol)&&placement.side!=='focus';
     const clickAttr=clickable?` onclick="openRelationships(event,'${escapeHtml(node.symbol)}')"`:'';
     const bulletX=placement.side==='incoming'?placement.textX-16:placement.side==='focus'?placement.textX-34:placement.textX-16;
-    const lines=getNodeLines(node.id);
+    const pctLabel=getNodePctLabel(node.id);
+    const baseLines=getNodeLines(node.id);
+    const lines=pctLabel&&placement.side!=='focus'
+      ? baseLines.map((line,i)=>i===baseLines.length-1?`${line} ${pctLabel}`:line)
+      : baseLines;
     const labelColor=placement.side==='focus'||clickable?'#9ec5ff':'var(--text)';
     const sub=relKindLabel(node);
     const detail=node.symbol&&node.label&&node.label!==node.symbol?node.label:'';
@@ -1256,11 +1279,7 @@ function renderRelationships(){
     const toY=Math.max(tBox.top+10,Math.min(tBox.bottom-10,t.y-5));
     const dashed=group.some(e=>e.directness==='effective');
     const stroke=dashed?'rgba(110,168,255,.54)':'rgba(255,255,255,.16)';
-    const label=edgeLabel(group);
-    const labelColor=dashed?'#9ec5ff':'var(--text2)';
     let path='';
-    let mx=0;
-    let my=0;
 
     if(s.side==='incoming'&&t.side==='focus'){
       const fromX=sBox.right;
@@ -1269,8 +1288,6 @@ function renderRelationships(){
       const c1x=fromX+(mergeX-fromX)*0.42;
       const c2x=mergeX+(toX-mergeX)*0.35;
       path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
-      mx=fromX+(mergeX-fromX)*0.52;
-      my=fromY+(toY-fromY)*0.28;
     }else if(s.side==='focus'&&t.side==='outgoing'){
       const fromX=sBox.right;
       const toX=tBox.left;
@@ -1278,8 +1295,6 @@ function renderRelationships(){
       const c1x=fromX+(railX-fromX)*0.55;
       const c2x=railX+(toX-railX)*0.28;
       path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
-      mx=railX-18;
-      my=fromY+(toY-fromY)*0.35;
     }else{
       const fromX=sBox.right;
       const toX=tBox.left;
@@ -1287,13 +1302,10 @@ function renderRelationships(){
       const c1x=fromX+dx*0.36;
       const c2x=fromX+dx*0.72;
       path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
-      mx=fromX+dx*0.56;
-      my=fromY+(toY-fromY)*0.52-8;
     }
     return `
       <g class="rel-edge">
         <path d="${path}" fill="none" stroke="${stroke}" stroke-width="${dashed?1.6:1.15}" stroke-dasharray="${dashed?'6 4':'0'}"></path>
-        <text x="${mx}" y="${my}" text-anchor="middle" fill="${labelColor}" font-size="10.5">${escapeHtml(label)}</text>
       </g>`;
   };
 
