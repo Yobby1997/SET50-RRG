@@ -373,6 +373,18 @@ function shortRelLabel(node){
 function relKindLabel(node){
   return (node.kind||'entity').replaceAll('_',' ');
 }
+function compactRelDisplayName(text){
+  return String(text||'')
+    .replace(/\bCompany Limited\b/gi,'')
+    .replace(/\bCo\.,?\s*Ltd\.?\b/gi,'')
+    .replace(/\bLimited\b/gi,'')
+    .replace(/\s+,/g,',')
+    .replace(/\s{2,}/g,' ')
+    .replace(/\s+\)/g,')')
+    .replace(/\(\s+/g,'(')
+    .replace(/[,\s]+$/g,'')
+    .trim();
+}
 function wrapRelText(text,maxChars=24,maxLines=2){
   const words=String(text||'').split(/\s+/).filter(Boolean);
   if(!words.length) return [''];
@@ -1198,7 +1210,8 @@ function renderRelationships(){
     const side=placement?.side;
     const maxChars=side==='focus'?18:side==='secondary'?24:26;
     const maxLines=side==='focus'?1:3;
-    const lines=wrapRelText(node?.symbol||node?.label||nodeId,maxChars,maxLines);
+    const displayName=node?.symbol||compactRelDisplayName(node?.label||nodeId);
+    const lines=wrapRelText(displayName,maxChars,maxLines);
     nodeLinesCache.set(nodeId,lines);
     return lines;
   };
