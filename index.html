@@ -1237,6 +1237,27 @@ function renderRelationships(){
     nodeBoxCache.set(nodeId,box);
     return box;
   };
+  const getNodeConnector=(nodeId,role)=>{
+    const placement=placements.get(nodeId);
+    if(!placement) return null;
+    const box=getNodeBox(nodeId);
+    if(placement.side==='focus'){
+      return {
+        x:role==='source'?box.right:box.left,
+        y:placement.y-6
+      };
+    }
+    if(placement.side==='incoming'){
+      return {
+        x:placement.anchorX-18,
+        y:placement.y-5
+      };
+    }
+    return {
+      x:placement.anchorX,
+      y:placement.y-5
+    };
+  };
   const getNodePctLabel=(nodeId)=>{
     if(nodePctLabelCache.has(nodeId)) return nodePctLabelCache.get(nodeId);
     const placement=placements.get(nodeId);
@@ -1302,29 +1323,28 @@ function renderRelationships(){
     if(!s||!t) return '';
     const sBox=getNodeBox(sourceId);
     const tBox=getNodeBox(targetId);
-    const fromY=Math.max(sBox.top+10,Math.min(sBox.bottom-10,s.y-5));
-    const toY=Math.max(tBox.top+10,Math.min(tBox.bottom-10,t.y-5));
+    const from=getNodeConnector(sourceId,'source');
+    const to=getNodeConnector(targetId,'target');
+    if(!from||!to) return '';
+    const fromX=from.x;
+    const fromY=from.y;
+    const toX=to.x;
+    const toY=to.y;
     const dashed=group.some(e=>e.directness==='effective');
     const stroke=dashed?'rgba(110,168,255,.54)':'rgba(255,255,255,.16)';
     let path='';
 
     if(s.side==='incoming'&&t.side==='focus'){
-      const fromX=sBox.right;
-      const toX=tBox.left;
       const mergeX=498;
       const c1x=fromX+(mergeX-fromX)*0.42;
       const c2x=mergeX+(toX-mergeX)*0.35;
       path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
     }else if(s.side==='focus'&&t.side==='outgoing'){
-      const fromX=sBox.right;
-      const toX=tBox.left;
       const railX=726;
       const c1x=fromX+(railX-fromX)*0.55;
       const c2x=railX+(toX-railX)*0.28;
       path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
     }else{
-      const fromX=sBox.right;
-      const toX=tBox.left;
       const dx=toX-fromX;
       const c1x=fromX+dx*0.36;
       const c2x=fromX+dx*0.72;
