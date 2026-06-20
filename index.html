@@ -1286,7 +1286,17 @@ function renderRelationships(){
       <path d="M 830 52 H 990" stroke="rgba(26,158,110,.08)" stroke-dasharray="4 5"></path>
       <path d="M 1022 52 H 1160" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
     </g>`;
-  const edgeSvg=allEdges.map(renderEdge).join('');
+  const visibleEdges=allEdges.filter(group=>{
+    const first=group[0];
+    const s=placements.get(first.source);
+    const t=placements.get(first.target);
+    if(!s||!t) return false;
+    if(s.side==='incoming'&&t.side==='focus') return true;
+    if(s.side==='focus'&&t.side==='outgoing') return true;
+    if(s.side==='outgoing'&&t.side==='secondary') return true;
+    return false;
+  });
+  const edgeSvg=visibleEdges.map(renderEdge).join('');
   const nodes=[focus,...incomingNodes,...outgoingNodes,...secondaryNodes].map(n=>renderListNode(n,placements.get(n.id))).join('');
   svg.innerHTML=`<g id="relViewport">${laneBackdrop}${edgeSvg}${nodes}</g>`;
   applyRelationshipTransform();
