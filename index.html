@@ -232,7 +232,7 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
             <div class="rel-meta" id="relMeta"></div>
           </div>
           <div class="rel-stage">
-            <svg class="rel-svg" id="relSvg" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid meet"></svg>
+            <svg class="rel-svg" id="relSvg" viewBox="0 0 1320 720" preserveAspectRatio="xMidYMid meet"></svg>
             <div class="rel-empty" id="relEmpty"></div>
           </div>
           <div class="rel-note" id="relNote"></div>
@@ -431,6 +431,9 @@ function buildRelNodeBox(placement,lines,fontSize,sub=''){
   }else if(placement.side==='incoming'){
     right=placement.anchorX-8;
     left=right-width-26;
+  }else if(placement.side==='outgoing'||placement.side==='secondary'){
+    left=placement.anchorX+8;
+    right=left+width+26;
   }else{
     left=placement.textX-8;
     right=placement.textX+width+14;
@@ -1208,7 +1211,7 @@ function renderRelationships(){
     const sb=secondaryOrderScore.get(b.id)??9999;
     return sa-sb || (a.symbol||a.label||a.id).localeCompare(b.symbol||b.label||b.id);
   });
-  layoutLane(sortedSecondaryNodes,0,152,580).forEach(p=>placements.set(p.node.id,{anchorX:1020,textX:1042,y:p.y,side:'secondary'}));
+  layoutLane(sortedSecondaryNodes,0,152,580).forEach(p=>placements.set(p.node.id,{anchorX:1116,textX:1132,y:p.y,side:'secondary'}));
   const nodeById=new Map(currentRel.nodes.map(n=>[n.id,n]));
   const nodeLinesCache=new Map();
   const nodeBoxCache=new Map();
@@ -1261,7 +1264,11 @@ function renderRelationships(){
   const renderListNode=(node,placement)=>{
     const clickable=node.symbol&&hasRelationships(node.symbol)&&placement.side!=='focus';
     const clickAttr=clickable?` onclick="openRelationships(event,'${escapeHtml(node.symbol)}')"`:'';
-    const bulletX=placement.side==='incoming'?placement.anchorX-18:placement.side==='focus'?placement.textX-34:placement.textX-16;
+    const bulletX=placement.side==='incoming'
+      ? placement.anchorX-18
+      : placement.side==='focus'
+        ? placement.textX-34
+        : placement.anchorX;
     const pctLabel=getNodePctLabel(node.id);
     const baseLines=getNodeLines(node.id);
     const lines=pctLabel&&placement.side!=='focus'
@@ -1334,11 +1341,11 @@ function renderRelationships(){
       <text x="86" y="36" fill="var(--text3)" font-size="12">Shareholders</text>
       <text x="610" y="36" text-anchor="middle" fill="var(--text3)" font-size="12">Focus</text>
       <text x="846" y="36" fill="var(--text3)" font-size="12">Direct Holdings</text>
-      <text x="1038" y="36" fill="var(--text3)" font-size="12">Second Layer</text>
+      <text x="1136" y="36" fill="var(--text3)" font-size="12">Second Layer</text>
       <path d="M 70 52 H 360" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
       <path d="M 462 52 H 758" stroke="rgba(110,168,255,.08)" stroke-dasharray="4 5"></path>
-      <path d="M 830 52 H 990" stroke="rgba(26,158,110,.08)" stroke-dasharray="4 5"></path>
-      <path d="M 1022 52 H 1160" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
+      <path d="M 830 52 H 1018" stroke="rgba(26,158,110,.08)" stroke-dasharray="4 5"></path>
+      <path d="M 1098 52 H 1286" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
     </g>`;
   const visibleEdges=allEdges.filter(group=>{
     const first=group[0];
