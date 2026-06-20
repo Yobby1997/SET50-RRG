@@ -267,23 +267,19 @@ const REL_FILE = './relationships.json';
 const REL_VIEWBOX = {w:1200,h:720};
 
 const TICKERS = [
-  {t:'AOT',s:'Transport'},{t:'PTT',s:'Energy'},{t:'PTTEP',s:'Energy'},{t:'PTTGC',s:'Energy'},
-  {t:'TOP',s:'Energy'},{t:'IRPC',s:'Energy'},{t:'GULF',s:'Energy'},{t:'GPSC',s:'Energy'},
-  {t:'RATCH',s:'Utilities'},{t:'EGCO',s:'Utilities'},{t:'EA',s:'Utilities'},
-  {t:'KBANK',s:'Banking'},{t:'SCB',s:'Banking'},{t:'BBL',s:'Banking'},{t:'KTB',s:'Banking'},
-  {t:'BAY',s:'Banking'},{t:'TTB',s:'Banking'},{t:'KKP',s:'Banking'},
-  {t:'SCC',s:'Materials'},{t:'SCCC',s:'Materials'},{t:'TPIPL',s:'Materials'},
-  {t:'CPALL',s:'Commerce'},{t:'CRC',s:'Commerce'},{t:'HMPRO',s:'Commerce'},{t:'BJC',s:'Commerce'},
-  {t:'CPF',s:'Food & Bev'},{t:'TU',s:'Food & Bev'},{t:'OSP',s:'Food & Bev'},
-  {t:'ADVANC',s:'Telecom'},{t:'TRUE',s:'Telecom'},{t:'INTUCH',s:'Telecom'},
-  {t:'BH',s:'Healthcare'},{t:'BCH',s:'Healthcare'},{t:'THG',s:'Healthcare'},{t:'BDMS',s:'Healthcare'},
-  {t:'CPN',s:'Property'},{t:'LH',s:'Property'},{t:'SIRI',s:'Property'},
-  {t:'MINT',s:'Hotels'},{t:'ERW',s:'Hotels'},
-  {t:'SAT',s:'Auto'},
-  {t:'MTC',s:'Finance'},{t:'SAWAD',s:'Finance'},{t:'TIDLOR',s:'Finance'},
-  {t:'WHA',s:'Industrial'},{t:'AMATA',s:'Industrial'},
-  {t:'IVL',s:'Petrochems'},{t:'DELTA',s:'Electronics'},
-  {t:'VGI',s:'Media'},{t:'MAJOR',s:'Media'}
+  {t:'ADVANC',s:'Telecom'},{t:'AOT',s:'Transport'},{t:'AWC',s:'Property'},{t:'BANPU',s:'Energy'},
+  {t:'BBL',s:'Banking'},{t:'BDMS',s:'Healthcare'},{t:'BEM',s:'Transport'},{t:'BH',s:'Healthcare'},
+  {t:'BJC',s:'Commerce'},{t:'BTS',s:'Transport'},{t:'CBG',s:'Food & Bev'},{t:'CCET',s:'Electronics'},
+  {t:'CENTEL',s:'Hotels'},{t:'COM7',s:'Commerce'},{t:'CPALL',s:'Commerce'},{t:'CPF',s:'Food & Bev'},
+  {t:'CPN',s:'Property'},{t:'CRC',s:'Commerce'},{t:'DELTA',s:'Electronics'},{t:'EGCO',s:'Utilities'},
+  {t:'GPSC',s:'Utilities'},{t:'GULF',s:'Energy'},{t:'HMPRO',s:'Commerce'},{t:'IVL',s:'Petrochems'},
+  {t:'KBANK',s:'Banking'},{t:'KKP',s:'Banking'},{t:'KTB',s:'Banking'},{t:'KTC',s:'Finance'},
+  {t:'LH',s:'Property'},{t:'MINT',s:'Hotels'},{t:'MTC',s:'Finance'},{t:'OR',s:'Energy'},
+  {t:'OSP',s:'Food & Bev'},{t:'PTT',s:'Energy'},{t:'PTTEP',s:'Energy'},{t:'PTTGC',s:'Petrochems'},
+  {t:'RATCH',s:'Utilities'},{t:'SAWAD',s:'Finance'},{t:'SCB',s:'Banking'},{t:'SCC',s:'Materials'},
+  {t:'SCGP',s:'Materials'},{t:'TCAP',s:'Banking'},{t:'TIDLOR',s:'Finance'},{t:'TISCO',s:'Banking'},
+  {t:'TLI',s:'Finance'},{t:'TOP',s:'Energy'},{t:'TRUE',s:'Telecom'},{t:'TTB',s:'Banking'},
+  {t:'TU',s:'Food & Bev'},{t:'WHA',s:'Industrial'}
 ];
 
 const SC = {
@@ -295,16 +291,26 @@ const SC = {
 };
 const QC = {Leading:'#1a9e6e',Weakening:'#c47f12',Lagging:'#d84040',Improving:'#3278d8'};
 const QB = {Leading:'rgba(26,158,110,.07)',Weakening:'rgba(196,127,18,.07)',Lagging:'rgba(216,64,64,.07)',Improving:'rgba(50,120,216,.07)'};
+const TF_CONTEXT = {daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
 const SIZE_META = {
   weight:{key:'set50_weight',label:'SET50 Weight',short:'Weight'},
   market_cap:{key:'market_cap',label:'Market Cap',short:'MCap'},
   avg_trading_value:{key:'avg_trading_value',label:'Avg Trading Value',short:'Avg Value'}
 };
+const TICKER_META = new Map(TICKERS.map(({t,s})=>[t,{symbol:t,sector:s,label:t}]));
+const REL_DEFAULT_LANES = {
+  incoming:'Shareholders',
+  focus:'Focus',
+  outgoing:'Direct Holdings',
+  secondary:'Second Layer'
+};
+const REL_SNAPSHOT_DATE = '2026-06-21';
 
 let tf='daily', tail=6, view='all', sizeMode='weight';
 let results=[], hidden=new Set(), sel=null, hov=null;
 let cv, cx;
 let relData=null, relMaps=new Map(), relMode=false, currentRel=null, currentRelSymbol=null;
+let relNodeGraphs=new Map(), relDerivedCache=new Map();
 let chartZoom=null;
 let chartPan=null, chartSuppressClickUntil=0;
 let relViewport={scale:1,x:0,y:0};
@@ -314,6 +320,12 @@ function setTF(v){tf=v;document.querySelectorAll('[id^="tf-"]').forEach(b=>b.cla
 function setTail(v){tail=v;resetChartZoom(false);document.querySelectorAll('[id^="tl-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tl-'+v).classList.add('on');if(results.length){compute();draw();buildSb()}}
 function setView(v){view=v;resetChartZoom(false);document.querySelectorAll('[id^="vw-"]').forEach(b=>b.classList.remove('on'));document.getElementById('vw-'+v).classList.add('on');if(results.length)draw()}
 function setSizeMode(v){sizeMode=v;document.querySelectorAll('[id^="sz-"]').forEach(b=>b.classList.remove('on'));document.getElementById('sz-'+v).classList.add('on');updateTfNote();if(results.length)draw()}
+function getMinHistoryPoints(){return tf==='monthly'?10:20}
+function getSeriesTimeKey(ts){
+  if(tf!=='monthly') return String(ts);
+  const d=new Date(ts*1000);
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+}
 function sideTab(t,el){document.querySelectorAll('.sb-tab').forEach(x=>x.classList.remove('on'));el.classList.add('on');document.getElementById('sbStocks').style.display=t==='stocks'?'':'none';document.getElementById('sbSectors').style.display=t==='sectors'?'':'none'}
 function updateTfNote(){
   const note=document.getElementById('tfNote');
@@ -360,10 +372,196 @@ async function ensureRelationshipsLoaded(){
   if(!res.ok) throw new Error(`โหลด ${REL_FILE} ไม่สำเร็จ`);
   relData=await res.json();
   relMaps=new Map((relData.graphs||[]).map(g=>[g.focusSymbol,g]));
+  relNodeGraphs=new Map();
+  relDerivedCache=new Map();
+  for(const graph of relData.graphs||[]){
+    for(const node of graph.nodes||[]){
+      if(!node.symbol||relMaps.has(node.symbol)||relNodeGraphs.has(node.symbol)) continue;
+      relNodeGraphs.set(node.symbol,graph);
+    }
+  }
   return relData;
 }
-function hasRelationships(symbol){return relMaps.has(symbol)}
-function getRelationshipGraph(symbol){return relMaps.get(symbol)||null}
+function getTickerMeta(symbol){
+  if(!symbol) return null;
+  if(TICKER_META.has(symbol)) return TICKER_META.get(symbol);
+  if(relMaps.has(symbol)){
+    const graph=relMaps.get(symbol);
+    const node=graph.nodes.find(n=>n.symbol===symbol);
+    if(node) return {symbol,sector:null,label:node.label||symbol};
+  }
+  if(relNodeGraphs.has(symbol)){
+    const graph=relNodeGraphs.get(symbol);
+    const node=graph.nodes.find(n=>n.symbol===symbol);
+    if(node) return {symbol,sector:null,label:node.label||symbol};
+  }
+  return null;
+}
+function getResultBySymbol(symbol){
+  return results.find(r=>r.name===symbol)||null;
+}
+function getRelationshipKind(symbol){
+  if(!symbol) return null;
+  if(relMaps.has(symbol)) return 'manual';
+  if(relNodeGraphs.has(symbol)) return 'derived';
+  if(getTickerMeta(symbol)) return 'auto';
+  return null;
+}
+function hasRelationships(symbol){return !!getRelationshipKind(symbol)}
+function buildDerivedRelationshipGraph(symbol){
+  if(relDerivedCache.has(symbol)) return relDerivedCache.get(symbol);
+  const baseGraph=relNodeGraphs.get(symbol);
+  if(!baseGraph){
+    relDerivedCache.set(symbol,null);
+    return null;
+  }
+  const focusNode=baseGraph.nodes.find(n=>n.symbol===symbol);
+  if(!focusNode){
+    relDerivedCache.set(symbol,null);
+    return null;
+  }
+  const focusId=focusNode.id;
+  const primaryEdges=(baseGraph.edges||[]).filter(edge=>edge.source===focusId||edge.target===focusId);
+  if(!primaryEdges.length){
+    relDerivedCache.set(symbol,null);
+    return null;
+  }
+  const nodeIds=new Set([focusId]);
+  primaryEdges.forEach(edge=>{nodeIds.add(edge.source);nodeIds.add(edge.target)});
+  const secondaryEdges=(baseGraph.edges||[]).filter(edge=>edge.source!==focusId&&edge.target!==focusId&&(nodeIds.has(edge.source)||nodeIds.has(edge.target)));
+  secondaryEdges.forEach(edge=>{nodeIds.add(edge.source);nodeIds.add(edge.target)});
+  const derived={
+    id:`${symbol.toLowerCase()}_derived_map`,
+    focusSymbol:symbol,
+    focusLabel:focusNode.label||symbol,
+    laneLabels:{...REL_DEFAULT_LANES},
+    assessment:{
+      worksForModel:true,
+      why:[`Derived from the ${baseGraph.focusSymbol} ownership map so ${symbol} can open as its own relationship view.`],
+      recommendedDefaultFilters:[
+        `Source graph: ${baseGraph.focusSymbol}`,
+        'Blue links still come from documented ownership data',
+        'Use this as a drill-down until a dedicated map is added'
+      ]
+    },
+    nodes:(baseGraph.nodes||[]).filter(node=>nodeIds.has(node.id)).map(node=>({...node,tags:[...(node.tags||[])]})),
+    edges:[...primaryEdges,...secondaryEdges].map(edge=>({...edge,sourceRefs:[...(edge.sourceRefs||[])]}))
+  };
+  relDerivedCache.set(symbol,derived);
+  return derived;
+}
+function getBubbleMetricValue(entry){
+  return Number(entry?.sizes?.set50_weight||entry?.sizes?.market_cap||entry?.sizes?.avg_trading_value||0);
+}
+function getRrgDistance(a,b){
+  if(!a?.last||!b?.last) return Number.POSITIVE_INFINITY;
+  const dx=(a.last.rsRatio||0)-(b.last.rsRatio||0);
+  const dy=(a.last.rsMom||0)-(b.last.rsMom||0);
+  return Math.sqrt(dx*dx+dy*dy);
+}
+function buildAutoRelationshipGraph(symbol){
+  const meta=getTickerMeta(symbol)||{symbol,sector:'Unknown',label:symbol};
+  const focusResult=getResultBySymbol(symbol);
+  const sector=focusResult?.sector||meta.sector||'Unknown';
+  const focusNode={
+    id:`auto_focus_${symbol}`,
+    label:meta.label||symbol,
+    kind:'listed_company',
+    symbol,
+    market:'SET',
+    country:'TH',
+    displayShape:'circle',
+    tags:['focus','auto_generated']
+  };
+  const sectorPeers=focusResult
+    ? results
+      .filter(item=>item.name!==symbol&&item.sector===sector)
+      .sort((a,b)=>getBubbleMetricValue(b)-getBubbleMetricValue(a)||a.name.localeCompare(b.name))
+      .slice(0,8)
+    : [];
+  const used=new Set(sectorPeers.map(item=>item.name));
+  const nearestPeers=focusResult
+    ? results
+      .filter(item=>item.name!==symbol&&!used.has(item.name))
+      .sort((a,b)=>getRrgDistance(a,focusResult)-getRrgDistance(b,focusResult)||a.name.localeCompare(b.name))
+      .slice(0,8)
+    : [];
+  const nodes=[focusNode];
+  const edges=[];
+  for(const item of sectorPeers){
+    nodes.push({
+      id:`auto_sector_${item.name}`,
+      label:item.name,
+      kind:'listed_company',
+      symbol:item.name,
+      market:'SET',
+      country:'TH',
+      displayShape:'circle',
+      tags:['auto_generated','sector_peer']
+    });
+    edges.push({
+      source:`auto_sector_${item.name}`,
+      target:focusNode.id,
+      relation:'sector_peer',
+      directness:'context',
+      asOfDate:REL_SNAPSHOT_DATE,
+      sourceRefs:[],
+      notes:`Same sector as ${symbol}`,
+      displayLabel:''
+    });
+  }
+  for(const item of nearestPeers){
+    nodes.push({
+      id:`auto_rrg_${item.name}`,
+      label:item.name,
+      kind:'listed_company',
+      symbol:item.name,
+      market:'SET',
+      country:'TH',
+      displayShape:'circle',
+      tags:['auto_generated','rrg_neighbor']
+    });
+    edges.push({
+      source:focusNode.id,
+      target:`auto_rrg_${item.name}`,
+      relation:'rrg_neighbor',
+      directness:'context',
+      asOfDate:REL_SNAPSHOT_DATE,
+      sourceRefs:[],
+      notes:`Nearest current RRG neighbor for ${symbol}`,
+      displayLabel:''
+    });
+  }
+  return {
+    id:`${symbol.toLowerCase()}_auto_context`,
+    focusSymbol:symbol,
+    focusLabel:meta.label||symbol,
+    laneLabels:{
+      incoming:'Sector Peers',
+      focus:'Focus',
+      outgoing:'Nearest RRG',
+      secondary:'Second Layer'
+    },
+    assessment:{
+      worksForModel:false,
+      why:[`Auto-generated market context for ${symbol}. A dedicated ownership map has not been added yet.`],
+      recommendedDefaultFilters:[
+        `Sector: ${sector}`,
+        'Left = biggest same-sector SET50 peers',
+        `Right = nearest names in the current ${TF_CONTEXT[tf]||tf} view`,
+        'This fallback is market context, not shareholder ownership'
+      ]
+    },
+    nodes,
+    edges
+  };
+}
+function getRelationshipGraph(symbol){
+  if(relMaps.has(symbol)) return relMaps.get(symbol);
+  const derived=buildDerivedRelationshipGraph(symbol);
+  if(derived) return derived;
+  return getTickerMeta(symbol)?buildAutoRelationshipGraph(symbol):null;
+}
 function escapeHtml(v){return String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
 function shortRelLabel(node){
   if(node.symbol) return node.symbol;
@@ -467,6 +665,7 @@ function hideRelTooltip(){
 function edgeLabel(edgeGroup){
   if(edgeGroup.length===1){
     const e=edgeGroup[0];
+    if(e.displayLabel!=null) return e.displayLabel;
     return e.pctShares!=null?`${Number(e.pctShares).toFixed(2)}%`:'Link';
   }
   return edgeGroup.map(e=>{
@@ -591,17 +790,21 @@ async function openRelationships(ev,symbol){
   sel=symbol;
   await setPanelMode('relations',symbol);
 }
-async function setPanelMode(mode,symbol=sel){
+async function setPanelMode(mode,symbol){
   if(mode==='relations'){
     try{
       await ensureRelationshipsLoaded();
       const target=symbol||currentRelSymbol;
       if(!target||!hasRelationships(target)){
-        alert('เลือกหุ้นที่มี relationship map ก่อน เช่น PTT หรือ CPALL');
+        alert('เลือกหุ้นก่อน แล้วค่อยเข้า Relations');
         return;
       }
       currentRelSymbol=target;
       currentRel=getRelationshipGraph(target);
+      if(!currentRel){
+        alert(`ยังสร้าง relation view ให้ ${target} ไม่ได้`);
+        return;
+      }
       relMode=true;
       document.getElementById('relView').style.display='flex';
       document.getElementById('cv').style.display='none';
@@ -794,15 +997,16 @@ async function loadData(){
     if(!bench.length) throw new Error('ไม่ได้รับข้อมูล benchmark');
 
     // Build maps
-    const bMap=new Map(bench.map(p=>[p.t,p.c]));
+    const bMap=new Map(bench.map(p=>[getSeriesTimeKey(p.t),p.c]));
+    const minHistory=getMinHistoryPoints();
     results=[];
     for(const{t:name,s:sector}of TICKERS){
       const ticker=name+'.BK';
       const prices=raw[ticker]||[];
-      if(prices.length<20) continue;
+      if(prices.length<minHistory) continue;
       // Align
-      const aligned=prices.filter(p=>bMap.has(p.t)).map(p=>({t:p.t,stock:p.c,bench:bMap.get(p.t)}));
-      if(aligned.length<20) continue;
+      const aligned=prices.filter(p=>bMap.has(getSeriesTimeKey(p.t))).map(p=>({t:p.t,stock:p.c,bench:bMap.get(getSeriesTimeKey(p.t))}));
+      if(aligned.length<minHistory) continue;
       const series=calcRS(aligned);
       if(!series.length) continue;
       const t2=series.slice(-tail-1);
@@ -841,7 +1045,7 @@ async function loadData(){
 // ── RS Calculation ────────────────────────────────────────
 function ema(arr,p){const k=2/(p+1),r=[arr[0]];for(let i=1;i<arr.length;i++)r.push(arr[i]*k+r[i-1]*(1-k));return r}
 function calcRS(aligned){
-  if(aligned.length<20)return[];
+  if(aligned.length<getMinHistoryPoints())return[];
   const rs=aligned.map(p=>p.stock/p.bench*100);
   const e1=ema(rs,14),e2=ema(e1,10);
   const mn=e2.reduce((a,b)=>a+b,0)/e2.length;
@@ -1046,7 +1250,7 @@ function buildSb(){
   document.getElementById('sbStocks').innerHTML=sorted.map(s=>{
     const q=quad(s.last.rsRatio,s.last.rsMom);
     const qc={Leading:'ql',Weakening:'qw',Lagging:'qg',Improving:'qi'}[q];
-    const rel=hasRelationships(s.name)?`<span class="rel-pill">Map</span>`:'';
+    const rel=hasRelationships(s.name)?`<span class="rel-pill">Rel</span>`:'';
     return`<div class="si${sel===s.name?' sel':''}" data-n="${s.name}" onclick="selStock('${s.name}')"><div class="sdot" style="background:${s.color}"></div><span class="stk">${s.name}</span>${rel}<span class="sq ${qc}">${q[0]}</span></div>`;
   }).join('');
 
@@ -1062,9 +1266,19 @@ function buildSb(){
 
 function selStock(n){
   sel=sel===n?null:n;
-  if(sel&&hasRelationships(sel)) currentRelSymbol=sel;
+  currentRelSymbol=sel&&hasRelationships(sel)?sel:null;
   updateTfNote();
-  draw();
+  if(relMode){
+    currentRel=sel&&hasRelationships(sel)?getRelationshipGraph(sel):null;
+    if(currentRel){
+      resetRelationshipView(false);
+      renderRelationships();
+    }else{
+      showRelationshipPlaceholder();
+    }
+  }else{
+    draw();
+  }
   document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')});
 }
 function buildLeg(){
@@ -1356,12 +1570,13 @@ function renderRelationships(){
       </g>`;
   };
 
+  const laneLabels=currentRel.laneLabels||REL_DEFAULT_LANES;
   const laneBackdrop=`
     <g opacity=".8">
-      <text x="86" y="36" fill="var(--text3)" font-size="12">Shareholders</text>
-      <text x="610" y="36" text-anchor="middle" fill="var(--text3)" font-size="12">Focus</text>
-      <text x="846" y="36" fill="var(--text3)" font-size="12">Direct Holdings</text>
-      <text x="1136" y="36" fill="var(--text3)" font-size="12">Second Layer</text>
+      <text x="86" y="36" fill="var(--text3)" font-size="12">${escapeHtml(laneLabels.incoming||REL_DEFAULT_LANES.incoming)}</text>
+      <text x="610" y="36" text-anchor="middle" fill="var(--text3)" font-size="12">${escapeHtml(laneLabels.focus||REL_DEFAULT_LANES.focus)}</text>
+      <text x="846" y="36" fill="var(--text3)" font-size="12">${escapeHtml(laneLabels.outgoing||REL_DEFAULT_LANES.outgoing)}</text>
+      <text x="1136" y="36" fill="var(--text3)" font-size="12">${escapeHtml(laneLabels.secondary||REL_DEFAULT_LANES.secondary)}</text>
       <path d="M 70 52 H 360" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
       <path d="M 462 52 H 758" stroke="rgba(110,168,255,.08)" stroke-dasharray="4 5"></path>
       <path d="M 830 52 H 1018" stroke="rgba(26,158,110,.08)" stroke-dasharray="4 5"></path>
@@ -1384,23 +1599,35 @@ function renderRelationships(){
   applyRelationshipTransform();
   relView.style.display='flex';
 }
+function showRelationshipPlaceholder(symbol=''){
+  const relView=document.getElementById('relView');
+  const svg=document.getElementById('relSvg');
+  const empty=document.getElementById('relEmpty');
+  document.getElementById('relTitle').textContent=symbol?`${symbol} Relations`:'Relationships';
+  document.getElementById('relSub').textContent=symbol
+    ? `Select ${symbol} again from the sidebar or choose another stock to load its relation view.`
+    : 'Select a stock from the left sidebar to load its relation view.';
+  document.getElementById('relMeta').innerHTML='';
+  document.getElementById('relNote').textContent='Sidebar selection drives this mode. Blue nodes inside a loaded map still open the next relation level.';
+  svg.innerHTML='';
+  empty.style.display='flex';
+  empty.textContent=symbol
+    ? `ยังไม่ได้เปิด relation view ของ ${symbol} ในโหมดนี้`
+    : 'เลือกหุ้นจาก sidebar ทางซ้ายเพื่อดู Relations';
+  hideRelTooltip();
+  updateRelationshipStageState();
+  relView.style.display='flex';
+}
 async function openRelationships(ev,symbol){
   if(ev) ev.stopPropagation();
   if(Date.now()<relSuppressClickUntil) return;
   sel=symbol;
   await setPanelMode('relations',symbol);
 }
-async function setPanelMode(mode,symbol=sel){
+async function setPanelMode(mode,symbol){
   if(mode==='relations'){
     try{
       await ensureRelationshipsLoaded();
-      const target=symbol||currentRelSymbol;
-      if(!target||!hasRelationships(target)){
-        alert('เลือกหุ้นที่มี relationship map ก่อน เช่น PTT หรือ CPALL');
-        return;
-      }
-      currentRelSymbol=target;
-      currentRel=getRelationshipGraph(target);
       relMode=true;
       resetRelationshipView(false);
       document.getElementById('relView').style.display='flex';
@@ -1410,6 +1637,23 @@ async function setPanelMode(mode,symbol=sel){
       document.getElementById('tt').style.display='none';
       updateModeButtons();
       updateTfNote();
+      const target=symbol&&hasRelationships(symbol)?symbol:null;
+      if(!target){
+        sel=null;
+        currentRelSymbol=null;
+        currentRel=null;
+        updateTfNote();
+        document.querySelectorAll('.si').forEach(el=>el.classList.remove('sel'));
+        showRelationshipPlaceholder();
+        return;
+      }
+      currentRelSymbol=target;
+      currentRel=getRelationshipGraph(target);
+      if(!currentRel){
+        currentRelSymbol=null;
+        showRelationshipPlaceholder(target);
+        return;
+      }
       renderRelationships();
     }catch(err){
       alert(err.message);
@@ -1554,8 +1798,8 @@ function onWheel(e){
 async function onClick(){
   if(Date.now()<chartSuppressClickUntil||!hov) return;
   const clicked=hov.name;
-  if(hasRelationships(clicked)){sel=clicked;currentRelSymbol=clicked;updateTfNote();await openRelationships(null,clicked);return}
   sel=sel===clicked?null:clicked;
+  currentRelSymbol=sel&&hasRelationships(sel)?sel:null;
   updateTfNote();
   draw();
   document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')});
