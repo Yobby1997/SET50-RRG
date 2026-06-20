@@ -1171,19 +1171,42 @@ function renderRelationships(){
   layoutLane(incomingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:336,textX:86,y:p.y,side:'incoming'}));
   layoutLane(outgoingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:816,textX:846,y:p.y,side:'outgoing'}));
   layoutLane(secondaryNodes,0,152,580).forEach(p=>placements.set(p.node.id,{anchorX:1014,textX:1038,y:p.y,side:'secondary'}));
+  const nodeById=new Map(currentRel.nodes.map(n=>[n.id,n]));
+  const nodeLinesCache=new Map();
+  const nodeBoxCache=new Map();
+  const indirectSourceIds=[...new Set(allEdges.filter(e=>e.source!==focus.id&&placements.has(e.source)).map(e=>e.source))]
+    .sort((a,b)=>(placements.get(a)?.y||0)-(placements.get(b)?.y||0));
+  const railXBySource=new Map(indirectSourceIds.map((id,idx)=>[id,1006+idx*18]));
+
+  const getNodeLines=(nodeId)=>{
+    if(nodeLinesCache.has(nodeId)) return nodeLinesCache.get(nodeId);
+    const node=nodeById.get(nodeId);
+    const placement=placements.get(nodeId);
+    const lines=wrapRelText(node?.symbol||node?.label||nodeId,placement?.side==='focus'?18:22,placement?.side==='focus'?1:2);
+    nodeLinesCache.set(nodeId,lines);
+    return lines;
+  };
+  const getNodeBox=(nodeId)=>{
+    if(nodeBoxCache.has(nodeId)) return nodeBoxCache.get(nodeId);
+    const node=nodeById.get(nodeId);
+    const placement=placements.get(nodeId);
+    const box=buildRelNodeBox(placement,getNodeLines(nodeId),placement?.side==='focus'?28:13,relKindLabel(node||{}));
+    nodeBoxCache.set(nodeId,box);
+    return box;
+  };
 
   const renderListNode=(node,placement)=>{
     const clickable=node.symbol&&hasRelationships(node.symbol)&&placement.side!=='focus';
     const clickAttr=clickable?` onclick="openRelationships(event,'${escapeHtml(node.symbol)}')"`:'';
     const bulletX=placement.side==='incoming'?placement.textX-16:placement.side==='focus'?placement.textX-34:placement.textX-16;
-    const lines=wrapRelText(node.symbol||node.label||node.id,placement.side==='focus'?18:22,placement.side==='focus'?1:2);
+    const lines=getNodeLines(node.id);
     const labelColor=placement.side==='focus'||clickable?'#9ec5ff':'var(--text)';
     const sub=relKindLabel(node);
     const detail=node.symbol&&node.label&&node.label!==node.symbol?node.label:'';
     const arrow=clickable?' ›':'';
     const blockY=placement.side==='focus'?placement.y-14:placement.y-8;
     const textAnchor=placement.side==='focus'?'middle':'start';
-    const box=buildRelNodeBox(placement,lines,placement.side==='focus'?28:13,sub);
+    const box=getNodeBox(node.id);
     const hoverAttr=` onmouseenter="showRelTooltip(event,'${escapeHtml(node.symbol||node.label||node.id)}','${escapeHtml(sub)}','${escapeHtml(detail)}')" onmousemove="moveRelTooltip(event)" onmouseleave="hideRelTooltip()"`;
     return `
       <g class="rel-node"${clickAttr}${hoverAttr} style="${clickable?'cursor:pointer':''}">
@@ -1198,27 +1221,57 @@ function renderRelationships(){
     const first=group[0];
     const s=placements.get(first.source), t=placements.get(first.target);
     if(!s||!t) return '';
-    const sLines=wrapRelText(first.source===focus.id?focus.symbol||focus.label||focus.id:(s.side==='incoming'||s.side==='outgoing'||s.side==='secondary')?(currentRel.nodes.find(n=>n.id===first.source)?.symbol||currentRel.nodes.find(n=>n.id===first.source)?.label||first.source):first.source,s.side==='focus'?18:22,s.side==='focus'?1:2);
-    const tNode=currentRel.nodes.find(n=>n.id===first.target);
-    const sNode=currentRel.nodes.find(n=>n.id===first.source);
-    const sBox=buildRelNodeBox(s,sLines,s.side==='focus'?28:13,relKindLabel(sNode||{}));
-    const tLines=wrapRelText(tNode?.symbol||tNode?.label||first.target,t.side==='focus'?18:22,t.side==='focus'?1:2);
-    const tBox=buildRelNodeBox(t,tLines,t.side==='focus'?28:13,relKindLabel(tNode||{}));
-    const fromX=s.side==='focus'?sBox.right:sBox.right;
-    const toX=t.side==='focus'?tBox.left:tBox.left;
+    const sBox=getNodeBox(first.source);
+    const tBox=getNodeBox(first.target);
     const fromY=Math.max(sBox.top+10,Math.min(sBox.bottom-10,s.y-5));
     const toY=Math.max(tBox.top+10,Math.min(tBox.bottom-10,t.y-5));
-    const dx=toX-fromX;
-    const c1x=fromX+dx*0.34;
-    const c2x=fromX+dx*0.66;
-    const ratio=t.side==='focus'?0.44:s.side==='focus'?0.56:0.6;
-    const mx=fromX+dx*ratio;
-    const my=fromY+(toY-fromY)*ratio;
     const dashed=group.some(e=>e.directness==='effective');
+    const stroke=dashed?'rgba(110,168,255,.54)':'rgba(255,255,255,.16)';
+    const label=edgeLabel(group);
+    const labelColor=dashed?'#9ec5ff':'var(--text2)';
+    let path='';
+    let mx=0;
+    let my=0;
+
+    if(s.side==='incoming'&&t.side==='focus'){
+      const fromX=sBox.right;
+      const toX=tBox.left;
+      const mergeX=498;
+      const c1x=fromX+(mergeX-fromX)*0.42;
+      const c2x=mergeX+(toX-mergeX)*0.35;
+      path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
+      mx=fromX+(mergeX-fromX)*0.52;
+      my=fromY+(toY-fromY)*0.28;
+    }else if(s.side==='focus'&&t.side==='outgoing'){
+      const fromX=sBox.right;
+      const toX=tBox.left;
+      const railX=726;
+      const c1x=fromX+(railX-fromX)*0.55;
+      const c2x=railX+(toX-railX)*0.28;
+      path=`M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
+      mx=railX-18;
+      my=fromY+(toY-fromY)*0.35;
+    }else{
+      const railX=railXBySource.get(first.source)||1040;
+      const fromX=sBox.right;
+      const toX=tBox.left;
+      const exitX=Math.max(fromX+12,railX-18);
+      const entryX=Math.min(toX-12,railX-12);
+      path=[
+        `M ${fromX} ${fromY}`,
+        `C ${fromX+10} ${fromY}, ${exitX-10} ${fromY}, ${exitX} ${fromY}`,
+        `L ${railX} ${fromY}`,
+        `L ${railX} ${toY}`,
+        `L ${entryX} ${toY}`,
+        `C ${entryX-10} ${toY}, ${toX+10} ${toY}, ${toX} ${toY}`
+      ].join(' ');
+      mx=railX-8;
+      my=fromY<toY ? fromY+12 : fromY-8;
+    }
     return `
       <g class="rel-edge">
-        <path d="M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}" fill="none" stroke="${dashed?'rgba(110,168,255,.58)':'rgba(255,255,255,.18)'}" stroke-width="${dashed?1.7:1.2}" stroke-dasharray="${dashed?'6 4':'0'}"></path>
-        <text x="${mx}" y="${my-6}" text-anchor="middle" fill="${dashed?'#9ec5ff':'var(--text2)'}" font-size="10.5">${escapeHtml(edgeLabel(group))}</text>
+        <path d="${path}" fill="none" stroke="${stroke}" stroke-width="${dashed?1.6:1.15}" stroke-dasharray="${dashed?'6 4':'0'}"></path>
+        <text x="${mx}" y="${my}" text-anchor="middle" fill="${labelColor}" font-size="10.5">${escapeHtml(label)}</text>
       </g>`;
   };
 
