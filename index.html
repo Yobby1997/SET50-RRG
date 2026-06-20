@@ -396,9 +396,9 @@ function wrapRelText(text,maxChars=20,maxLines=2){
   }
   return lines.slice(0,maxLines);
 }
-function buildRelTextBlock(lines,x,y,fontSize=12,fill='var(--text)',weight='700'){
+function buildRelTextBlock(lines,x,y,fontSize=12,fill='var(--text)',weight='700',anchor='middle'){
   const offset=(lines.length-1)*7.5;
-  return `<text x="${x}" y="${y-offset}" text-anchor="middle" fill="${fill}" font-size="${fontSize}" font-weight="${weight}">${lines.map((line,i)=>`<tspan x="${x}" dy="${i===0?0:15}">${escapeHtml(line)}</tspan>`).join('')}</text>`;
+  return `<text x="${x}" y="${y-offset}" text-anchor="${anchor}" fill="${fill}" font-size="${fontSize}" font-weight="${weight}">${lines.map((line,i)=>`<tspan x="${x}" dy="${i===0?0:15}">${escapeHtml(line)}</tspan>`).join('')}</text>`;
 }
 function edgeLabel(edgeGroup){
   if(edgeGroup.length===1){
@@ -1084,54 +1084,10 @@ function endRelationshipPan(){
   updateRelationshipStageState();
 }
 function nodeMarkup(node,x,y,isFocus){
-  const circle=node.displayShape==='circle';
-  const title=escapeHtml(node.label||node.id);
-  const clickable=node.symbol&&hasRelationships(node.symbol)&&!isFocus;
-  const clickAttr=clickable?` onclick="openRelationships(event,'${escapeHtml(node.symbol)}')"`:'';
-  const stroke=clickable||isFocus?'#6ea8ff':'rgba(255,255,255,.18)';
-  if(circle){
-    const r=isFocus?42:28;
-    return `
-      <g class="rel-node"${clickAttr} style="${clickable?'cursor:pointer':''}">
-        <title>${title}</title>
-        <circle cx="${x}" cy="${y}" r="${r+8}" fill="rgba(50,120,216,.08)"></circle>
-        <circle cx="${x}" cy="${y}" r="${r}" fill="rgba(50,120,216,.18)" stroke="${stroke}" stroke-width="${isFocus?3:1.5}"></circle>
-        ${buildRelTextBlock([node.symbol||shortRelLabel(node)],x,y-4,isFocus?18:14,'var(--text)','700')}
-        <text x="${x}" y="${y+18}" text-anchor="middle" fill="var(--text2)" font-size="11">${escapeHtml(relKindLabel(node))}</text>
-      </g>`;
-  }
-  const lines=wrapRelText(node.label||node.id,isFocus?22:21,isFocus?3:2);
-  const sub=relKindLabel(node);
-  const widest=Math.max(...lines.map(line=>line.length),sub.length);
-  const w=Math.max(178,Math.min(238,32+widest*7.1));
-  const h=54+(lines.length-1)*15+(sub?16:0);
-  const rx=x-w/2, ry=y-h/2;
-  return `
-    <g class="rel-node"${clickAttr} style="${clickable?'cursor:pointer':''}">
-      <title>${title}</title>
-      <rect x="${rx}" y="${ry}" width="${w}" height="${h}" rx="16" fill="rgba(255,255,255,.055)" stroke="${stroke}" stroke-width="${isFocus?2.2:1.2}"></rect>
-      ${buildRelTextBlock(lines,x,y-(sub?9:0),isFocus?14:12,'var(--text)','700')}
-      ${sub?`<text x="${x}" y="${y+lines.length*8+8}" text-anchor="middle" fill="var(--text2)" font-size="10.5">${escapeHtml(sub)}</text>`:''}
-      ${clickable?`<text x="${x}" y="${ry+h-10}" text-anchor="middle" fill="#9ec5ff" font-size="9.5">open map</text>`:''}
-    </g>`;
+  return '';
 }
 function edgeMarkup(group,positions,focusId){
-  const first=group[0];
-  const s=positions.get(first.source), t=positions.get(first.target);
-  if(!s||!t) return '';
-  const dx=t.x-s.x;
-  const c1x=s.x+dx*0.35, c2x=s.x+dx*0.65;
-  const dashed=group.some(e=>e.directness==='effective');
-  const label=edgeLabel(group);
-  const ratio=first.target===focusId ? .42 : first.source===focusId ? .58 : .64;
-  const midX=s.x+dx*ratio, midY=s.y+(t.y-s.y)*ratio;
-  const labelWidth=Math.max(70,Math.min(116,label.length*6.1+20));
-  return `
-    <g class="rel-edge">
-      <path d="M ${s.x} ${s.y} C ${c1x} ${s.y}, ${c2x} ${t.y}, ${t.x} ${t.y}" fill="none" stroke="${dashed?'rgba(110,168,255,.78)':'rgba(255,255,255,.20)'}" stroke-width="${dashed?2.1:1.35}" stroke-dasharray="${dashed?'7 5':'0'}"></path>
-      <rect x="${midX-labelWidth/2}" y="${midY-11}" width="${labelWidth}" height="22" rx="11" fill="rgba(15,17,23,.94)" stroke="rgba(255,255,255,.08)"></rect>
-      <text x="${midX}" y="${midY+4}" text-anchor="middle" fill="${dashed?'#9ec5ff':'var(--text2)'}" font-size="10">${escapeHtml(label)}</text>
-    </g>`;
+  return '';
 }
 function renderRelationships(){
   if(!currentRel) return;
@@ -1162,25 +1118,70 @@ function renderRelationships(){
     return;
   }
   empty.style.display='none';
-  const positions=new Map();
-  positions.set(focus.id,{x:560,y:360});
-  layoutLane(incomingNodes,168,108,612).forEach(p=>positions.set(p.node.id,{x:p.x,y:p.y}));
-  layoutLane(outgoingNodes,860,108,612).forEach(p=>positions.set(p.node.id,{x:p.x,y:p.y}));
-  layoutLane(secondaryNodes,1090,132,588).forEach(p=>positions.set(p.node.id,{x:p.x,y:p.y}));
+  const placements=new Map();
+  placements.set(focus.id,{anchorX:610,textX:610,y:352,side:'focus'});
+  layoutLane(incomingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:336,textX:86,y:p.y,side:'incoming'}));
+  layoutLane(outgoingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:816,textX:846,y:p.y,side:'outgoing'}));
+  layoutLane(secondaryNodes,0,152,580).forEach(p=>placements.set(p.node.id,{anchorX:1014,textX:1038,y:p.y,side:'secondary'}));
+
+  const renderListNode=(node,placement)=>{
+    const clickable=node.symbol&&hasRelationships(node.symbol)&&placement.side!=='focus';
+    const clickAttr=clickable?` onclick="openRelationships(event,'${escapeHtml(node.symbol)}')"`:'';
+    const bulletX=placement.side==='incoming'?placement.textX-16:placement.side==='focus'?placement.textX-34:placement.textX-16;
+    const lines=wrapRelText(node.symbol||node.label||node.id,placement.side==='focus'?18:22,placement.side==='focus'?1:2);
+    const labelColor=placement.side==='focus'||clickable?'#9ec5ff':'var(--text)';
+    const sub=node.symbol&&placement.side!=='focus'&&node.label&&node.label!==node.symbol
+      ? relKindLabel(node)
+      : placement.side==='focus'
+        ? relKindLabel(node)
+        : relKindLabel(node);
+    const arrow=clickable?' ›':'';
+    const blockY=placement.side==='focus'?placement.y-14:placement.y-8;
+    const textAnchor=placement.side==='focus'?'middle':'start';
+    return `
+      <g class="rel-node"${clickAttr} style="${clickable?'cursor:pointer':''}">
+        <title>${escapeHtml(node.label||node.id)}</title>
+        <circle cx="${bulletX}" cy="${placement.side==='focus'?placement.y-6:placement.y-5}" r="${placement.side==='focus'?5:3.5}" fill="${placement.side==='focus'?'#6ea8ff':'rgba(255,255,255,.45)'}"></circle>
+        ${buildRelTextBlock(lines.map((line,i)=>i===lines.length-1?line+arrow:line),placement.textX,blockY,placement.side==='focus'?28:13,labelColor,placement.side==='focus'?'700':'600',textAnchor)}
+        <text x="${placement.textX}" y="${placement.side==='focus'?placement.y+18:placement.y+18}" text-anchor="${textAnchor}" fill="var(--text2)" font-size="${placement.side==='focus'?12:10.5}">${escapeHtml(sub)}</text>
+      </g>`;
+  };
+
+  const renderEdge=(group)=>{
+    const first=group[0];
+    const s=placements.get(first.source), t=placements.get(first.target);
+    if(!s||!t) return '';
+    const fromX=s.side==='incoming'?s.anchorX:s.side==='focus'?s.anchorX+30:s.anchorX;
+    const toX=t.side==='focus'?t.anchorX-30:t.anchorX;
+    const fromY=s.y-4;
+    const toY=t.y-4;
+    const dx=toX-fromX;
+    const c1x=fromX+dx*0.34;
+    const c2x=fromX+dx*0.66;
+    const ratio=t.side==='focus'?0.44:s.side==='focus'?0.56:0.6;
+    const mx=fromX+dx*ratio;
+    const my=fromY+(toY-fromY)*ratio;
+    const dashed=group.some(e=>e.directness==='effective');
+    return `
+      <g class="rel-edge">
+        <path d="M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}" fill="none" stroke="${dashed?'rgba(110,168,255,.58)':'rgba(255,255,255,.18)'}" stroke-width="${dashed?1.7:1.2}" stroke-dasharray="${dashed?'6 4':'0'}"></path>
+        <text x="${mx}" y="${my-6}" text-anchor="middle" fill="${dashed?'#9ec5ff':'var(--text2)'}" font-size="10.5">${escapeHtml(edgeLabel(group))}</text>
+      </g>`;
+  };
+
   const laneBackdrop=`
-    <g opacity=".9">
-      <rect x="46" y="66" width="244" height="590" rx="28" fill="rgba(255,255,255,.016)" stroke="rgba(255,255,255,.04)"></rect>
-      <rect x="430" y="66" width="258" height="590" rx="28" fill="rgba(50,120,216,.03)" stroke="rgba(110,168,255,.06)"></rect>
-      <rect x="738" y="66" width="244" height="590" rx="28" fill="rgba(26,158,110,.03)" stroke="rgba(26,158,110,.05)"></rect>
-      <rect x="1000" y="66" width="156" height="590" rx="28" fill="rgba(255,255,255,.016)" stroke="rgba(255,255,255,.04)"></rect>
-      <text x="168" y="40" text-anchor="middle" fill="var(--text3)" font-size="12">Shareholders</text>
-      <text x="560" y="40" text-anchor="middle" fill="var(--text3)" font-size="12">Focus</text>
-      <text x="860" y="40" text-anchor="middle" fill="var(--text3)" font-size="12">Direct Holdings</text>
-      <text x="1078" y="40" text-anchor="middle" fill="var(--text3)" font-size="12">Second Layer</text>
+    <g opacity=".8">
+      <text x="86" y="36" fill="var(--text3)" font-size="12">Shareholders</text>
+      <text x="610" y="36" text-anchor="middle" fill="var(--text3)" font-size="12">Focus</text>
+      <text x="846" y="36" fill="var(--text3)" font-size="12">Direct Holdings</text>
+      <text x="1038" y="36" fill="var(--text3)" font-size="12">Second Layer</text>
+      <path d="M 70 52 H 360" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
+      <path d="M 462 52 H 758" stroke="rgba(110,168,255,.08)" stroke-dasharray="4 5"></path>
+      <path d="M 830 52 H 990" stroke="rgba(26,158,110,.08)" stroke-dasharray="4 5"></path>
+      <path d="M 1022 52 H 1160" stroke="rgba(255,255,255,.06)" stroke-dasharray="4 5"></path>
     </g>`;
-  const edgeSvg=allEdges.map(g=>edgeMarkup(g,positions,focus.id)).join('');
-  const nodes=[focus,...incomingNodes,...outgoingNodes,...secondaryNodes]
-    .map(n=>nodeMarkup(n,positions.get(n.id).x,positions.get(n.id).y,n.id===focus.id)).join('');
+  const edgeSvg=allEdges.map(renderEdge).join('');
+  const nodes=[focus,...incomingNodes,...outgoingNodes,...secondaryNodes].map(n=>renderListNode(n,placements.get(n.id))).join('');
   svg.innerHTML=`<g id="relViewport">${laneBackdrop}${edgeSvg}${nodes}</g>`;
   applyRelationshipTransform();
   relView.style.display='flex';
