@@ -77,6 +77,25 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 .cw{flex:1;position:relative;padding:14px;min-height:0;overflow:hidden}
 #cv{display:block;width:100%;height:100%}
 
+/* Relationships */
+.rel-view{position:absolute;inset:14px;display:none;flex-direction:column;gap:12px;background:linear-gradient(180deg,rgba(24,28,37,.98),rgba(15,17,23,.98));border:1px solid var(--border);border-radius:12px;padding:14px;z-index:20}
+.rel-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rel-head{display:flex;flex-direction:column;gap:3px}
+.rel-title{font-size:18px;font-weight:700}
+.rel-sub{font-size:12px;color:var(--text2);line-height:1.5}
+.rel-meta{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.rel-chip{font-size:11px;color:var(--text2);padding:4px 8px;border:1px solid var(--border2);border-radius:999px;background:rgba(255,255,255,.03)}
+.rel-stage{position:relative;flex:1;min-height:0;border:1px solid var(--border);border-radius:10px;background:
+  radial-gradient(circle at 20% 20%, rgba(50,120,216,.08), transparent 22%),
+  radial-gradient(circle at 80% 30%, rgba(26,158,110,.08), transparent 24%),
+  linear-gradient(180deg, rgba(255,255,255,.015), rgba(255,255,255,.005))}
+.rel-svg{width:100%;height:100%;display:block}
+.rel-empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;color:var(--text2);font-size:13px;line-height:1.7;padding:24px}
+.rel-note{font-size:11px;color:var(--text3);line-height:1.6}
+.rel-link{color:#9ec5ff;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(158,197,255,.4);text-underline-offset:2px}
+.rel-link:hover{color:#cfe1ff}
+.rel-pill{font-size:9px;padding:1px 5px;border-radius:999px;border:1px solid rgba(50,120,216,.35);color:#9ec5ff;background:rgba(50,120,216,.12)}
+
 /* Overlay */
 .ov{position:absolute;inset:0;background:rgba(15,17,23,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:50;border-radius:10px}
 .ov.hide{display:none}
@@ -155,6 +174,14 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
     </div>
     <div class="sep"></div>
     <div style="display:flex;align-items:center;gap:6px">
+      <span class="cl">Mode</span>
+      <div class="bg">
+        <button class="on" id="md-price" onclick="setPanelMode('price')">Price</button>
+        <button          id="md-relations" onclick="setPanelMode('relations')">Relations</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div style="display:flex;align-items:center;gap:6px">
       <span class="cl">Bubble Size</span>
       <div class="bg">
         <button class="on" id="sz-weight" onclick="setSizeMode('weight')">SET50 Weight</button>
@@ -162,6 +189,8 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
         <button          id="sz-avg_trading_value" onclick="setSizeMode('avg_trading_value')">Avg Value</button>
       </div>
     </div>
+    <div class="sep"></div>
+    <button class="btn" type="button" onclick="resetChartZoom()" style="color:var(--text)">Reset Zoom</button>
     <div class="sep"></div>
     <button class="btn" id="loadBtn" onclick="loadData()">
       <span class="spin" id="sp"></span>
@@ -185,6 +214,21 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
     <div class="cp">
       <div class="cw" id="cw">
         <canvas id="cv"></canvas>
+        <div class="rel-view" id="relView">
+          <div class="rel-top">
+            <button class="btn" type="button" onclick="closeRelationships()" style="color:var(--text)">← Back</button>
+            <div class="rel-head">
+              <div class="rel-title" id="relTitle">Relationships</div>
+              <div class="rel-sub" id="relSub">กำลังโหลด...</div>
+            </div>
+            <div class="rel-meta" id="relMeta"></div>
+          </div>
+          <div class="rel-stage">
+            <svg class="rel-svg" id="relSvg" viewBox="0 0 1000 640" preserveAspectRatio="none"></svg>
+            <div class="rel-empty" id="relEmpty"></div>
+          </div>
+          <div class="rel-note" id="relNote"></div>
+        </div>
         <div class="ov" id="ov">
           <div style="font-size:28px">📊</div>
           <div class="ov-msg" id="ovMsg">กำลังตรวจสอบ server...</div>
@@ -211,6 +255,7 @@ const DATA_FILES = {
   weekly:'./data-weekly.json',
   monthly:'./data-monthly.json'
 };
+const REL_FILE = './relationships.json';
 
 const TICKERS = [
   {t:'AOT',s:'Transport'},{t:'PTT',s:'Energy'},{t:'PTTEP',s:'Energy'},{t:'PTTGC',s:'Energy'},
@@ -250,15 +295,212 @@ const SIZE_META = {
 let tf='daily', tail=6, view='all', sizeMode='weight';
 let results=[], hidden=new Set(), sel=null, hov=null;
 let cv, cx;
+let relData=null, relMaps=new Map(), relMode=false, currentRel=null, currentRelSymbol=null;
+let chartZoom=null;
 
 function setTF(v){tf=v;document.querySelectorAll('[id^="tf-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tf-'+v).classList.add('on')}
-function setTail(v){tail=v;document.querySelectorAll('[id^="tl-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tl-'+v).classList.add('on');if(results.length){compute();draw();buildSb()}}
-function setView(v){view=v;document.querySelectorAll('[id^="vw-"]').forEach(b=>b.classList.remove('on'));document.getElementById('vw-'+v).classList.add('on');if(results.length)draw()}
+function setTail(v){tail=v;resetChartZoom(false);document.querySelectorAll('[id^="tl-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tl-'+v).classList.add('on');if(results.length){compute();draw();buildSb()}}
+function setView(v){view=v;resetChartZoom(false);document.querySelectorAll('[id^="vw-"]').forEach(b=>b.classList.remove('on'));document.getElementById('vw-'+v).classList.add('on');if(results.length)draw()}
 function setSizeMode(v){sizeMode=v;document.querySelectorAll('[id^="sz-"]').forEach(b=>b.classList.remove('on'));document.getElementById('sz-'+v).classList.add('on');updateTfNote();if(results.length)draw()}
 function sideTab(t,el){document.querySelectorAll('.sb-tab').forEach(x=>x.classList.remove('on'));el.classList.add('on');document.getElementById('sbStocks').style.display=t==='stocks'?'':'none';document.getElementById('sbSectors').style.display=t==='sectors'?'':'none'}
 function updateTfNote(){
   const note=document.getElementById('tfNote');
-  if(note) note.textContent=`Size: ${SIZE_META[sizeMode].short}`;
+  const selected=sel?` • Selected: ${sel}`:'';
+  const mode=relMode?` • Mode: Relations`:` • Mode: Price`;
+  if(note) note.textContent=`Size: ${SIZE_META[sizeMode].short}${selected}${mode}`;
+}
+function updateModeButtons(){
+  document.querySelectorAll('[id^="md-"]').forEach(b=>b.classList.remove('on'));
+  document.getElementById(relMode?'md-relations':'md-price')?.classList.add('on');
+}
+function resetChartZoom(redraw=true){
+  chartZoom=null;
+  if(redraw&&results.length&&!relMode) draw();
+}
+function handleResize(){
+  if(relMode){renderRelationships();return}
+  if(results.length)draw();
+}
+async function ensureRelationshipsLoaded(){
+  if(relData) return relData;
+  const res=await fetch(REL_FILE,{cache:'no-cache'});
+  if(!res.ok) throw new Error(`โหลด ${REL_FILE} ไม่สำเร็จ`);
+  relData=await res.json();
+  relMaps=new Map((relData.graphs||[]).map(g=>[g.focusSymbol,g]));
+  return relData;
+}
+function hasRelationships(symbol){return relMaps.has(symbol)}
+function getRelationshipGraph(symbol){return relMaps.get(symbol)||null}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+function shortRelLabel(node){
+  if(node.symbol) return node.symbol;
+  const txt=node.label||node.id;
+  return txt.length>24?txt.slice(0,23)+'…':txt;
+}
+function edgeLabel(edgeGroup){
+  if(edgeGroup.length===1){
+    const e=edgeGroup[0];
+    return e.pctShares!=null?`${Number(e.pctShares).toFixed(2)}%`:'Link';
+  }
+  return edgeGroup.map(e=>{
+    const pct=e.pctShares!=null?`${Number(e.pctShares).toFixed(2)}% `:'';
+    return `${pct}${e.directness||e.relation}`;
+  }).join(' / ');
+}
+function buildRelationshipView(graph){
+  const nodesById=new Map(graph.nodes.map(n=>[n.id,n]));
+  const focus=graph.nodes.find(n=>n.symbol===graph.focusSymbol)||graph.nodes[0];
+  const incomingEdges=graph.edges.filter(e=>e.target===focus.id);
+  const outgoingEdges=graph.edges.filter(e=>e.source===focus.id&&e.target!==focus.id);
+  const outgoingIds=new Set(outgoingEdges.map(e=>e.target));
+  const secondaryEdges=graph.edges.filter(e=>e.source!==focus.id&&e.target!==focus.id&&(outgoingIds.has(e.source)||outgoingIds.has(e.target)));
+  const displayIds=new Set([focus.id]);
+  incomingEdges.forEach(e=>displayIds.add(e.source));
+  outgoingEdges.forEach(e=>displayIds.add(e.target));
+  secondaryEdges.forEach(e=>{displayIds.add(e.source);displayIds.add(e.target)});
+  const incomingNodes=[...new Set(incomingEdges.map(e=>e.source))].map(id=>nodesById.get(id)).filter(Boolean);
+  const outgoingNodes=[...new Set(outgoingEdges.map(e=>e.target))].map(id=>nodesById.get(id)).filter(Boolean);
+  const secondaryNodes=[...new Set(secondaryEdges.flatMap(e=>[e.source,e.target]).filter(id=>id!==focus.id&&!incomingNodes.some(n=>n.id===id)&&!outgoingNodes.some(n=>n.id===id)))]
+    .map(id=>nodesById.get(id)).filter(Boolean);
+  const allEdges=graph.edges.filter(e=>displayIds.has(e.source)&&displayIds.has(e.target)&&e.source!==e.target);
+  const groupedEdges=new Map();
+  for(const e of allEdges){
+    const key=`${e.source}->${e.target}`;
+    if(!groupedEdges.has(key)) groupedEdges.set(key,[]);
+    groupedEdges.get(key).push(e);
+  }
+  return {focus,incomingNodes,outgoingNodes,secondaryNodes,allEdges:[...groupedEdges.values()]};
+}
+function layoutLane(nodes,x,y0,y1){
+  if(!nodes.length) return [];
+  const step=(y1-y0)/(nodes.length+1);
+  return nodes.map((n,i)=>({node:n,x,y:y0+step*(i+1)}));
+}
+function nodeMarkup(node,x,y,isFocus){
+  const circle=node.displayShape==='circle';
+  const w=isFocus?156:circle?94:146;
+  const h=isFocus?64:50;
+  const fill=circle?'rgba(50,120,216,.18)':'rgba(255,255,255,.06)';
+  const stroke=node.symbol&&hasRelationships(node.symbol)?'#6ea8ff':'rgba(255,255,255,.18)';
+  const title=escapeHtml(node.label||node.id);
+  const line1=escapeHtml(shortRelLabel(node));
+  const line2=node.symbol&&line1!==node.symbol?escapeHtml(node.symbol):escapeHtml(node.kind.replaceAll('_',' '));
+  const clickAttr=node.symbol&&hasRelationships(node.symbol)&&!isFocus?` onclick="openRelationships(null,'${escapeHtml(node.symbol)}')"`:'';
+  if(circle){
+    const r=isFocus?34:24;
+    return `
+      <g class="rel-node"${clickAttr} style="${clickAttr?'cursor:pointer':''}">
+        <title>${title}</title>
+        <circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${isFocus?2.5:1.2}"></circle>
+        <text x="${x}" y="${y-2}" text-anchor="middle" fill="var(--text)" font-size="${isFocus?16:13}" font-weight="700">${line1}</text>
+        <text x="${x}" y="${y+14}" text-anchor="middle" fill="var(--text2)" font-size="10">${line2}</text>
+      </g>`;
+  }
+  const rx=x-w/2, ry=y-h/2;
+  return `
+    <g class="rel-node"${clickAttr} style="${clickAttr?'cursor:pointer':''}">
+      <title>${title}</title>
+      <rect x="${rx}" y="${ry}" width="${w}" height="${h}" rx="12" fill="${fill}" stroke="${stroke}" stroke-width="${isFocus?2:1.2}"></rect>
+      <text x="${x}" y="${y-3}" text-anchor="middle" fill="var(--text)" font-size="${isFocus?15:12}" font-weight="700">${line1}</text>
+      <text x="${x}" y="${y+12}" text-anchor="middle" fill="var(--text2)" font-size="10">${line2}</text>
+      ${node.symbol&&hasRelationships(node.symbol)&&!isFocus?`<text x="${x}" y="${y+25}" text-anchor="middle" fill="#9ec5ff" font-size="9">open map</text>`:''}
+    </g>`;
+}
+function edgeMarkup(group,positions){
+  const first=group[0];
+  const s=positions.get(first.source), t=positions.get(first.target);
+  if(!s||!t) return '';
+  const dx=t.x-s.x;
+  const c1x=s.x+dx*0.35, c2x=s.x+dx*0.65;
+  const label=edgeLabel(group);
+  const dashed=group.some(e=>e.directness==='effective');
+  const midX=s.x+dx*0.5, midY=s.y+(t.y-s.y)*0.5;
+  return `
+    <g class="rel-edge">
+      <path d="M ${s.x} ${s.y} C ${c1x} ${s.y}, ${c2x} ${t.y}, ${t.x} ${t.y}" fill="none" stroke="${dashed?'rgba(110,168,255,.75)':'rgba(255,255,255,.22)'}" stroke-width="${dashed?2:1.4}" stroke-dasharray="${dashed?'7 5':'0'}"></path>
+      <rect x="${midX-44}" y="${midY-10}" width="88" height="20" rx="10" fill="rgba(15,17,23,.92)" stroke="rgba(255,255,255,.08)"></rect>
+      <text x="${midX}" y="${midY+4}" text-anchor="middle" fill="${dashed?'#9ec5ff':'var(--text2)'}" font-size="10">${escapeHtml(label)}</text>
+    </g>`;
+}
+function renderRelationships(){
+  if(!currentRel) return;
+  const relView=document.getElementById('relView');
+  const svg=document.getElementById('relSvg');
+  const empty=document.getElementById('relEmpty');
+  const {focus,incomingNodes,outgoingNodes,secondaryNodes,allEdges}=buildRelationshipView(currentRel);
+  document.getElementById('relTitle').textContent=`${focus.symbol||focus.label} Relationships`;
+  document.getElementById('relSub').textContent=currentRel.assessment?.why?.[0]||'Ownership and ecosystem relationships';
+  document.getElementById('relMeta').innerHTML=[
+    `<span class="rel-chip">Incoming ${incomingNodes.length}</span>`,
+    `<span class="rel-chip">Outgoing ${outgoingNodes.length}</span>`,
+    `<span class="rel-chip">Second Layer ${secondaryNodes.length}</span>`
+  ].join('');
+  document.getElementById('relNote').textContent=(currentRel.assessment?.recommendedDefaultFilters||[]).join(' • ');
+  if(!incomingNodes.length&&!outgoingNodes.length){
+    empty.style.display='flex';
+    empty.textContent='ยังไม่พบความสัมพันธ์สำหรับหุ้นนี้';
+    svg.innerHTML='';
+    relView.style.display='flex';
+    return;
+  }
+  empty.style.display='none';
+  const positions=new Map();
+  positions.set(focus.id,{x:500,y:320});
+  layoutLane(incomingNodes,190,90,550).forEach(p=>positions.set(p.node.id,{x:p.x,y:p.y}));
+  layoutLane(outgoingNodes,720,90,550).forEach(p=>positions.set(p.node.id,{x:p.x,y:p.y}));
+  layoutLane(secondaryNodes,900,120,520).forEach(p=>positions.set(p.node.id,{x:p.x,y:p.y}));
+  const edgeSvg=allEdges.map(g=>edgeMarkup(g,positions)).join('');
+  const nodes=[focus,...incomingNodes,...outgoingNodes,...secondaryNodes].map(n=>nodeMarkup(n,positions.get(n.id).x,positions.get(n.id).y,n.id===focus.id)).join('');
+  const laneLabels=`
+    <text x="190" y="38" text-anchor="middle" fill="var(--text3)" font-size="11">Shareholders</text>
+    <text x="500" y="38" text-anchor="middle" fill="var(--text3)" font-size="11">Focus</text>
+    <text x="720" y="38" text-anchor="middle" fill="var(--text3)" font-size="11">Direct Holdings</text>
+    <text x="900" y="38" text-anchor="middle" fill="var(--text3)" font-size="11">Second Layer</text>`;
+  svg.innerHTML=`<g>${edgeSvg}${nodes}</g>${laneLabels}`;
+  relView.style.display='flex';
+}
+async function openRelationships(ev,symbol){
+  if(ev) ev.stopPropagation();
+  sel=symbol;
+  await setPanelMode('relations',symbol);
+}
+async function setPanelMode(mode,symbol=sel){
+  if(mode==='relations'){
+    try{
+      await ensureRelationshipsLoaded();
+      const target=symbol||currentRelSymbol;
+      if(!target||!hasRelationships(target)){
+        alert('เลือกหุ้นที่มี relationship map ก่อน เช่น PTT หรือ CPALL');
+        return;
+      }
+      currentRelSymbol=target;
+      currentRel=getRelationshipGraph(target);
+      relMode=true;
+      document.getElementById('relView').style.display='flex';
+      document.getElementById('cv').style.display='none';
+      document.querySelector('.sb2').style.display='none';
+      document.getElementById('leg').style.display='none';
+      document.getElementById('tt').style.display='none';
+      updateModeButtons();
+      updateTfNote();
+      renderRelationships();
+    }catch(err){
+      alert(err.message);
+    }
+    return;
+  }
+  relMode=false;
+  currentRel=null;
+  document.getElementById('relView').style.display='none';
+  document.getElementById('cv').style.display='block';
+  document.querySelector('.sb2').style.display='flex';
+  document.getElementById('leg').style.display='flex';
+  updateModeButtons();
+  updateTfNote();
+  draw();
+}
+function closeRelationships(){
+  setPanelMode('price');
 }
 function getSizeMetric(item,mode=sizeMode){
   const key=SIZE_META[mode]?.key;
@@ -300,6 +542,47 @@ function makeRadiusScaler(items){
     return radius;
   };
 }
+function getVisibleResults(){
+  return results.filter(s=>!hidden.has(s.sector));
+}
+function getBaseExtents(vis){
+  let ar=[],am=[];
+  for(const s of vis) for(const p of s.tail){ar.push(p.rsRatio);am.push(p.rsMom)}
+  if(!ar.length) return null;
+  const pad=2.5;
+  return {r0:Math.min(...ar,100)-pad,r1:Math.max(...ar,100)+pad,m0:Math.min(...am,100)-pad,m1:Math.max(...am,100)+pad};
+}
+function clampExtents(ext,base){
+  const baseW=base.r1-base.r0, baseH=base.m1-base.m0;
+  const minW=baseW*0.18, minH=baseH*0.18;
+  const w=Math.min(Math.max(ext.r1-ext.r0,minW),baseW);
+  const h=Math.min(Math.max(ext.m1-ext.m0,minH),baseH);
+  let r0=ext.r0, r1=r0+w, m0=ext.m0, m1=m0+h;
+  if(w>=baseW){r0=base.r0;r1=base.r1}else{
+    if(r0<base.r0){r1+=base.r0-r0;r0=base.r0}
+    if(r1>base.r1){r0-=r1-base.r1;r1=base.r1}
+  }
+  if(h>=baseH){m0=base.m0;m1=base.m1}else{
+    if(m0<base.m0){m1+=base.m0-m0;m0=base.m0}
+    if(m1>base.m1){m0-=m1-base.m1;m1=base.m1}
+  }
+  return {r0,r1,m0,m1};
+}
+function getCurrentExtents(vis){
+  const base=getBaseExtents(vis);
+  if(!base) return null;
+  if(!chartZoom) return base;
+  return clampExtents(chartZoom,base);
+}
+function attachCanvasInteractions(){
+  if(!cv||cv.dataset.bound==='1') return;
+  cv.dataset.bound='1';
+  cv.addEventListener('mousemove',onMM);
+  cv.addEventListener('click',onClick);
+  cv.addEventListener('mouseleave',()=>{hov=null;document.getElementById('tt').style.display='none';draw()});
+  cv.addEventListener('wheel',onWheel,{passive:false});
+  cv.addEventListener('dblclick',()=>resetChartZoom());
+}
 
 // ── Check server ──────────────────────────────────────────
 async function checkServer(){
@@ -338,6 +621,8 @@ async function loadData(){
   const ov=document.getElementById('ov');
   const note=document.getElementById('progNote');
   btn.disabled=true; sp.style.display='block';
+  resetChartZoom(false);
+  await ensureRelationshipsLoaded().catch(()=>{});
 
   const TF_LABEL={daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
 
@@ -449,14 +734,12 @@ function quad(r,m){return r>=100&&m>=100?'Leading':r<100&&m>=100?'Weakening':r<1
 
 // ── Draw ──────────────────────────────────────────────────
 function draw(){
+  if(relMode){renderRelationships();return}
   if(!cv){
     cv=document.getElementById('cv');
     cx=cv.getContext('2d');
-    cv.addEventListener('mousemove',onMM);
-    cv.addEventListener('click',onClick);
-    cv.addEventListener('mouseleave',()=>{hov=null;document.getElementById('tt').style.display='none';draw()});
-    window.addEventListener('resize',()=>{if(results.length)draw()});
   }
+  attachCanvasInteractions();
   const wrap=document.getElementById('cw');
   cv.width=wrap.clientWidth; cv.height=wrap.clientHeight;
   const W=cv.width,H=cv.height,P={l:54,r:22,t:22,b:42};
@@ -464,14 +747,10 @@ function draw(){
   cx.clearRect(0,0,W,H);
   if(!results.length)return;
 
-  const vis=results.filter(s=>!hidden.has(s.sector));
-  let ar=[],am=[];
-  for(const s of vis) for(const p of s.tail){ar.push(p.rsRatio);am.push(p.rsMom)}
-  if(!ar.length)return;
-
-  const pd=2.5;
-  const r0=Math.min(...ar,100)-pd,r1=Math.max(...ar,100)+pd;
-  const m0=Math.min(...am,100)-pd,m1=Math.max(...am,100)+pd;
+  const vis=getVisibleResults();
+  const ext=getCurrentExtents(vis);
+  if(!ext)return;
+  const {r0,r1,m0,m1}=ext;
   const tx=v=>P.l+(v-r0)/(r1-r0)*pw;
   const ty=v=>P.t+ph-(v-m0)/(m1-m0)*ph;
   const cx0=tx(100),cy0=ty(100);
@@ -565,16 +844,16 @@ function bySector(vis){
 }
 
 function onMM(e){
+  if(relMode) return;
   const rect=cv.getBoundingClientRect();
   const mx=(e.clientX-rect.left)*(cv.width/rect.width);
   const my=(e.clientY-rect.top)*(cv.height/rect.height);
   const W=cv.width,H=cv.height,P={l:54,r:22,t:22,b:42};
   const pw=W-P.l-P.r,ph=H-P.t-P.b;
-  const vis=results.filter(s=>!hidden.has(s.sector));
-  let ar=[],am=[];
-  for(const s of vis)for(const p of s.tail){ar.push(p.rsRatio);am.push(p.rsMom)}
-  if(!ar.length)return;
-  const pd=2.5,r0=Math.min(...ar,100)-pd,r1=Math.max(...ar,100)+pd,m0=Math.min(...am,100)-pd,m1=Math.max(...am,100)+pd;
+  const vis=getVisibleResults();
+  const ext=getCurrentExtents(vis);
+  if(!ext)return;
+  const {r0,r1,m0,m1}=ext;
   const tx=v=>P.l+(v-r0)/(r1-r0)*pw,ty=v=>P.t+ph-(v-m0)/(m1-m0)*ph;
   const disp=view==='sector'?bySector(vis):vis;
   const radiusFor=makeRadiusScaler(disp);
@@ -599,14 +878,49 @@ function onMM(e){
   }else{cv.style.cursor='default';hov=null;tt.style.display='none'}
   draw();
 }
-function onClick(){if(hov){sel=sel===hov.name?null:hov.name;draw();document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')})}}
+function onWheel(e){
+  if(relMode||!results.length) return;
+  e.preventDefault();
+  const rect=cv.getBoundingClientRect();
+  const mx=(e.clientX-rect.left)*(cv.width/rect.width);
+  const my=(e.clientY-rect.top)*(cv.height/rect.height);
+  const W=cv.width,H=cv.height,P={l:54,r:22,t:22,b:42};
+  const pw=W-P.l-P.r,ph=H-P.t-P.b;
+  const vis=getVisibleResults();
+  const base=getBaseExtents(vis);
+  const current=getCurrentExtents(vis);
+  if(!base||!current) return;
+  const dataX=current.r0+((mx-P.l)/pw)*(current.r1-current.r0);
+  const dataY=current.m1-((my-P.t)/ph)*(current.m1-current.m0);
+  const factor=e.deltaY<0?0.88:1.12;
+  const next={
+    r0:dataX-(dataX-current.r0)*factor,
+    r1:dataX+(current.r1-dataX)*factor,
+    m0:dataY-(dataY-current.m0)*factor,
+    m1:dataY+(current.m1-dataY)*factor
+  };
+  const clamped=clampExtents(next,base);
+  const isBase=Math.abs(clamped.r0-base.r0)<0.001&&Math.abs(clamped.r1-base.r1)<0.001&&Math.abs(clamped.m0-base.m0)<0.001&&Math.abs(clamped.m1-base.m1)<0.001;
+  chartZoom=isBase?null:clamped;
+  draw();
+}
+async function onClick(){
+  if(!hov) return;
+  const clicked=hov.name;
+  if(hasRelationships(clicked)){sel=clicked;currentRelSymbol=clicked;updateTfNote();await openRelationships(null,clicked);return}
+  sel=sel===clicked?null:clicked;
+  updateTfNote();
+  draw();
+  document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')});
+}
 
 function buildSb(){
   const sorted=[...results].sort((a,b)=>{const o={Leading:0,Improving:1,Weakening:2,Lagging:3};return(o[quad(a.last.rsRatio,a.last.rsMom)]||0)-(o[quad(b.last.rsRatio,b.last.rsMom)]||0)});
   document.getElementById('sbStocks').innerHTML=sorted.map(s=>{
     const q=quad(s.last.rsRatio,s.last.rsMom);
     const qc={Leading:'ql',Weakening:'qw',Lagging:'qg',Improving:'qi'}[q];
-    return`<div class="si${sel===s.name?' sel':''}" data-n="${s.name}" onclick="selStock('${s.name}')"><div class="sdot" style="background:${s.color}"></div><span class="stk">${s.name}</span><span class="sq ${qc}">${q[0]}</span></div>`;
+    const rel=hasRelationships(s.name)?`<span class="rel-pill">Map</span>`:'';
+    return`<div class="si${sel===s.name?' sel':''}" data-n="${s.name}" onclick="selStock('${s.name}')"><div class="sdot" style="background:${s.color}"></div><span class="stk">${s.name}</span>${rel}<span class="sq ${qc}">${q[0]}</span></div>`;
   }).join('');
 
   const sm={};
@@ -619,16 +933,24 @@ function buildSb(){
   }).join('');
 }
 
-function selStock(n){sel=sel===n?null:n;draw();document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===n)el.classList.add('sel')})}
+function selStock(n){
+  sel=sel===n?null:n;
+  if(sel&&hasRelationships(sel)) currentRelSymbol=sel;
+  updateTfNote();
+  draw();
+  document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')});
+}
 function buildLeg(){
   const secs=[...new Set(results.map(s=>s.sector))];
   document.getElementById('leg').innerHTML=secs.map(s=>`<span class="li${hidden.has(s)?' dim':''}" onclick="toggleSec('${s}')"><span class="ld" style="background:${SC[s]||'#888'}"></span>${s}</span>`).join('');
 }
 function toggleSec(s){hidden.has(s)?hidden.delete(s):hidden.add(s);buildLeg();draw()}
 
-window.addEventListener('resize',()=>{if(results.length)draw()});
+window.addEventListener('resize',handleResize);
+updateModeButtons();
 updateTfNote();
 checkServer();
+ensureRelationshipsLoaded().then(()=>{if(results.length)buildSb()}).catch(()=>{});
 </script>
 </body>
 </html>
