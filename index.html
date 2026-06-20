@@ -400,6 +400,51 @@ function buildRelTextBlock(lines,x,y,fontSize=12,fill='var(--text)',weight='700'
   const offset=(lines.length-1)*7.5;
   return `<text x="${x}" y="${y-offset}" text-anchor="${anchor}" fill="${fill}" font-size="${fontSize}" font-weight="${weight}">${lines.map((line,i)=>`<tspan x="${x}" dy="${i===0?0:15}">${escapeHtml(line)}</tspan>`).join('')}</text>`;
 }
+function estimateRelLineWidth(text,fontSize=12){
+  return Math.max(18,String(text||'').length*fontSize*0.58);
+}
+function buildRelNodeBox(placement,lines,fontSize,sub=''){
+  const textWidths=lines.map(line=>estimateRelLineWidth(line,fontSize));
+  if(sub) textWidths.push(estimateRelLineWidth(sub,10.5));
+  const width=Math.max(...textWidths,42);
+  const lineHeight=15;
+  const textHeight=(lines.length-1)*lineHeight+fontSize;
+  const subGap=sub?16:0;
+  const height=textHeight+subGap+(sub?10.5:0);
+  let left,right;
+  if(placement.side==='focus'){
+    left=placement.textX-width/2-14;
+    right=placement.textX+width/2+14;
+  }else{
+    left=placement.textX-6;
+    right=placement.textX+width+10;
+  }
+  const top=(placement.side==='focus'?placement.y-34:placement.y-19);
+  const bottom=top+height+8;
+  return {left,right,top,bottom,width:right-left,height:bottom-top};
+}
+function showRelTooltip(evt,title,sub='',detail=''){
+  if(relPan) return;
+  const tt=document.getElementById('tt');
+  if(!tt) return;
+  tt.innerHTML=`
+    <div class="tth">${escapeHtml(title)}</div>
+    ${sub?`<div class="ttr"><span class="ttk">Type</span><span class="ttv">${escapeHtml(sub)}</span></div>`:''}
+    ${detail?`<div class="ttr"><span class="ttk">Detail</span><span class="ttv">${escapeHtml(detail)}</span></div>`:''}
+  `;
+  tt.style.display='block';
+  moveRelTooltip(evt);
+}
+function moveRelTooltip(evt){
+  const tt=document.getElementById('tt');
+  if(!tt||tt.style.display!=='block') return;
+  tt.style.left=(evt.clientX+14)+'px';
+  tt.style.top=(evt.clientY-20)+'px';
+}
+function hideRelTooltip(){
+  const tt=document.getElementById('tt');
+  if(tt) tt.style.display='none';
+}
 function edgeLabel(edgeGroup){
   if(edgeGroup.length===1){
     const e=edgeGroup[0];
@@ -1065,6 +1110,7 @@ function onRelationshipWheel(e){
 }
 function onRelationshipDown(e){
   if(!relMode||!currentRel||e.button!==0) return;
+  hideRelTooltip();
   relPan={start:relPointFromClient(e),x:relViewport.x,y:relViewport.y,moved:false};
   updateRelationshipStageState();
 }
@@ -1092,6 +1138,7 @@ function edgeMarkup(group,positions,focusId){
 function renderRelationships(){
   if(!currentRel) return;
   attachRelationshipInteractions();
+  hideRelTooltip();
   const relView=document.getElementById('relView');
   const svg=document.getElementById('relSvg');
   const empty=document.getElementById('relEmpty');
@@ -1113,6 +1160,7 @@ function renderRelationships(){
     empty.style.display='flex';
     empty.textContent='ยังไม่พบความสัมพันธ์สำหรับหุ้นนี้';
     svg.innerHTML='';
+    hideRelTooltip();
     updateRelationshipStageState();
     relView.style.display='flex';
     return;
@@ -1130,20 +1178,19 @@ function renderRelationships(){
     const bulletX=placement.side==='incoming'?placement.textX-16:placement.side==='focus'?placement.textX-34:placement.textX-16;
     const lines=wrapRelText(node.symbol||node.label||node.id,placement.side==='focus'?18:22,placement.side==='focus'?1:2);
     const labelColor=placement.side==='focus'||clickable?'#9ec5ff':'var(--text)';
-    const sub=node.symbol&&placement.side!=='focus'&&node.label&&node.label!==node.symbol
-      ? relKindLabel(node)
-      : placement.side==='focus'
-        ? relKindLabel(node)
-        : relKindLabel(node);
+    const sub=relKindLabel(node);
+    const detail=node.symbol&&node.label&&node.label!==node.symbol?node.label:'';
     const arrow=clickable?' ›':'';
     const blockY=placement.side==='focus'?placement.y-14:placement.y-8;
     const textAnchor=placement.side==='focus'?'middle':'start';
+    const box=buildRelNodeBox(placement,lines,placement.side==='focus'?28:13,sub);
+    const hoverAttr=` onmouseenter="showRelTooltip(event,'${escapeHtml(node.symbol||node.label||node.id)}','${escapeHtml(sub)}','${escapeHtml(detail)}')" onmousemove="moveRelTooltip(event)" onmouseleave="hideRelTooltip()"`;
     return `
-      <g class="rel-node"${clickAttr} style="${clickable?'cursor:pointer':''}">
+      <g class="rel-node"${clickAttr}${hoverAttr} style="${clickable?'cursor:pointer':''}">
         <title>${escapeHtml(node.label||node.id)}</title>
+        <rect x="${box.left}" y="${box.top}" width="${box.width}" height="${box.height}" fill="transparent" stroke="none"></rect>
         <circle cx="${bulletX}" cy="${placement.side==='focus'?placement.y-6:placement.y-5}" r="${placement.side==='focus'?5:3.5}" fill="${placement.side==='focus'?'#6ea8ff':'rgba(255,255,255,.45)'}"></circle>
         ${buildRelTextBlock(lines.map((line,i)=>i===lines.length-1?line+arrow:line),placement.textX,blockY,placement.side==='focus'?28:13,labelColor,placement.side==='focus'?'700':'600',textAnchor)}
-        <text x="${placement.textX}" y="${placement.side==='focus'?placement.y+18:placement.y+18}" text-anchor="${textAnchor}" fill="var(--text2)" font-size="${placement.side==='focus'?12:10.5}">${escapeHtml(sub)}</text>
       </g>`;
   };
 
@@ -1151,10 +1198,16 @@ function renderRelationships(){
     const first=group[0];
     const s=placements.get(first.source), t=placements.get(first.target);
     if(!s||!t) return '';
-    const fromX=s.side==='incoming'?s.anchorX:s.side==='focus'?s.anchorX+30:s.anchorX;
-    const toX=t.side==='focus'?t.anchorX-30:t.anchorX;
-    const fromY=s.y-4;
-    const toY=t.y-4;
+    const sLines=wrapRelText(first.source===focus.id?focus.symbol||focus.label||focus.id:(s.side==='incoming'||s.side==='outgoing'||s.side==='secondary')?(currentRel.nodes.find(n=>n.id===first.source)?.symbol||currentRel.nodes.find(n=>n.id===first.source)?.label||first.source):first.source,s.side==='focus'?18:22,s.side==='focus'?1:2);
+    const tNode=currentRel.nodes.find(n=>n.id===first.target);
+    const sNode=currentRel.nodes.find(n=>n.id===first.source);
+    const sBox=buildRelNodeBox(s,sLines,s.side==='focus'?28:13,relKindLabel(sNode||{}));
+    const tLines=wrapRelText(tNode?.symbol||tNode?.label||first.target,t.side==='focus'?18:22,t.side==='focus'?1:2);
+    const tBox=buildRelNodeBox(t,tLines,t.side==='focus'?28:13,relKindLabel(tNode||{}));
+    const fromX=s.side==='focus'?sBox.right:sBox.right;
+    const toX=t.side==='focus'?tBox.left:tBox.left;
+    const fromY=Math.max(sBox.top+10,Math.min(sBox.bottom-10,s.y-5));
+    const toY=Math.max(tBox.top+10,Math.min(tBox.bottom-10,t.y-5));
     const dx=toX-fromX;
     const c1x=fromX+dx*0.34;
     const c2x=fromX+dx*0.66;
@@ -1221,6 +1274,7 @@ async function setPanelMode(mode,symbol=sel){
   relMode=false;
   currentRel=null;
   relPan=null;
+  hideRelTooltip();
   document.getElementById('relView').style.display='none';
   document.getElementById('cv').style.display='block';
   document.querySelector('.sb2').style.display='flex';
