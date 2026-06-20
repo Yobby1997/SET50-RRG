@@ -10,20 +10,13 @@ from urllib.parse import urlparse, parse_qs
 import yfinance as yf
 
 SET50 = [
-    "AOT.BK","PTT.BK","PTTEP.BK","PTTGC.BK","TOP.BK","IRPC.BK","GULF.BK","GPSC.BK",
-    "RATCH.BK","EGCO.BK","EA.BK",
-    "KBANK.BK","SCB.BK","BBL.BK","KTB.BK","BAY.BK","TTB.BK","KKP.BK",
-    "SCC.BK","SCCC.BK","TPIPL.BK",
-    "CPALL.BK","CRC.BK","HMPRO.BK","BJC.BK",
-    "CPF.BK","TU.BK","OSP.BK",
-    "ADVANC.BK","TRUE.BK","INTUCH.BK",
-    "BH.BK","BCH.BK","THG.BK","BDMS.BK",
-    "CPN.BK","LH.BK","SIRI.BK",
-    "MINT.BK","ERW.BK",
-    "SAT.BK",
-    "MTC.BK","SAWAD.BK","TIDLOR.BK",
-    "WHA.BK","AMATA.BK",
-    "IVL.BK","DELTA.BK","VGI.BK","MAJOR.BK"
+    "ADVANC.BK","AOT.BK","AWC.BK","BANPU.BK","BBL.BK","BDMS.BK","BEM.BK","BH.BK",
+    "BJC.BK","BTS.BK","CBG.BK","CCET.BK","CENTEL.BK","COM7.BK","CPALL.BK","CPF.BK",
+    "CPN.BK","CRC.BK","DELTA.BK","EGCO.BK","GPSC.BK","GULF.BK","HMPRO.BK","IVL.BK",
+    "KBANK.BK","KKP.BK","KTB.BK","KTC.BK","LH.BK","MINT.BK","MTC.BK","OR.BK",
+    "OSP.BK","PTT.BK","PTTEP.BK","PTTGC.BK","RATCH.BK","SAWAD.BK","SCB.BK","SCC.BK",
+    "SCGP.BK","TCAP.BK","TIDLOR.BK","TISCO.BK","TLI.BK","TOP.BK","TRUE.BK","TTB.BK",
+    "TU.BK","WHA.BK"
 ]
 
 TF = {
@@ -58,17 +51,25 @@ def _normalize_price_frame(df):
     return price_frame
 
 def _download_close_series(symbol, cfg):
+    interval = cfg["interval"]
+    # Yahoo monthly bars for SET indices can be sparse or malformed, so
+    # derive month-end closes from daily data instead.
+    if interval == "1mo":
+        interval = "1d"
     raw = yf.download(
         symbol,
         period=cfg["period"],
-        interval=cfg["interval"],
+        interval=interval,
         progress=False,
         auto_adjust=True,
     )
     frame = _normalize_price_frame(raw)
     if frame is None:
         return None
-    return frame["Close"].dropna()
+    close = frame["Close"].dropna()
+    if cfg["interval"] == "1mo":
+        close = close.resample("ME").last().dropna()
+    return close
 
 def _build_price_points(frame):
     points = []
