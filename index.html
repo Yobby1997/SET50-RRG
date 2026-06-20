@@ -432,7 +432,7 @@ function buildRelNodeBox(placement,lines,fontSize,sub=''){
     right=placement.anchorX-8;
     left=right-width-26;
   }else if(placement.side==='outgoing'||placement.side==='secondary'){
-    left=placement.anchorX+8;
+    left=placement.textX-8;
     right=left+width+26;
   }else{
     left=placement.textX-8;
@@ -1188,7 +1188,7 @@ function renderRelationships(){
   const placements=new Map();
   placements.set(focus.id,{anchorX:598,textX:598,y:352,side:'focus'});
   layoutLane(incomingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:328,textX:294,y:p.y,side:'incoming'}));
-  layoutLane(outgoingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:804,textX:820,y:p.y,side:'outgoing'}));
+  layoutLane(outgoingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:804,textX:832,y:p.y,side:'outgoing'}));
   const secondaryOrderScore=new Map();
   for(const node of secondaryNodes){
     const linkedSources=allEdges
@@ -1211,7 +1211,7 @@ function renderRelationships(){
     const sb=secondaryOrderScore.get(b.id)??9999;
     return sa-sb || (a.symbol||a.label||a.id).localeCompare(b.symbol||b.label||b.id);
   });
-  layoutLane(sortedSecondaryNodes,0,152,580).forEach(p=>placements.set(p.node.id,{anchorX:1116,textX:1132,y:p.y,side:'secondary'}));
+  layoutLane(sortedSecondaryNodes,0,152,580).forEach(p=>placements.set(p.node.id,{anchorX:1116,textX:1144,y:p.y,side:'secondary'}));
   const nodeById=new Map(currentRel.nodes.map(n=>[n.id,n]));
   const nodeLinesCache=new Map();
   const nodeBoxCache=new Map();
