@@ -1,0 +1,1423 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-20",
+  "nodeSchema": {
+    "required": [
+      "id",
+      "label",
+      "kind",
+      "displayShape"
+    ],
+    "fields": {
+      "id": "Stable node identifier",
+      "label": "Human-readable node label",
+      "kind": "listed_company | private_company | fund | state_agency | nominee | custodian_bank | person | educational_institution",
+      "symbol": "SET ticker when the node is a listed Thai company",
+      "market": "Primary market for listed companies, e.g. SET",
+      "country": "Primary country or jurisdiction",
+      "displayShape": "circle for listed companies, rect for non-listed entities",
+      "tags": "Optional string tags used for filtering"
+    }
+  },
+  "edgeSchema": {
+    "required": [
+      "source",
+      "target",
+      "relation",
+      "asOfDate",
+      "sourceRefs"
+    ],
+    "fields": {
+      "source": "Source node id",
+      "target": "Target node id",
+      "relation": "shareholder_of | effective_ownership | strategic_holder",
+      "pctShares": "Shareholding percentage when known",
+      "pctVoting": "Voting-right percentage when different from shareholding",
+      "directness": "direct | indirect | effective",
+      "asOfDate": "YYYY-MM-DD date attached to the reported ownership snapshot",
+      "sourceRefs": "List of source ids from the top-level sources array",
+      "notes": "Short explanation for context or caveats"
+    }
+  },
+  "sources": [
+    {
+      "id": "cpall_shareholding_2025",
+      "label": "CP ALL shareholding structure",
+      "url": "https://www.cpall.co.th/en/about-us/shareholding-structure/",
+      "asOfDate": "2025-12-31"
+    },
+    {
+      "id": "cpall_one_report_2025",
+      "label": "CP ALL 56-1 One Report 2025",
+      "url": "https://www.cpall.co.th/wp-content/uploads/2026/03/E-One-Report_EN_Final.pdf",
+      "asOfDate": "2025-12-31"
+    },
+    {
+      "id": "cpaxt_major_shareholders_2026",
+      "label": "CP Axtra major shareholders",
+      "url": "https://www.cpaxtra.com/en/investor-relations/shareholders/major-shareholders",
+      "asOfDate": "2026-04-21"
+    },
+    {
+      "id": "ptt_major_shareholders_2026",
+      "label": "PTT major shareholders",
+      "url": "https://investor.pttplc.com/en/shareholder-information/major-shareholders",
+      "asOfDate": "2026-03-06"
+    },
+    {
+      "id": "pttep_major_shareholders_2026",
+      "label": "PTTEP major shareholders",
+      "url": "https://www.pttep.com/en/investor-relations/shareholder-information/major-shareholders",
+      "asOfDate": "2026-02-24"
+    },
+    {
+      "id": "or_major_shareholders_2026",
+      "label": "OR major shareholders",
+      "url": "https://investor.pttor.com/en/shareholder-info/major-shareholders",
+      "asOfDate": "2026-02-24"
+    },
+    {
+      "id": "pttgc_shareholder_structure_2026",
+      "label": "PTTGC shareholder structure",
+      "url": "https://www.pttgcgroup.com/en/investor-relations/shareholder-information/shareholder-structure",
+      "asOfDate": "2026-02-25"
+    },
+    {
+      "id": "irpc_major_shareholders_2026",
+      "label": "IRPC major shareholders",
+      "url": "https://investor.irpc.co.th/en/shareholder/major-shareholders",
+      "asOfDate": "2026-03-04"
+    },
+    {
+      "id": "top_major_shareholders_2026",
+      "label": "TOP major shareholders",
+      "url": "https://investor.thaioilgroup.com/en/shareholder-information/major-shareholders",
+      "asOfDate": "2026-02-26"
+    },
+    {
+      "id": "gpsc_major_shareholders_2026",
+      "label": "GPSC listed company snapshot major shareholders",
+      "url": "https://lssmedia.setlink.set.or.th/2026/3M/GPSC-3M69-ListedCompanySnapshot-EN.html",
+      "asOfDate": "2026-02-26"
+    },
+    {
+      "id": "ggc_major_shareholders_2026",
+      "label": "GGC major shareholders",
+      "url": "https://www.ggcplc.com/en/investor-relations/shareholder-information/major-shareholders",
+      "asOfDate": "2026-02-23"
+    },
+    {
+      "id": "bafs_major_shareholders_2026",
+      "label": "BAFS major shareholders",
+      "url": "https://www.bafsthai.com/en/investor-relations/shareholder-info/major-shareholders",
+      "asOfDate": "2026-05-07"
+    }
+  ],
+  "graphs": [
+    {
+      "id": "cpall_ownership_map",
+      "focusSymbol": "CPALL",
+      "focusLabel": "CP ALL Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "CPALL has a clear parent-holder layer and a clear subsidiary layer from official sources.",
+          "The same node and edge model used for PTT can represent both incoming holders and downstream controlled entities.",
+          "The main caveat is that market intermediary nodes like Thai NVDR and custodian banks add noise, so the UI should support filtering."
+        ],
+        "recommendedDefaultFilters": [
+          "show strategic owners first",
+          "hide nominee and custodian nodes by default",
+          "toggle direct ownership vs effective ownership"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "cpall",
+          "label": "CP ALL Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "CPALL",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "retail"
+          ]
+        },
+        {
+          "id": "cp_merch",
+          "label": "C.P. Merchandising Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "cpf",
+          "label": "Charoen Pokphand Foods Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "CPF",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "cp_foods_holdings",
+          "label": "C.P. Foods Holdings Limited",
+          "kind": "private_company",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "orient_success",
+          "label": "Orient Success International",
+          "kind": "private_company",
+          "country": "unknown",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "cpg_enterprise",
+          "label": "CPG Enterprise Limited",
+          "kind": "private_company",
+          "country": "unknown",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "worth_access",
+          "label": "Worth Access Trading Limited",
+          "kind": "private_company",
+          "country": "unknown",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "creative_light",
+          "label": "Creative Light Investments Limited",
+          "kind": "private_company",
+          "country": "unknown",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "bangkok_produce_merch",
+          "label": "Bangkok Produce Merchandising Plc.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "cp_group_co",
+          "label": "Charoen Pokphand Group Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "state_linked"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "state_linked"
+          ]
+        },
+        {
+          "id": "ubs_hk",
+          "label": "UBS AG Hong Kong Branch",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bny_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "niti_osathanugrah",
+          "label": "Mr. Niti Osathanugrah",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "nortrust_nominees",
+          "label": "Nortrust Nominees Limited-NTC-RE IEDU UCITS 10 PCT",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "siam_makro_holding",
+          "label": "Siam Makro Holding (Thailand) Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "holding_company",
+            "key_subsidiary"
+          ]
+        },
+        {
+          "id": "cpaxt",
+          "label": "CP Axtra Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "CPAXT",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "key_subsidiary"
+          ]
+        },
+        {
+          "id": "charoen_pokphand_holding",
+          "label": "Charoen Pokphand Holding Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cp_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "cpram",
+          "label": "CPRAM Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "operating_subsidiary",
+            "food"
+          ]
+        },
+        {
+          "id": "counter_service",
+          "label": "Counter Service Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "operating_subsidiary",
+            "payments"
+          ]
+        },
+        {
+          "id": "shopping_24",
+          "label": "24 Shopping Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "operating_subsidiary",
+            "ecommerce"
+          ]
+        },
+        {
+          "id": "gosoft",
+          "label": "Gosoft (Thailand) Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "operating_subsidiary",
+            "technology"
+          ]
+        },
+        {
+          "id": "cp_retailink",
+          "label": "CP Retailink Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "operating_subsidiary",
+            "equipment"
+          ]
+        },
+        {
+          "id": "lotus_distribution_investment",
+          "label": "Lotus Distribution Investment Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "holding_company",
+            "key_subsidiary"
+          ]
+        },
+        {
+          "id": "all_speedy",
+          "label": "ALL SPEEDY CO., LTD.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "operating_subsidiary",
+            "logistics"
+          ]
+        },
+        {
+          "id": "pim",
+          "label": "Panyapiwat Institute of Management",
+          "kind": "educational_institution",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "education"
+          ]
+        },
+        {
+          "id": "patc",
+          "label": "Panyapiwat Technological College",
+          "kind": "educational_institution",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "education"
+          ]
+        },
+        {
+          "id": "cpall_laos",
+          "label": "CP ALL Laos Company Limited",
+          "kind": "private_company",
+          "country": "LA",
+          "displayShape": "rect",
+          "tags": [
+            "international_subsidiary"
+          ]
+        },
+        {
+          "id": "cpall_cambodia",
+          "label": "CP ALL (Cambodia) Co., Ltd.",
+          "kind": "private_company",
+          "country": "KH",
+          "displayShape": "rect",
+          "tags": [
+            "international_subsidiary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "cp_merch",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 30.42,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "cpf",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 2.43,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "cp_foods_holdings",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 1.60,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "orient_success",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 0.67,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "cpg_enterprise",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 0.35,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "worth_access",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 0.20,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "creative_light",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 0.15,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "bangkok_produce_merch",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 0.06,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "cp_group_co",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 0.04,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 9.05,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 3.60,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 3.43,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 3.11,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "ubs_hk",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 2.42,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 2.40,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "bny_mellon",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 1.84,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "niti_osathanugrah",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 1.69,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "nortrust_nominees",
+          "target": "cpall",
+          "relation": "shareholder_of",
+          "pctShares": 1.66,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_shareholding_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "siam_makro_holding",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "cpaxt",
+          "relation": "shareholder_of",
+          "pctShares": 34.92,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "cpaxt_major_shareholders_2026"
+          ],
+          "notes": "Direct holding reported on the CP Axtra major shareholders page."
+        },
+        {
+          "source": "siam_makro_holding",
+          "target": "cpaxt",
+          "relation": "shareholder_of",
+          "pctShares": 25.01,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "cpaxt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "cpaxt",
+          "relation": "effective_ownership",
+          "pctShares": 59.93,
+          "pctVoting": 59.93,
+          "directness": "effective",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025",
+            "cpaxt_major_shareholders_2026"
+          ],
+          "notes": "CP ALL one report reports 59.93 percent effective ownership; CP Axtra shareholder page shows the split as 34.92 percent direct plus 25.01 percent via Siam Makro Holding."
+        },
+        {
+          "source": "charoen_pokphand_holding",
+          "target": "cpaxt",
+          "relation": "shareholder_of",
+          "pctShares": 15.96,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "cpaxt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "cp_merch",
+          "target": "cpaxt",
+          "relation": "shareholder_of",
+          "pctShares": 8.85,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "cpaxt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "cpram",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "counter_service",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "shopping_24",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "gosoft",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "cp_retailink",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "lotus_distribution_investment",
+          "relation": "shareholder_of",
+          "pctShares": 100.0,
+          "pctVoting": 100.0,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "all_speedy",
+          "relation": "shareholder_of",
+          "pctShares": 45.45,
+          "pctVoting": 99.88,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ],
+          "notes": "Useful test case because shareholding and voting control differ."
+        },
+        {
+          "source": "cpall",
+          "target": "pim",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "patc",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "cpall_laos",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "pctVoting": 99.99,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        },
+        {
+          "source": "cpall",
+          "target": "cpall_cambodia",
+          "relation": "shareholder_of",
+          "pctShares": 100.0,
+          "pctVoting": 100.0,
+          "directness": "direct",
+          "asOfDate": "2025-12-31",
+          "sourceRefs": [
+            "cpall_one_report_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ptt_ownership_map",
+      "focusSymbol": "PTT",
+      "focusLabel": "PTT Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "PTT has a clean state-linked owner layer and a clearly visible downstream listed ecosystem.",
+          "The same node and edge schema can represent both direct holdings and multi-step group relationships through holding companies.",
+          "Compared with CPALL, the PTT graph benefits more from second-layer nodes because the value of the map comes from seeing listed subsidiaries linked to one another."
+        ],
+        "recommendedDefaultFilters": [
+          "show direct ownership first",
+          "hide nominee and custodian nodes by default",
+          "allow an expand-to-second-layer toggle for holdings through Siam Management, PTTGC, TOP and OR"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "ptt",
+          "label": "PTT Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "PTT",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "energy"
+          ]
+        },
+        {
+          "id": "ministry_of_finance",
+          "label": "Ministry of Finance",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "federation_savings_credit",
+          "label": "The Federation of Savings and Credit Cooperatives of Thailand Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "cooperative"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "egat_saving_credit",
+          "label": "EGAT Saving and Credit Cooperative Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "cooperative"
+          ]
+        },
+        {
+          "id": "bny_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "siam_management_holding",
+          "label": "Siam Management Holding Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "holding_company",
+            "key_hub"
+          ]
+        },
+        {
+          "id": "pttep",
+          "label": "PTT Exploration and Production Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "PTTEP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "upstream"
+          ]
+        },
+        {
+          "id": "or",
+          "label": "PTT Oil and Retail Business Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "OR",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "retail"
+          ]
+        },
+        {
+          "id": "pttgc",
+          "label": "PTT Global Chemical Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "PTTGC",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "petrochemical"
+          ]
+        },
+        {
+          "id": "irpc",
+          "label": "IRPC Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "IRPC",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "petrochemical"
+          ]
+        },
+        {
+          "id": "top",
+          "label": "Thai Oil Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TOP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "refining"
+          ]
+        },
+        {
+          "id": "gpsc",
+          "label": "Global Power Synergy Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "GPSC",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "power"
+          ]
+        },
+        {
+          "id": "ggc",
+          "label": "Global Green Chemicals Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "GGC",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "second_layer",
+            "green_chemicals"
+          ]
+        },
+        {
+          "id": "bafs",
+          "label": "Bangkok Aviation Fuel Services Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BAFS",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "second_layer",
+            "aviation_fuel"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "ministry_of_finance",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 51.38,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 7.83,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 5.95,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "federation_savings_credit",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 2.06,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 1.77,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 1.73,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 1.37,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "egat_saving_credit",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 1.30,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bny_mellon",
+          "target": "ptt",
+          "relation": "shareholder_of",
+          "pctShares": 1.12,
+          "directness": "direct",
+          "asOfDate": "2026-03-06",
+          "sourceRefs": [
+            "ptt_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ptt",
+          "target": "siam_management_holding",
+          "relation": "shareholder_of",
+          "pctShares": 100.0,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "pttep_major_shareholders_2026"
+          ],
+          "notes": "The PTTEP major shareholders page states that Siam Management Holding Company Limited is a wholly owned subsidiary of PTT."
+        },
+        {
+          "source": "ptt",
+          "target": "pttep",
+          "relation": "shareholder_of",
+          "pctShares": 63.79,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "pttep_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "siam_management_holding",
+          "target": "pttep",
+          "relation": "shareholder_of",
+          "pctShares": 1.50,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "pttep_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ptt",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 75.00,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ptt",
+          "target": "pttgc",
+          "relation": "shareholder_of",
+          "pctShares": 45.18,
+          "directness": "direct",
+          "asOfDate": "2026-02-25",
+          "sourceRefs": [
+            "pttgc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "siam_management_holding",
+          "target": "pttgc",
+          "relation": "shareholder_of",
+          "pctShares": 3.00,
+          "directness": "direct",
+          "asOfDate": "2026-02-25",
+          "sourceRefs": [
+            "pttgc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "ptt",
+          "target": "irpc",
+          "relation": "shareholder_of",
+          "pctShares": 45.05,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "irpc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "siam_management_holding",
+          "target": "irpc",
+          "relation": "shareholder_of",
+          "pctShares": 3.00,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "irpc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ptt",
+          "target": "top",
+          "relation": "shareholder_of",
+          "pctShares": 45.03,
+          "directness": "direct",
+          "asOfDate": "2026-02-26",
+          "sourceRefs": [
+            "top_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "siam_management_holding",
+          "target": "top",
+          "relation": "shareholder_of",
+          "pctShares": 2.97,
+          "directness": "direct",
+          "asOfDate": "2026-02-26",
+          "sourceRefs": [
+            "top_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ptt",
+          "target": "gpsc",
+          "relation": "shareholder_of",
+          "pctShares": 47.27,
+          "directness": "direct",
+          "asOfDate": "2026-02-26",
+          "sourceRefs": [
+            "gpsc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "pttgc",
+          "target": "gpsc",
+          "relation": "shareholder_of",
+          "pctShares": 10.00,
+          "directness": "direct",
+          "asOfDate": "2026-02-26",
+          "sourceRefs": [
+            "gpsc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "top",
+          "target": "gpsc",
+          "relation": "shareholder_of",
+          "pctShares": 10.00,
+          "directness": "direct",
+          "asOfDate": "2026-02-26",
+          "sourceRefs": [
+            "gpsc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "siam_management_holding",
+          "target": "gpsc",
+          "relation": "shareholder_of",
+          "pctShares": 7.96,
+          "directness": "direct",
+          "asOfDate": "2026-02-26",
+          "sourceRefs": [
+            "gpsc_major_shareholders_2026"
+          ],
+          "notes": "This data point uses the SET listed company snapshot because the current official IR page still shows an older book-closing date."
+        },
+        {
+          "source": "pttgc",
+          "target": "ggc",
+          "relation": "shareholder_of",
+          "pctShares": 72.29,
+          "directness": "direct",
+          "asOfDate": "2026-02-23",
+          "sourceRefs": [
+            "ggc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "or",
+          "target": "bafs",
+          "relation": "shareholder_of",
+          "pctShares": 7.06,
+          "directness": "direct",
+          "asOfDate": "2026-05-07",
+          "sourceRefs": [
+            "bafs_major_shareholders_2026"
+          ],
+          "notes": "Minority strategic holding rather than control, included to test whether the model can show adjacent ecosystem links as well as controlled subsidiaries."
+        }
+      ]
+    }
+  ]
+}
