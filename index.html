@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SET50 RRG</title>
+<style>
+:root{
+  --bg:#0f1117;--bg2:#181c25;--bg3:#1e2330;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.16);
+  --text:#e8eaf0;--text2:#8b92a8;--text3:#555d72;
+  --green:#1a9e6e;--green-bg:rgba(26,158,110,0.13);
+  --red:#d84040;  --red-bg:rgba(216,64,64,0.11);
+  --amber:#c47f12;--amber-bg:rgba(196,127,18,0.13);
+  --blue:#3278d8; --blue-bg:rgba(50,120,216,0.13);
+  --r:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:14px;height:100%;margin:0;overflow:hidden}
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh}
+
+/* Header */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.hdr-title{font-size:15px;font-weight:600}
+.hdr-sub{font-size:11px;color:var(--text2)}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.badge{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500;white-space:nowrap}
+.b-ok{background:var(--green-bg);color:var(--green)}
+.b-err{background:var(--red-bg);color:var(--red)}
+.b-warn{background:var(--amber-bg);color:var(--amber)}
+
+/* Controls */
+.ctrl-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:7px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.cl{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
+.bg{display:flex;border:1px solid var(--border2);border-radius:var(--r);overflow:hidden}
+.bg button{background:transparent;border:none;color:var(--text2);padding:4px 12px;font-size:12px;cursor:pointer;transition:all .15s}
+.bg button:hover{background:var(--bg3);color:var(--text)}
+.bg button.on{background:var(--blue);color:#fff}
+.sep{width:1px;height:18px;background:var(--border)}
+.btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:4px 13px;font-size:12px;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s}
+.btn:hover:not(:disabled){color:var(--text);border-color:var(--blue)}
+.btn:disabled{opacity:.4;cursor:default}
+.spin{width:12px;height:12px;border:2px solid var(--text3);border-top-color:var(--blue);border-radius:50%;animation:rot .7s linear infinite;display:none}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* Layout */
+.main{display:flex;flex:1;overflow:hidden;min-height:0}
+
+/* Sidebar */
+.sb{width:200px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;min-height:0}
+.sb-tabs{display:flex;border-bottom:1px solid var(--border)}
+.sb-tab{flex:1;padding:7px;font-size:11px;text-align:center;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;transition:all .15s}
+.sb-tab.on{color:var(--blue);border-bottom-color:var(--blue)}
+.sb-body{flex:1;overflow-y:auto;padding:6px}
+.sb-body::-webkit-scrollbar{width:3px}
+.sb-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.si{display:flex;align-items:center;gap:7px;padding:4px 5px;border-radius:5px;cursor:pointer;margin-bottom:1px;transition:background .1s}
+.si:hover{background:var(--bg3)}
+.si.sel{background:rgba(50,120,216,.15)}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.stk{font-size:12px;font-weight:500;flex:1}
+.sq{font-size:10px;padding:1px 5px;border-radius:3px}
+.ql{background:var(--green-bg);color:var(--green)}
+.qw{background:var(--amber-bg);color:var(--amber)}
+.qg{background:var(--red-bg);color:var(--red)}
+.qi{background:var(--blue-bg);color:var(--blue)}
+.sci{padding:7px;border-radius:5px;margin-bottom:4px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.sci:hover{border-color:var(--border2)}
+.sci.sel{border-color:var(--blue);background:rgba(50,120,216,.08)}
+.scn{font-size:12px;font-weight:500;margin-bottom:2px;display:flex;align-items:center;gap:5px}
+.scb{display:flex;gap:2px;height:4px;border-radius:2px;overflow:hidden;margin-bottom:2px}
+.scbs{height:100%}
+.scs{font-size:10px;color:var(--text2);line-height:1.5}
+
+/* Chart */
+.cp{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;min-width:0}
+.cw{flex:1;position:relative;padding:14px;min-height:0;overflow:hidden}
+#cv{display:block;width:100%;height:100%}
+
+/* Overlay */
+.ov{position:absolute;inset:0;background:rgba(15,17,23,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:50;border-radius:10px}
+.ov.hide{display:none}
+.ov-msg{font-size:13px;color:var(--text2);text-align:center;max-width:320px;line-height:1.7}
+.pb{width:200px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.pf{height:100%;background:var(--blue);border-radius:2px;transition:width .25s}
+
+/* Stats */
+.sb2{display:flex;border-top:1px solid var(--border);padding:7px 18px;gap:20px;flex-shrink:0;background:var(--bg2)}
+.st{display:flex;align-items:center;gap:7px}
+.std{width:9px;height:9px;border-radius:50%}
+.stl{font-size:11px;color:var(--text2)}
+.stv{font-size:14px;font-weight:600}
+.c-l{color:var(--green)}.c-w{color:var(--amber)}.c-g{color:var(--red)}.c-i{color:var(--blue)}
+
+/* Legend */
+.leg{display:flex;flex-wrap:wrap;gap:7px;padding:5px 18px;border-top:1px solid var(--border);background:var(--bg2);flex-shrink:0}
+.li{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2);cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid transparent}
+.li:hover{border-color:var(--border2)}
+.li.dim{opacity:.28}
+.ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* Tooltip */
+.tt{position:fixed;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;pointer-events:none;z-index:999;display:none;min-width:175px;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.tth{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.ttr{display:flex;justify-content:space-between;gap:18px;font-size:12px;margin-bottom:2px}
+.ttk{color:var(--text2)}.ttv{font-weight:500}
+
+/* Error box */
+.err-box{background:rgba(216,64,64,.1);border:1px solid rgba(216,64,64,.3);border-radius:var(--r);padding:12px 16px;max-width:340px;font-size:13px;color:var(--text2);line-height:1.7;text-align:center}
+.err-box b{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="hdr">
+    <div>
+      <div class="hdr-title">SET50 Relative Rotation Graph</div>
+      <div class="hdr-sub" id="lastUpd">กำลังตรวจสอบ server...</div>
+    </div>
+    <span class="badge b-warn" id="srcBadge">ตรวจสอบ...</span>
+    <div class="hdr-right">
+      <span id="benchmarkLabel" style="font-size:12px;color:var(--text2)">Benchmark: loading...</span>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="ctrl-bar">
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="cl">Timeframe</span>
+      <div class="bg">
+        <button class="on" id="tf-daily"   onclick="setTF('daily')">Daily</button>
+        <button          id="tf-weekly"  onclick="setTF('weekly')">Weekly</button>
+        <button          id="tf-monthly" onclick="setTF('monthly')">Monthly</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="cl">Tail</span>
+      <div class="bg">
+        <button id="tl-4"  onclick="setTail(4)">4</button>
+        <button id="tl-6"  onclick="setTail(6)" class="on">6</button>
+        <button id="tl-8"  onclick="setTail(8)">8</button>
+        <button id="tl-12" onclick="setTail(12)">12</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="cl">View</span>
+      <div class="bg">
+        <button class="on" id="vw-all"    onclick="setView('all')">ทั้งหมด</button>
+        <button          id="vw-sector" onclick="setView('sector')">By Sector</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="cl">Bubble Size</span>
+      <div class="bg">
+        <button class="on" id="sz-weight" onclick="setSizeMode('weight')">SET50 Weight</button>
+        <button          id="sz-market_cap" onclick="setSizeMode('market_cap')">Market Cap</button>
+        <button          id="sz-avg_trading_value" onclick="setSizeMode('avg_trading_value')">Avg Value</button>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <button class="btn" id="loadBtn" onclick="loadData()">
+      <span class="spin" id="sp"></span>
+      ⬇ โหลดข้อมูล
+    </button>
+    <span id="progNote" style="font-size:11px;color:var(--text3)"></span>
+  </div>
+
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sb">
+      <div class="sb-tabs">
+        <div class="sb-tab on" onclick="sideTab('stocks',this)">หุ้น</div>
+        <div class="sb-tab"   onclick="sideTab('sectors',this)">Sector</div>
+      </div>
+      <div class="sb-body" id="sbStocks"></div>
+      <div class="sb-body" id="sbSectors" style="display:none"></div>
+    </div>
+
+    <!-- Chart panel -->
+    <div class="cp">
+      <div class="cw" id="cw">
+        <canvas id="cv"></canvas>
+        <div class="ov" id="ov">
+          <div style="font-size:28px">📊</div>
+          <div class="ov-msg" id="ovMsg">กำลังตรวจสอบ server...</div>
+        </div>
+      </div>
+
+      <div class="sb2">
+        <div class="st"><div class="std" style="background:var(--green)"></div><span class="stl">Leading</span>  <span class="stv c-l" id="cl">—</span></div>
+        <div class="st"><div class="std" style="background:var(--amber)"></div><span class="stl">Weakening</span><span class="stv c-w" id="cw2">—</span></div>
+        <div class="st"><div class="std" style="background:var(--red)"></div>  <span class="stl">Lagging</span>  <span class="stv c-g" id="cg">—</span></div>
+        <div class="st"><div class="std" style="background:var(--blue)"></div> <span class="stl">Improving</span><span class="stv c-i" id="ci">—</span></div>
+        <span style="margin-left:auto;font-size:11px;color:var(--text3)" id="tfNote"></span>
+      </div>
+      <div class="leg" id="leg"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tt" id="tt"></div>
+
+<script>
+const DATA_FILES = {
+  daily:'./data-daily.json',
+  weekly:'./data-weekly.json',
+  monthly:'./data-monthly.json'
+};
+
+const TICKERS = [
+  {t:'AOT',s:'Transport'},{t:'PTT',s:'Energy'},{t:'PTTEP',s:'Energy'},{t:'PTTGC',s:'Energy'},
+  {t:'TOP',s:'Energy'},{t:'IRPC',s:'Energy'},{t:'GULF',s:'Energy'},{t:'GPSC',s:'Energy'},
+  {t:'RATCH',s:'Utilities'},{t:'EGCO',s:'Utilities'},{t:'EA',s:'Utilities'},
+  {t:'KBANK',s:'Banking'},{t:'SCB',s:'Banking'},{t:'BBL',s:'Banking'},{t:'KTB',s:'Banking'},
+  {t:'BAY',s:'Banking'},{t:'TTB',s:'Banking'},{t:'KKP',s:'Banking'},
+  {t:'SCC',s:'Materials'},{t:'SCCC',s:'Materials'},{t:'TPIPL',s:'Materials'},
+  {t:'CPALL',s:'Commerce'},{t:'CRC',s:'Commerce'},{t:'HMPRO',s:'Commerce'},{t:'BJC',s:'Commerce'},
+  {t:'CPF',s:'Food & Bev'},{t:'TU',s:'Food & Bev'},{t:'OSP',s:'Food & Bev'},
+  {t:'ADVANC',s:'Telecom'},{t:'TRUE',s:'Telecom'},{t:'INTUCH',s:'Telecom'},
+  {t:'BH',s:'Healthcare'},{t:'BCH',s:'Healthcare'},{t:'THG',s:'Healthcare'},{t:'BDMS',s:'Healthcare'},
+  {t:'CPN',s:'Property'},{t:'LH',s:'Property'},{t:'SIRI',s:'Property'},
+  {t:'MINT',s:'Hotels'},{t:'ERW',s:'Hotels'},
+  {t:'SAT',s:'Auto'},
+  {t:'MTC',s:'Finance'},{t:'SAWAD',s:'Finance'},{t:'TIDLOR',s:'Finance'},
+  {t:'WHA',s:'Industrial'},{t:'AMATA',s:'Industrial'},
+  {t:'IVL',s:'Petrochems'},{t:'DELTA',s:'Electronics'},
+  {t:'VGI',s:'Media'},{t:'MAJOR',s:'Media'}
+];
+
+const SC = {
+  Energy:'#378ADD',Banking:'#1D9E75',Commerce:'#D4537E',Materials:'#BA7517',
+  Telecom:'#9F7FE0',Healthcare:'#E8773A',Property:'#639922','Food & Bev':'#7db5b8',
+  Utilities:'#4A90D9',Hotels:'#c0566e',Finance:'#5aaa60',Auto:'#c9952f',
+  Industrial:'#2fb5a0',Petrochems:'#7A5CB5',Electronics:'#E24B4A',Media:'#a08060',
+  Transport:'#aaaaaa'
+};
+const QC = {Leading:'#1a9e6e',Weakening:'#c47f12',Lagging:'#d84040',Improving:'#3278d8'};
+const QB = {Leading:'rgba(26,158,110,.07)',Weakening:'rgba(196,127,18,.07)',Lagging:'rgba(216,64,64,.07)',Improving:'rgba(50,120,216,.07)'};
+const SIZE_META = {
+  weight:{key:'set50_weight',label:'SET50 Weight',short:'Weight'},
+  market_cap:{key:'market_cap',label:'Market Cap',short:'MCap'},
+  avg_trading_value:{key:'avg_trading_value',label:'Avg Trading Value',short:'Avg Value'}
+};
+
+let tf='daily', tail=6, view='all', sizeMode='weight';
+let results=[], hidden=new Set(), sel=null, hov=null;
+let cv, cx;
+
+function setTF(v){tf=v;document.querySelectorAll('[id^="tf-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tf-'+v).classList.add('on')}
+function setTail(v){tail=v;document.querySelectorAll('[id^="tl-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tl-'+v).classList.add('on');if(results.length){compute();draw();buildSb()}}
+function setView(v){view=v;document.querySelectorAll('[id^="vw-"]').forEach(b=>b.classList.remove('on'));document.getElementById('vw-'+v).classList.add('on');if(results.length)draw()}
+function setSizeMode(v){sizeMode=v;document.querySelectorAll('[id^="sz-"]').forEach(b=>b.classList.remove('on'));document.getElementById('sz-'+v).classList.add('on');updateTfNote();if(results.length)draw()}
+function sideTab(t,el){document.querySelectorAll('.sb-tab').forEach(x=>x.classList.remove('on'));el.classList.add('on');document.getElementById('sbStocks').style.display=t==='stocks'?'':'none';document.getElementById('sbSectors').style.display=t==='sectors'?'':'none'}
+function updateTfNote(){
+  const note=document.getElementById('tfNote');
+  if(note) note.textContent=`Size: ${SIZE_META[sizeMode].short}`;
+}
+function getSizeMetric(item,mode=sizeMode){
+  const key=SIZE_META[mode]?.key;
+  const value=item?.sizes?.[key];
+  return Number.isFinite(value)?value:null;
+}
+function formatCompactTHB(v){
+  const abs=Math.abs(v);
+  if(abs>=1e12) return `THB ${(v/1e12).toFixed(2)}T`;
+  if(abs>=1e9) return `THB ${(v/1e9).toFixed(2)}B`;
+  if(abs>=1e6) return `THB ${(v/1e6).toFixed(2)}M`;
+  if(abs>=1e3) return `THB ${(v/1e3).toFixed(1)}K`;
+  return `THB ${v.toFixed(0)}`;
+}
+function formatSizeValue(v,mode=sizeMode){
+  if(v==null) return 'n/a';
+  if(mode==='weight') return `${v.toFixed(2)}%`;
+  return formatCompactTHB(v);
+}
+function makeRadiusScaler(items){
+  const values=items.map(s=>getSizeMetric(s)).filter(v=>v!=null&&v>0);
+  const minR=view==='sector'?7.5:5.5;
+  const maxR=view==='sector'?18:12;
+  if(!values.length){
+    return (_item,isActive=false)=>minR+(isActive?1.5:0);
+  }
+  const minV=Math.min(...values), maxV=Math.max(...values);
+  return (item,isActive=false)=>{
+    const value=getSizeMetric(item);
+    let radius=minR;
+    if(value!=null&&value>0){
+      if(maxV>minV){
+        radius=minR+Math.sqrt((value-minV)/(maxV-minV))*(maxR-minR);
+      }else{
+        radius=(minR+maxR)/2;
+      }
+    }
+    if(isActive) radius+=1.5;
+    return radius;
+  };
+}
+
+// ── Check server ──────────────────────────────────────────
+async function checkServer(){
+  const ov=document.getElementById('ov');
+  const badge=document.getElementById('srcBadge');
+  const sub=document.getElementById('lastUpd');
+  try{
+    const r=await fetch(`${DATA_FILES.daily}?v=${Date.now()}`,{signal:AbortSignal.timeout(5000)});
+    const j=await r.json();
+    if(j.ok&&j.data&&j.data.__bench__){
+      badge.textContent='Static Data ✓'; badge.className='badge b-ok';
+      sub.textContent='ข้อมูลพร้อมใช้งานแล้ว — กด "โหลดข้อมูล"';
+      ov.innerHTML=`
+        <div style="font-size:28px">✅</div>
+        <div class="ov-msg">ไฟล์ข้อมูลพร้อมแล้ว!<br>กด <b>"โหลดข้อมูล"</b> เพื่อเปิด RRG จาก snapshot ล่าสุด</div>
+        <button class="btn" onclick="loadData()" style="color:var(--text);margin-top:6px">⬇ โหลดเลย</button>`;
+    }
+  }catch(e){
+    badge.textContent='Data Missing'; badge.className='badge b-err';
+    sub.textContent='ยังไม่พบไฟล์ข้อมูล static';
+    ov.innerHTML=`
+      <div style="font-size:28px">📦</div>
+      <div class="err-box">
+        <b>ยังไม่พบไฟล์ข้อมูล</b><br><br>
+        สำหรับ GitHub Pages ให้รัน workflow <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:12px">Update static data</code><br>
+        หรืออัปโหลดไฟล์ <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:12px">data-daily.json</code> และไฟล์คู่กันให้เรียบร้อยก่อน
+      </div>
+      <button class="btn" onclick="checkServer()" style="color:var(--text);margin-top:6px">🔄 ตรวจสอบอีกครั้ง</button>`;
+  }
+}
+
+// ── Load data ─────────────────────────────────────────────
+async function loadData(){
+  const btn=document.getElementById('loadBtn');
+  const sp=document.getElementById('sp');
+  const ov=document.getElementById('ov');
+  const note=document.getElementById('progNote');
+  btn.disabled=true; sp.style.display='block';
+
+  const TF_LABEL={daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
+
+  ov.innerHTML=`
+    <div class="spin" style="width:26px;height:26px;border-width:3px;display:block"></div>
+    <div class="ov-msg">กำลังเปิดไฟล์ข้อมูลล่าสุด...<br><small style="color:var(--text3)">อาจใช้เวลาเล็กน้อยหาก browser ยัง cache อยู่</small></div>
+    <div class="pb"><div class="pf" id="pf" style="width:5%"></div></div>
+    <div style="font-size:11px;color:var(--text3)" id="pl">กำลังเชื่อมต่อ...</div>`;
+  ov.classList.remove('hide');
+
+  // Animate progress while waiting
+  let fakeP=5;
+  const fakeInt=setInterval(()=>{
+    fakeP=Math.min(fakeP+Math.random()*3,90);
+    const pf=document.getElementById('pf');
+    const pl=document.getElementById('pl');
+    if(pf) pf.style.width=fakeP+'%';
+    if(pl) pl.textContent=`กำลังโหลด snapshot... ${Math.round(fakeP)}%`;
+  },800);
+
+  try{
+    const r=await fetch(`${DATA_FILES[tf]}?v=${Date.now()}`,{signal:AbortSignal.timeout(20000)});
+    if(!r.ok) throw new Error(`Server error ${r.status}`);
+    const json=await r.json();
+    clearInterval(fakeInt);
+    const pf=document.getElementById('pf');
+    if(pf) pf.style.width='100%';
+
+    if(!json.ok) throw new Error(json.error||'Unknown error');
+
+    // Process
+    const raw=json.data;
+    const meta=raw['__meta__']||{};
+    const benchmarkLabel=document.getElementById('benchmarkLabel');
+    if(benchmarkLabel){
+      const symbol=meta.benchmark_symbol||'unknown';
+      const label=meta.benchmark_label||'Benchmark';
+      benchmarkLabel.textContent=`Benchmark: ${symbol} (${label})`;
+    }
+    const bench=raw['__bench__']||[];
+    const sizeMap=raw['__sizes__']||{};
+    if(!bench.length) throw new Error('ไม่ได้รับข้อมูล benchmark');
+
+    // Build maps
+    const bMap=new Map(bench.map(p=>[p.t,p.c]));
+    results=[];
+    for(const{t:name,s:sector}of TICKERS){
+      const ticker=name+'.BK';
+      const prices=raw[ticker]||[];
+      if(prices.length<20) continue;
+      // Align
+      const aligned=prices.filter(p=>bMap.has(p.t)).map(p=>({t:p.t,stock:p.c,bench:bMap.get(p.t)}));
+      if(aligned.length<20) continue;
+      const series=calcRS(aligned);
+      if(!series.length) continue;
+      const t2=series.slice(-tail-1);
+      const last=t2[t2.length-1];
+      results.push({name,sector,tail:t2,last,color:SC[sector]||'#888',sizes:sizeMap[ticker]||{}});
+    }
+
+    if(!results.length) throw new Error('ไม่มีหุ้นที่คำนวณได้');
+
+    ov.classList.add('hide');
+    draw(); buildSb(); buildLeg();
+    note.textContent='';
+    const loaded=results.length;
+    document.getElementById('lastUpd').textContent=`อัปเดต ${new Date().toLocaleTimeString('th-TH')} · ${TF_LABEL[tf]} · ${loaded} ตัว`;
+    updateTfNote();
+    document.getElementById('srcBadge').textContent='Static Snapshot ✓';
+    document.getElementById('srcBadge').className='badge b-ok';
+
+  }catch(e){
+    clearInterval(fakeInt);
+    ov.innerHTML=`
+      <div style="font-size:24px">⚠️</div>
+      <div class="err-box">
+        <b>โหลดไม่สำเร็จ</b><br>${e.message}<br><br>
+        ตรวจสอบว่าไฟล์ <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:3px">${DATA_FILES[tf]}</code> ถูกอัปเดตและเปิดเข้าถึงได้
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" style="color:var(--text)" onclick="checkServer()">📦 ตรวจ Data</button>
+        <button class="btn" style="color:var(--text)" onclick="loadData()">🔄 ลองใหม่</button>
+      </div>`;
+    document.getElementById('srcBadge').textContent='Error'; document.getElementById('srcBadge').className='badge b-err';
+  }
+  btn.disabled=false; sp.style.display='none';
+}
+
+// ── RS Calculation ────────────────────────────────────────
+function ema(arr,p){const k=2/(p+1),r=[arr[0]];for(let i=1;i<arr.length;i++)r.push(arr[i]*k+r[i-1]*(1-k));return r}
+function calcRS(aligned){
+  if(aligned.length<20)return[];
+  const rs=aligned.map(p=>p.stock/p.bench*100);
+  const e1=ema(rs,14),e2=ema(e1,10);
+  const mn=e2.reduce((a,b)=>a+b,0)/e2.length;
+  const sd=Math.sqrt(e2.reduce((a,v)=>a+(v-mn)**2,0)/e2.length)||1;
+  const ratio=e2.map(v=>100+(v-mn)/sd*2);
+  const rawM=ratio.map((v,i)=>i===0?100:100+(v-ratio[i-1])*5);
+  const mom=ema(rawM,10);
+  return aligned.map((p,i)=>({t:p.t,rsRatio:ratio[i],rsMom:mom[i]}));
+}
+
+function compute(){
+  // Recompute tails on tail length change
+  // Need raw results — skip for now (tail change triggers redraw with existing tail sliced)
+}
+
+function quad(r,m){return r>=100&&m>=100?'Leading':r<100&&m>=100?'Weakening':r<100&&m<100?'Lagging':'Improving'}
+
+// ── Draw ──────────────────────────────────────────────────
+function draw(){
+  if(!cv){
+    cv=document.getElementById('cv');
+    cx=cv.getContext('2d');
+    cv.addEventListener('mousemove',onMM);
+    cv.addEventListener('click',onClick);
+    cv.addEventListener('mouseleave',()=>{hov=null;document.getElementById('tt').style.display='none';draw()});
+    window.addEventListener('resize',()=>{if(results.length)draw()});
+  }
+  const wrap=document.getElementById('cw');
+  cv.width=wrap.clientWidth; cv.height=wrap.clientHeight;
+  const W=cv.width,H=cv.height,P={l:54,r:22,t:22,b:42};
+  const pw=W-P.l-P.r,ph=H-P.t-P.b;
+  cx.clearRect(0,0,W,H);
+  if(!results.length)return;
+
+  const vis=results.filter(s=>!hidden.has(s.sector));
+  let ar=[],am=[];
+  for(const s of vis) for(const p of s.tail){ar.push(p.rsRatio);am.push(p.rsMom)}
+  if(!ar.length)return;
+
+  const pd=2.5;
+  const r0=Math.min(...ar,100)-pd,r1=Math.max(...ar,100)+pd;
+  const m0=Math.min(...am,100)-pd,m1=Math.max(...am,100)+pd;
+  const tx=v=>P.l+(v-r0)/(r1-r0)*pw;
+  const ty=v=>P.t+ph-(v-m0)/(m1-m0)*ph;
+  const cx0=tx(100),cy0=ty(100);
+
+  // Quadrant BG
+  [{x:P.l,y:P.t,w:cx0-P.l,h:cy0-P.t,q:'Weakening'},
+   {x:cx0,y:P.t,w:W-P.r-cx0,h:cy0-P.t,q:'Leading'},
+   {x:P.l,y:cy0,w:cx0-P.l,h:H-P.b-cy0,q:'Lagging'},
+   {x:cx0,y:cy0,w:W-P.r-cx0,h:H-P.b-cy0,q:'Improving'}
+  ].forEach(q=>{cx.fillStyle=QB[q.q];cx.fillRect(q.x,q.y,q.w,q.h)});
+
+  // Grid
+  cx.strokeStyle='rgba(255,255,255,.04)';cx.lineWidth=.5;
+  for(let v=Math.ceil(r0);v<=Math.floor(r1);v++){cx.beginPath();cx.moveTo(tx(v),P.t);cx.lineTo(tx(v),H-P.b);cx.stroke()}
+  for(let v=Math.ceil(m0);v<=Math.floor(m1);v++){cx.beginPath();cx.moveTo(P.l,ty(v));cx.lineTo(W-P.r,ty(v));cx.stroke()}
+
+  // Axes
+  cx.strokeStyle='rgba(255,255,255,.2)';cx.lineWidth=1;
+  cx.beginPath();cx.moveTo(cx0,P.t-4);cx.lineTo(cx0,H-P.b+4);cx.stroke();
+  cx.beginPath();cx.moveTo(P.l-4,cy0);cx.lineTo(W-P.r+4,cy0);cx.stroke();
+
+  // Labels
+  cx.fillStyle='rgba(255,255,255,.3)';cx.font='11px Inter,system-ui';
+  cx.textAlign='center';cx.fillText('RS-Ratio →',P.l+pw/2,H-8);
+  cx.save();cx.translate(12,P.t+ph/2);cx.rotate(-Math.PI/2);cx.fillText('RS-Momentum ↑',0,0);cx.restore();
+  cx.fillText('100',cx0,H-P.b+13);cx.textAlign='right';cx.fillText('100',P.l-4,cy0+4);
+  [{x:P.l+5,y:P.t+13,t:'Weakening',a:'left',q:'Weakening'},
+   {x:W-P.r-5,y:P.t+13,t:'Leading',a:'right',q:'Leading'},
+   {x:P.l+5,y:H-P.b-5,t:'Lagging',a:'left',q:'Lagging'},
+   {x:W-P.r-5,y:H-P.b-5,t:'Improving',a:'right',q:'Improving'}
+  ].forEach(q=>{cx.fillStyle=QC[q.q];cx.globalAlpha=.38;cx.textAlign=q.a;cx.font='11px Inter,system-ui';cx.fillText(q.t,q.x,q.y)});
+  cx.globalAlpha=1;
+
+  const display=view==='sector'?bySector(vis):vis;
+  const radiusFor=makeRadiusScaler(display);
+  for(const s of display){
+    const isH=hov&&hov.name===s.name,isS=sel===s.name;
+    const dim=(hov||sel)&&!isH&&!isS;
+    const ba=dim?.1:1;
+    for(let i=0;i<s.tail.length-1;i++){
+      const p0=s.tail[i],p1=s.tail[i+1];
+      const al=.15+.85*(i/(s.tail.length-1));
+      cx.globalAlpha=ba*al;
+      cx.strokeStyle=s.color;cx.lineWidth=isH||isS?2:1.2;
+      cx.beginPath();cx.moveTo(tx(p0.rsRatio),ty(p0.rsMom));cx.lineTo(tx(p1.rsRatio),ty(p1.rsMom));cx.stroke();
+      if(i===s.tail.length-2){
+        const ang=Math.atan2(ty(p1.rsMom)-ty(p0.rsMom),tx(p1.rsRatio)-tx(p0.rsRatio));
+        cx.globalAlpha=ba*.65;cx.fillStyle=s.color;
+        cx.save();cx.translate(tx(p1.rsRatio),ty(p1.rsMom));cx.rotate(ang);
+        cx.beginPath();cx.moveTo(5,0);cx.lineTo(-4,-3);cx.lineTo(-4,3);cx.closePath();cx.fill();cx.restore();
+      }
+    }
+    const L=s.tail[s.tail.length-1],dx=tx(L.rsRatio),dy=ty(L.rsMom),r=radiusFor(s,isH||isS);
+    cx.globalAlpha=ba;
+    cx.beginPath();cx.arc(dx,dy,r,0,Math.PI*2);cx.fillStyle=s.color;cx.fill();
+    if(isH||isS){cx.strokeStyle='#fff';cx.lineWidth=1.5;cx.stroke()}
+    cx.globalAlpha=ba*(isH||isS?.95:.6);
+    cx.fillStyle=isH||isS?'#fff':'#bbb';cx.font=(isH||isS?'11px':'9.5px')+' Inter,system-ui';
+    cx.textAlign='left';cx.fillText(s.name,dx+r+3,dy+4);
+  }
+  cx.globalAlpha=1;
+
+  const ct={Leading:0,Weakening:0,Lagging:0,Improving:0};
+  for(const s of vis)ct[quad(s.last.rsRatio,s.last.rsMom)]++;
+  document.getElementById('cl').textContent=ct.Leading;
+  document.getElementById('cw2').textContent=ct.Weakening;
+  document.getElementById('cg').textContent=ct.Lagging;
+  document.getElementById('ci').textContent=ct.Improving;
+}
+
+function bySector(vis){
+  const m={};
+  for(const s of vis){
+    if(!m[s.sector])m[s.sector]={name:s.sector,sector:s.sector,color:s.color,tails:[],sizes:{set50_weight:0,market_cap:0,avg_trading_value:0}};
+    m[s.sector].tails.push(s.tail);
+    m[s.sector].sizes.set50_weight+=(s.sizes?.set50_weight||0);
+    m[s.sector].sizes.market_cap+=(s.sizes?.market_cap||0);
+    m[s.sector].sizes.avg_trading_value+=(s.sizes?.avg_trading_value||0);
+  }
+  return Object.values(m).map(d=>{
+    const len=Math.min(...d.tails.map(t=>t.length));
+    const tail=[];
+    for(let i=0;i<len;i++){
+      const r=d.tails.reduce((a,t)=>a+t[i].rsRatio,0)/d.tails.length;
+      const mo=d.tails.reduce((a,t)=>a+t[i].rsMom,0)/d.tails.length;
+      tail.push({rsRatio:r,rsMom:mo});
+    }
+    const last=tail[tail.length-1]||{rsRatio:100,rsMom:100};
+    return{name:d.name,sector:d.sector,color:d.color,tail,last,sizes:d.sizes};
+  });
+}
+
+function onMM(e){
+  const rect=cv.getBoundingClientRect();
+  const mx=(e.clientX-rect.left)*(cv.width/rect.width);
+  const my=(e.clientY-rect.top)*(cv.height/rect.height);
+  const W=cv.width,H=cv.height,P={l:54,r:22,t:22,b:42};
+  const pw=W-P.l-P.r,ph=H-P.t-P.b;
+  const vis=results.filter(s=>!hidden.has(s.sector));
+  let ar=[],am=[];
+  for(const s of vis)for(const p of s.tail){ar.push(p.rsRatio);am.push(p.rsMom)}
+  if(!ar.length)return;
+  const pd=2.5,r0=Math.min(...ar,100)-pd,r1=Math.max(...ar,100)+pd,m0=Math.min(...am,100)-pd,m1=Math.max(...am,100)+pd;
+  const tx=v=>P.l+(v-r0)/(r1-r0)*pw,ty=v=>P.t+ph-(v-m0)/(m1-m0)*ph;
+  const disp=view==='sector'?bySector(vis):vis;
+  const radiusFor=makeRadiusScaler(disp);
+  let found=null;
+  for(const s of disp){
+    const L=s.tail[s.tail.length-1];
+    const hitR=radiusFor(s,hov&&hov.name===s.name)+4;
+    if(Math.hypot(mx-tx(L.rsRatio),my-ty(L.rsMom))<hitR){found=s;break}
+  }
+  const tt=document.getElementById('tt');
+  if(found){
+    cv.style.cursor='pointer';hov=found;
+    const q=quad(found.last.rsRatio,found.last.rsMom);
+    const sizeValue=getSizeMetric(found);
+    tt.innerHTML=`<div class="tth"><span style="width:10px;height:10px;border-radius:50%;background:${found.color};display:inline-block;flex-shrink:0"></span>${found.name}</div>
+      <div class="ttr"><span class="ttk">RS-Ratio</span><span class="ttv">${found.last.rsRatio.toFixed(2)}</span></div>
+      <div class="ttr"><span class="ttk">RS-Momentum</span><span class="ttv">${found.last.rsMom.toFixed(2)}</span></div>
+      <div class="ttr"><span class="ttk">Quadrant</span><span class="ttv" style="color:${QC[q]}">${q}</span></div>
+      <div class="ttr"><span class="ttk">Sector</span><span class="ttv">${found.sector}</span></div>
+      <div class="ttr"><span class="ttk">${SIZE_META[sizeMode].label}</span><span class="ttv">${formatSizeValue(sizeValue)}</span></div>`;
+    tt.style.display='block';tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-20)+'px';
+  }else{cv.style.cursor='default';hov=null;tt.style.display='none'}
+  draw();
+}
+function onClick(){if(hov){sel=sel===hov.name?null:hov.name;draw();document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')})}}
+
+function buildSb(){
+  const sorted=[...results].sort((a,b)=>{const o={Leading:0,Improving:1,Weakening:2,Lagging:3};return(o[quad(a.last.rsRatio,a.last.rsMom)]||0)-(o[quad(b.last.rsRatio,b.last.rsMom)]||0)});
+  document.getElementById('sbStocks').innerHTML=sorted.map(s=>{
+    const q=quad(s.last.rsRatio,s.last.rsMom);
+    const qc={Leading:'ql',Weakening:'qw',Lagging:'qg',Improving:'qi'}[q];
+    return`<div class="si${sel===s.name?' sel':''}" data-n="${s.name}" onclick="selStock('${s.name}')"><div class="sdot" style="background:${s.color}"></div><span class="stk">${s.name}</span><span class="sq ${qc}">${q[0]}</span></div>`;
+  }).join('');
+
+  const sm={};
+  for(const s of results){if(!sm[s.sector])sm[s.sector]={color:s.color,ct:{Leading:0,Weakening:0,Lagging:0,Improving:0},tks:[]};sm[s.sector].ct[quad(s.last.rsRatio,s.last.rsMom)]++;sm[s.sector].tks.push(s.name)}
+  document.getElementById('sbSectors').innerHTML=Object.entries(sm).map(([sec,d])=>{
+    const tot=d.tks.length;
+    const bars=Object.entries(d.ct).map(([q,n])=>n?`<div class="scbs" style="background:${QC[q]};width:${n/tot*100}%"></div>`:'').join('');
+    const dom=Object.entries(d.ct).sort((a,b)=>b[1]-a[1])[0];
+    return`<div class="sci"><div class="scn"><span style="width:7px;height:7px;border-radius:50%;background:${d.color};display:inline-block"></span>${sec}</div><div class="scb">${bars}</div><div class="scs">${d.tks.join(' · ')} · <span style="color:${QC[dom[0]]}">${dom[0]}</span></div></div>`;
+  }).join('');
+}
+
+function selStock(n){sel=sel===n?null:n;draw();document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===n)el.classList.add('sel')})}
+function buildLeg(){
+  const secs=[...new Set(results.map(s=>s.sector))];
+  document.getElementById('leg').innerHTML=secs.map(s=>`<span class="li${hidden.has(s)?' dim':''}" onclick="toggleSec('${s}')"><span class="ld" style="background:${SC[s]||'#888'}"></span>${s}</span>`).join('');
+}
+function toggleSec(s){hidden.has(s)?hidden.delete(s):hidden.add(s);buildLeg();draw()}
+
+window.addEventListener('resize',()=>{if(results.length)draw()});
+updateTfNote();
+checkServer();
+</script>
+</body>
+</html>
