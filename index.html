@@ -428,6 +428,9 @@ function buildRelNodeBox(placement,lines,fontSize,sub=''){
   if(placement.side==='focus'){
     left=placement.textX-width/2-14;
     right=placement.textX+width/2+14;
+  }else if(placement.side==='incoming'){
+    right=placement.anchorX-8;
+    left=right-width-26;
   }else{
     left=placement.textX-8;
     right=placement.textX+width+14;
@@ -1181,13 +1184,19 @@ function renderRelationships(){
   empty.style.display='none';
   const placements=new Map();
   placements.set(focus.id,{anchorX:598,textX:598,y:352,side:'focus'});
-  layoutLane(incomingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:328,textX:76,y:p.y,side:'incoming'}));
+  layoutLane(incomingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:328,textX:294,y:p.y,side:'incoming'}));
   layoutLane(outgoingNodes,0,128,604).forEach(p=>placements.set(p.node.id,{anchorX:804,textX:820,y:p.y,side:'outgoing'}));
   const secondaryOrderScore=new Map();
   for(const node of secondaryNodes){
     const linkedSources=allEdges
-      .filter(group=>group[0]?.target===node.id)
-      .map(group=>placements.get(group[0].source))
+      .map(group=>{
+        const first=group[0];
+        const sourcePlacement=placements.get(first.source);
+        const targetPlacement=placements.get(first.target);
+        if(first.target===node.id&&sourcePlacement?.side==='outgoing') return sourcePlacement;
+        if(first.source===node.id&&targetPlacement?.side==='outgoing') return targetPlacement;
+        return null;
+      })
       .filter(p=>p?.side==='outgoing');
     const score=linkedSources.length
       ? linkedSources.reduce((sum,p)=>sum+p.y,0)/linkedSources.length
@@ -1236,7 +1245,13 @@ function renderRelationships(){
       const edgeGroup=allEdges.find(group=>group[0]?.source===focus.id&&group[0]?.target===nodeId);
       if(edgeGroup) label=edgeLabel(edgeGroup);
     }else if(placement?.side==='secondary'){
-      const edgeGroup=allEdges.find(group=>group[0]?.target===nodeId);
+      const edgeGroup=allEdges.find(group=>{
+        const first=group[0];
+        const sourcePlacement=placements.get(first.source);
+        const targetPlacement=placements.get(first.target);
+        return (first.target===nodeId&&sourcePlacement?.side==='outgoing')
+          || (first.source===nodeId&&targetPlacement?.side==='outgoing');
+      });
       if(edgeGroup) label=edgeLabel(edgeGroup);
     }
     nodePctLabelCache.set(nodeId,label);
@@ -1246,7 +1261,7 @@ function renderRelationships(){
   const renderListNode=(node,placement)=>{
     const clickable=node.symbol&&hasRelationships(node.symbol)&&placement.side!=='focus';
     const clickAttr=clickable?` onclick="openRelationships(event,'${escapeHtml(node.symbol)}')"`:'';
-    const bulletX=placement.side==='incoming'?placement.textX-16:placement.side==='focus'?placement.textX-34:placement.textX-16;
+    const bulletX=placement.side==='incoming'?placement.anchorX-18:placement.side==='focus'?placement.textX-34:placement.textX-16;
     const pctLabel=getNodePctLabel(node.id);
     const baseLines=getNodeLines(node.id);
     const lines=pctLabel&&placement.side!=='focus'
@@ -1257,7 +1272,7 @@ function renderRelationships(){
     const detail=node.symbol&&node.label&&node.label!==node.symbol?node.label:'';
     const arrow=clickable?' ›':'';
     const blockY=placement.side==='focus'?placement.y-14:placement.y-8;
-    const textAnchor=placement.side==='focus'?'middle':'start';
+    const textAnchor=placement.side==='focus'?'middle':placement.side==='incoming'?'end':'start';
     const box=getNodeBox(node.id);
     const hoverAttr=` onmouseenter="showRelTooltip(event,'${escapeHtml(node.symbol||node.label||node.id)}','${escapeHtml(sub)}','${escapeHtml(detail)}')" onmousemove="moveRelTooltip(event)" onmouseleave="hideRelTooltip()"`;
     return `
@@ -1271,10 +1286,15 @@ function renderRelationships(){
 
   const renderEdge=(group)=>{
     const first=group[0];
-    const s=placements.get(first.source), t=placements.get(first.target);
+    let sourceId=first.source, targetId=first.target;
+    let s=placements.get(sourceId), t=placements.get(targetId);
+    if(s?.side==='secondary'&&t?.side==='outgoing'){
+      [sourceId,targetId]=[targetId,sourceId];
+      [s,t]=[t,s];
+    }
     if(!s||!t) return '';
-    const sBox=getNodeBox(first.source);
-    const tBox=getNodeBox(first.target);
+    const sBox=getNodeBox(sourceId);
+    const tBox=getNodeBox(targetId);
     const fromY=Math.max(sBox.top+10,Math.min(sBox.bottom-10,s.y-5));
     const toY=Math.max(tBox.top+10,Math.min(tBox.bottom-10,t.y-5));
     const dashed=group.some(e=>e.directness==='effective');
@@ -1328,6 +1348,7 @@ function renderRelationships(){
     if(s.side==='incoming'&&t.side==='focus') return true;
     if(s.side==='focus'&&t.side==='outgoing') return true;
     if(s.side==='outgoing'&&t.side==='secondary') return true;
+    if(s.side==='secondary'&&t.side==='outgoing') return true;
     return false;
   });
   const edgeSvg=visibleEdges.map(renderEdge).join('');
