@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20",
+  "generatedAt": "2026-06-21",
   "nodeSchema": {
     "required": [
       "id",
@@ -111,6 +111,132 @@
       "label": "BAFS major shareholders",
       "url": "https://www.bafsthai.com/en/investor-relations/shareholder-info/major-shareholders",
       "asOfDate": "2026-05-07"
+    },
+    {
+      "id": "bem_major_shareholders_2026",
+      "label": "BEM major shareholders",
+      "url": "https://investor.bemplc.co.th/en/shareholder-information/major-shareholders",
+      "asOfDate": "2026-03-11"
+    },
+    {
+      "id": "bem_one_report_2024",
+      "label": "BEM annual report 2024",
+      "url": "https://bem.listedcompany.com/misc/one-report/bem-one-report-2024-en.pdf",
+      "asOfDate": "2024-12-31"
+    },
+    {
+      "id": "bts_shareholder_structure_2025",
+      "label": "BTS shareholder structure",
+      "url": "https://www.btsgroup.co.th/en/investor-relations/shareholder-information/shareholder-structure",
+      "asOfDate": "2025-03-31"
+    },
+    {
+      "id": "bts_one_report_2024_25",
+      "label": "BTS annual report 2024/25",
+      "url": "https://www.btsgroup.co.th/en/document/viewer/stream/155917/annual-report-2024-25",
+      "asOfDate": "2025-04-30"
+    },
+    {
+      "id": "aot_one_report_2025",
+      "label": "AOT one report 2025",
+      "url": "https://investor.airportthai.co.th/misc/one-report/20260219-aot-one-report-2025-en.pdf",
+      "asOfDate": "2025-09-30"
+    },
+    {
+      "id": "ktc_major_shareholders_2026",
+      "label": "KTC major shareholders",
+      "url": "https://www.ktc.co.th/en/investor-relations/shareholders/major-shareholders",
+      "asOfDate": "2026-03-31"
+    },
+    {
+      "id": "advanc_shareholder_structure_2026",
+      "label": "ADVANC shareholder structure",
+      "url": "https://investor.ais.co.th/en/shareholder-information/shareholder-structure",
+      "asOfDate": "2026-03-02"
+    },
+    {
+      "id": "delta_share_capital_shareholding_2026",
+      "label": "DELTA share capital and shareholding",
+      "url": "https://www.deltathailand.com/en/share-capital-and-shareholding",
+      "asOfDate": "2026-02-27"
+    },
+    {
+      "id": "kbank_shareholder_structure_2026",
+      "label": "KBANK shareholder structure",
+      "url": "https://www.kasikornbank.com/en/ir/generalinformation/pages/shareholders.aspx",
+      "asOfDate": "2026-04-22"
+    },
+    {
+      "id": "bbl_shareholder_information_2026",
+      "label": "BBL shareholder information",
+      "url": "https://www.bangkokbank.com/en/Investor-Relations/Shareholder-Information",
+      "asOfDate": "2026-04-23"
+    },
+    {
+      "id": "scb_major_shareholders_2026",
+      "label": "SCB major shareholders",
+      "url": "https://investor.scbx.com/en/shareholder-info/major-shareholders",
+      "asOfDate": "2026-04-21"
+    },
+    {
+      "id": "tisco_shareholders_structure_2026",
+      "label": "TISCO shareholders structure",
+      "url": "https://www.tisco.co.th/en/investorrelations/stock-information/shareholders-structure",
+      "asOfDate": "2026-04-30"
+    },
+    {
+      "id": "ttb_major_shareholders_2026",
+      "label": "TTB major shareholders",
+      "url": "https://www.ttbbank.com/en/ir/stock-information/major-shareholders",
+      "asOfDate": "2026-04-28"
+    },
+    {
+      "id": "kkp_major_shareholders_2026",
+      "label": "KKP major shareholders",
+      "url": "https://ir.kkpfg.com/en/shareholder-information/major-shareholders",
+      "asOfDate": "2026-04-30"
+    },
+    {
+      "id": "tcap_major_shareholders_2026",
+      "label": "TCAP major shareholder",
+      "url": "https://www.thanachart.co.th/en/investor-relations/shareholder-information/major-shareholder",
+      "asOfDate": "2026-04-17"
+    },
+    {
+      "id": "ktb_shareholders_list_2026",
+      "label": "KTB shareholders list",
+      "url": "https://krungthai.com/en/investor-relations/shareholders-information/shareholders-list",
+      "asOfDate": "2026-04-16"
+    },
+    {
+      "id": "cpn_major_shareholders_2026",
+      "label": "CPN major shareholders and shareholder structure",
+      "url": "https://investor.centralpattana.co.th/en/shareholder-info/major-shareholders-and-shareholder-structure",
+      "asOfDate": "2026-03-10"
+    },
+    {
+      "id": "lh_shareholder_structure_2026",
+      "label": "LH shareholder structure",
+      "url": "https://investor.lh.co.th/en/investor-info/shareholder-information/shareholder-structure",
+      "asOfDate": "2026-04-30"
+    },
+    {
+      "id": "or_major_shareholders_2026",
+      "label": "OR major shareholders",
+      "url": "https://investor.pttor.com/en/shareholder-info/major-shareholders",
+      "asOfDate": "2026-02-24"
+    },
+    {
+      "id": "tu_shareholding_structure_2026",
+      "label": "TU shareholding structure",
+      "url": "https://investor.thaiunion.com/en/shareholder-info/shareholding-structure",
+      "asOfDate": "2026-03-04"
+    },
+    {
+      "id": "sawad_major_shareholders_2026",
+      "label": "SAWAD major shareholders",
+      "url": "https://investor.sawad.co.th/en/sharehlder-infomation/major-shareholders",
+      "asOfDate": "2026-03-13"
     }
   ],
   "graphs": [
@@ -1416,6 +1542,4848 @@
             "bafs_major_shareholders_2026"
           ],
           "notes": "Minority strategic holding rather than control, included to test whether the model can show adjacent ecosystem links as well as controlled subsidiaries."
+        }
+      ]
+    },
+    {
+      "id": "bem_ownership_map",
+      "focusSymbol": "BEM",
+      "focusLabel": "Bangkok Expressway and Metro Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "BEM has a clean strategic-owner layer and a compact operating-subsidiary layer from official sources.",
+          "Unlike the auto-generated context view, this map uses actual shareholder percentages and reported ownership stakes in core subsidiaries.",
+          "The main caveat is that BEM also appears in its own shareholder register through treasury shares, which is omitted here to avoid self-loop noise."
+        ],
+        "recommendedDefaultFilters": [
+          "show strategic owners first",
+          "hide nominee and custodian nodes by default",
+          "keep BMN and NECL visible because they are the clearest downstream operating entities"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "bem",
+          "label": "Bangkok Expressway and Metro Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BEM",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "transport"
+          ]
+        },
+        {
+          "id": "ck",
+          "label": "CH. Karnchang Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "CK",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "construction_group"
+          ]
+        },
+        {
+          "id": "mrta",
+          "label": "Mass Rapid Transit Authority of Thailand",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "ktb",
+          "label": "Krung Thai Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KTB",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "bbl",
+          "label": "Bangkok Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BBL",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bmn",
+          "label": "Bangkok Metro Networks Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "commercial_development"
+          ]
+        },
+        {
+          "id": "necl",
+          "label": "Northern Bangkok Expressway Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "expressway"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "ck",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 42.26,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "mrta",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 8.22,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ktb",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 5.33,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 3.16,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 3.05,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bbl",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 1.99,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 1.56,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 1.43,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "bem",
+          "relation": "shareholder_of",
+          "pctShares": 0.71,
+          "directness": "direct",
+          "asOfDate": "2026-03-11",
+          "sourceRefs": [
+            "bem_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bem",
+          "target": "necl",
+          "relation": "shareholder_of",
+          "pctShares": 99.99,
+          "directness": "direct",
+          "asOfDate": "2024-12-31",
+          "sourceRefs": [
+            "bem_one_report_2024"
+          ]
+        },
+        {
+          "source": "bem",
+          "target": "bmn",
+          "relation": "shareholder_of",
+          "pctShares": 99.67,
+          "directness": "direct",
+          "asOfDate": "2024-12-31",
+          "sourceRefs": [
+            "bem_one_report_2024"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bts_ownership_map",
+      "focusSymbol": "BTS",
+      "focusLabel": "BTS Group Holdings Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "BTS has a visible control layer at the top and a clear stack of listed and unlisted operating subsidiaries beneath it.",
+          "The annual report provides direct ownership percentages for the core rail and media entities, so this view is closer to a true control map than the old market-context fallback.",
+          "Some parts of the group use preferred-share structures, so this first version focuses on direct stakes that are explicitly stated in official materials."
+        ],
+        "recommendedDefaultFilters": [
+          "show family-control and state-linked holders first",
+          "keep BTSC and VGI visible as the two primary downstream hubs",
+          "treat Rabbit and other complex preferred-share structures as later expansion layers"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "bts",
+          "label": "BTS Group Holdings Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BTS",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "transport"
+          ]
+        },
+        {
+          "id": "keeree_group",
+          "label": "Mr. Keeree Kanjanapas Group",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "family_group",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bbl",
+          "label": "Bangkok Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BBL",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "citibank_nominees_gic_c",
+          "label": "Citibank Nominees Singapore Pte Ltd - A/C GIC C",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "nares_ngamapichon",
+          "label": "Mr. Nares Ngam-apichon",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "btsc",
+          "label": "Bangkok Mass Transit System Public Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "core_subsidiary",
+            "rail"
+          ]
+        },
+        {
+          "id": "vgi",
+          "label": "VGI Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "VGI",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "listed_subsidiary",
+            "media"
+          ]
+        },
+        {
+          "id": "north_bangkok_monorail",
+          "label": "Northern Bangkok Monorail Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "rail"
+          ]
+        },
+        {
+          "id": "east_bangkok_monorail",
+          "label": "Eastern Bangkok Monorail Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "rail"
+          ]
+        },
+        {
+          "id": "super_turtle",
+          "label": "Super Turtle Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TURTLE",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "second_layer",
+            "retail"
+          ]
+        },
+        {
+          "id": "bss_holdings",
+          "label": "BSS Holdings Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "second_layer",
+            "payments"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "keeree_group",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 46.37,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 4.93,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "bbl",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 4.48,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "citibank_nominees_gic_c",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 3.66,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 2.89,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 2.64,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 1.26,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "nares_ngamapichon",
+          "target": "bts",
+          "relation": "shareholder_of",
+          "pctShares": 0.74,
+          "directness": "direct",
+          "asOfDate": "2025-03-31",
+          "sourceRefs": [
+            "bts_shareholder_structure_2025"
+          ]
+        },
+        {
+          "source": "bts",
+          "target": "btsc",
+          "relation": "shareholder_of",
+          "pctShares": 98.23,
+          "directness": "direct",
+          "asOfDate": "2025-04-30",
+          "sourceRefs": [
+            "bts_one_report_2024_25"
+          ]
+        },
+        {
+          "source": "bts",
+          "target": "vgi",
+          "relation": "shareholder_of",
+          "pctShares": 34.20,
+          "directness": "direct",
+          "asOfDate": "2025-04-30",
+          "sourceRefs": [
+            "bts_one_report_2024_25"
+          ]
+        },
+        {
+          "source": "bts",
+          "target": "north_bangkok_monorail",
+          "relation": "shareholder_of",
+          "pctShares": 75.00,
+          "directness": "direct",
+          "asOfDate": "2025-04-30",
+          "sourceRefs": [
+            "bts_one_report_2024_25"
+          ]
+        },
+        {
+          "source": "bts",
+          "target": "east_bangkok_monorail",
+          "relation": "shareholder_of",
+          "pctShares": 75.00,
+          "directness": "direct",
+          "asOfDate": "2025-04-30",
+          "sourceRefs": [
+            "bts_one_report_2024_25"
+          ]
+        },
+        {
+          "source": "vgi",
+          "target": "super_turtle",
+          "relation": "shareholder_of",
+          "pctShares": 73.32,
+          "directness": "direct",
+          "asOfDate": "2025-04-30",
+          "sourceRefs": [
+            "bts_one_report_2024_25"
+          ]
+        },
+        {
+          "source": "vgi",
+          "target": "bss_holdings",
+          "relation": "shareholder_of",
+          "pctShares": 90.00,
+          "directness": "direct",
+          "asOfDate": "2025-04-30",
+          "sourceRefs": [
+            "bts_one_report_2024_25"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aot_ownership_map",
+      "focusSymbol": "AOT",
+      "focusLabel": "Airports of Thailand Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "AOT has a very clear state-enterprise ownership structure led by the Ministry of Finance.",
+          "Its one report also discloses the ownership percentages of core operating subsidiaries, so the graph can show both incoming holders and downstream operating entities with reported stakes.",
+          "Several downstream entities are held at 49 to 50 percent, so the map is useful for seeing how AOT mixes control, joint-control and strategic operating partnerships."
+        ],
+        "recommendedDefaultFilters": [
+          "pin the Ministry of Finance node first",
+          "hide nominee and custodian nodes by default",
+          "keep AOTGA, AVSEC and SAH visible because they represent the clearest operating layer"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "aot",
+          "label": "Airports of Thailand Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "AOT",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "transport"
+          ]
+        },
+        {
+          "id": "ministry_of_finance",
+          "label": "Ministry of Finance",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Mutual Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "federation_savings_credit",
+          "label": "The Federation of Savings and Credit Cooperatives of Thailand Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "cooperative"
+          ]
+        },
+        {
+          "id": "egat_saving_credit",
+          "label": "EGAT Saving and Credit Cooperative Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "cooperative"
+          ]
+        },
+        {
+          "id": "bny_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sah",
+          "label": "Suvarnabhumi Airport Hotel Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "hospitality"
+          ]
+        },
+        {
+          "id": "aotga",
+          "label": "AOT Ground Aviation Services Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "ground_services"
+          ]
+        },
+        {
+          "id": "avsec",
+          "label": "AOT Aviation Security Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "security"
+          ]
+        },
+        {
+          "id": "aot_tafa_operator",
+          "label": "AOT TAFA Operator Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "subsidiary",
+            "cargo"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "ministry_of_finance",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 70.0,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 2.622,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 2.241,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 1.373,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 1.206,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 0.946,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "federation_savings_credit",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 0.663,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "egat_saving_credit",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 0.586,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "bny_mellon",
+          "target": "aot",
+          "relation": "shareholder_of",
+          "pctShares": 0.461,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "aot",
+          "target": "sah",
+          "relation": "shareholder_of",
+          "pctShares": 60.0,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "aot",
+          "target": "aotga",
+          "relation": "shareholder_of",
+          "pctShares": 49.0,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        },
+        {
+          "source": "aot",
+          "target": "avsec",
+          "relation": "shareholder_of",
+          "pctShares": 50.0,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ],
+          "notes": "AOT increased its AVSEC stake from 49 percent to 50 percent during FY2025 according to the one report note on subsidiary investments."
+        },
+        {
+          "source": "aot",
+          "target": "aot_tafa_operator",
+          "relation": "shareholder_of",
+          "pctShares": 49.0,
+          "directness": "direct",
+          "asOfDate": "2025-09-30",
+          "sourceRefs": [
+            "aot_one_report_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ktc_ownership_map",
+      "focusSymbol": "KTC",
+      "focusLabel": "Krungthai Card Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "KTC is one of the simplest cases because the ownership story is dominated by a clear anchor shareholder and an otherwise straightforward institutional register.",
+          "This first dedicated map focuses on reported major shareholders only, which is enough to replace the old market-context fallback with a true shareholding view.",
+          "The downstream operating structure can be added later, but the incoming layer already captures the key control and float signals."
+        ],
+        "recommendedDefaultFilters": [
+          "show anchor owner first",
+          "hide nominee and custodian nodes by default",
+          "treat this as an incoming-ownership-first map until subsidiary detail is added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "ktc",
+          "label": "Krungthai Card Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KTC",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "finance"
+          ]
+        },
+        {
+          "id": "ktb",
+          "label": "Krung Thai Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KTB",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "banking"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "mongkol_prakitchaiwattana",
+          "label": "Mr. Mongkol Prakitchaiwattana",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "nortrust_nominees_ucits_10pct",
+          "label": "Nortrust Nominees Limited-NTC-RE IEDU UCITS 10 PCT Clients Account",
+          "kind": "custodian_bank",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "kkp_capital",
+          "label": "KKP Capital Public Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "chantana_jirattitepat",
+          "label": "Ms. Chantana Jirattitepat",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bbhisl_nominees_nortrus",
+          "label": "BBHISL Nominees Limited NORTRUS",
+          "kind": "custodian_bank",
+          "country": "unknown",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "ktb",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 49.29,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 6.85,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "mongkol_prakitchaiwattana",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 5.44,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 2.07,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 1.72,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "nortrust_nominees_ucits_10pct",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 1.66,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "kkp_capital",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 1.60,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "chantana_jirattitepat",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 1.39,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 1.05,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bbhisl_nominees_nortrus",
+          "target": "ktc",
+          "relation": "shareholder_of",
+          "pctShares": 0.92,
+          "directness": "direct",
+          "asOfDate": "2026-03-31",
+          "sourceRefs": [
+            "ktc_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanc_ownership_map",
+      "focusSymbol": "ADVANC",
+      "focusLabel": "Advanced Info Service Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "ADVANC is also relatively simple because the official shareholder structure clearly identifies a dominant strategic owner plus a small set of institutional and nominee holders.",
+          "This dedicated map replaces the fallback with an explicit ownership view even before adding any downstream operating entities.",
+          "The key nuance is that part of the Singtel position is visible through a nominee account, so strategic and nominee layers should be interpreted together."
+        ],
+        "recommendedDefaultFilters": [
+          "show Gulf and Singtel first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a shareholder-register map until subsidiary detail is added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "advanc",
+          "label": "Advanced Info Service Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "ADVANC",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "telecom"
+          ]
+        },
+        {
+          "id": "gulf",
+          "label": "Gulf Development Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "GULF",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "energy_group"
+          ]
+        },
+        {
+          "id": "singtel_strategic_investments",
+          "label": "Singtel Strategic Investments Pte. Ltd.",
+          "kind": "private_company",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "telecom_group"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "raffles_nominees_singtel",
+          "label": "Raffles Nominees (Pte) Ltd S/A Singtel Strategic Investments Pte Ltd.",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary",
+            "strategic_owner_proxy"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "citibank_nominees_gic_c",
+          "label": "Citibank Nominees Singapore Pte Ltd-A/C GIC C",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "gulf",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 40.44,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "singtel_strategic_investments",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 19.10,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 7.63,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "raffles_nominees_singtel",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 5.67,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ],
+          "notes": "AIS marks this nominee line as related to Singtel Strategic Investments."
+        },
+        {
+          "source": "vayupak_1",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 2.97,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 2.26,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "citibank_nominees_gic_c",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 2.17,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 1.70,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "advanc",
+          "relation": "shareholder_of",
+          "pctShares": 1.46,
+          "directness": "direct",
+          "asOfDate": "2026-03-02",
+          "sourceRefs": [
+            "advanc_shareholder_structure_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delta_ownership_map",
+      "focusSymbol": "DELTA",
+      "focusLabel": "Delta Electronics (Thailand) Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "DELTA is straightforward to add because the official shareholding page clearly discloses the control cluster around Delta group entities.",
+          "A dedicated ownership map is valuable here because the top register is unusually concentrated and tells a more meaningful story than sector or RRG neighbors.",
+          "This first version focuses on incoming ownership and leaves operating subsidiaries for a later pass."
+        ],
+        "recommendedDefaultFilters": [
+          "show the Delta group entities first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a concentrated-control map until subsidiary detail is added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "delta_th",
+          "label": "Delta Electronics (Thailand) Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "DELTA",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "electronics"
+          ]
+        },
+        {
+          "id": "delta_sg",
+          "label": "Delta Electronics Int'l (Singapore) Pte. Ltd.",
+          "kind": "private_company",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "delta_group"
+          ]
+        },
+        {
+          "id": "citi_nominees_restricted",
+          "label": "CITI (Nominees) Limited-CBHK-PBGSG-Restricted Shares",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "delta_international_holding_bv",
+          "label": "Delta International Holding Limited B.V.",
+          "kind": "private_company",
+          "country": "NL",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "delta_group"
+          ]
+        },
+        {
+          "id": "delta_electronics_inc",
+          "label": "Delta Electronics Inc.",
+          "kind": "listed_company",
+          "market": "TWSE",
+          "country": "TW",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "delta_group"
+          ]
+        },
+        {
+          "id": "ubs_hk_clients",
+          "label": "UBS AG Hong Kong Branch - For Client's Accounts",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "hsbc_hk",
+          "label": "The Hong Kong and Shanghai Banking Corporation Limited, Hong Kong Branch",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "raffles_nominees",
+          "label": "Raffles Nominees (Pte) Limited",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "delta_sg",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 42.85,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "citi_nominees_restricted",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 13.86,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "delta_international_holding_bv",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 12.71,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "delta_electronics_inc",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 5.54,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "ubs_hk_clients",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 4.38,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "hsbc_hk",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 4.35,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "raffles_nominees",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 4.07,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 3.38,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 1.14,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 0.97,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "delta_th",
+          "relation": "shareholder_of",
+          "pctShares": 0.71,
+          "directness": "direct",
+          "asOfDate": "2026-02-27",
+          "sourceRefs": [
+            "delta_share_capital_shareholding_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kbank_ownership_map",
+      "focusSymbol": "KBANK",
+      "focusLabel": "Kasikornbank Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "KBANK is a good low-complexity addition because the shareholder structure page already provides a clean top-holder register on a single official page.",
+          "The map shows one important cross-link to another SET50 company through Gulf, while the rest of the incoming layer is mostly institutional and nominee capital.",
+          "This makes KBANK a useful comparison case against KTC and ADVANC without needing downstream subsidiary detail yet."
+        ],
+        "recommendedDefaultFilters": [
+          "show Gulf first",
+          "hide nominee and custodian nodes by default",
+          "treat this as an incoming-shareholder map until subsidiary detail is added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "kbank",
+          "label": "Kasikornbank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KBANK",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "banking"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "gulf",
+          "label": "Gulf Development Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "GULF",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "energy_group"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_bank_trust",
+          "label": "State Street Bank and Trust Company",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "cpb_equity",
+          "label": "CPB Equity Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "crown_property_group"
+          ]
+        },
+        {
+          "id": "sea_uk_type_a_nominees",
+          "label": "South East Asia UK (Type A) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "hsbc_saudi_central_bank",
+          "label": "HSBC Bank PLC - Saudi Central Bank Securities Account A",
+          "kind": "custodian_bank",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "thai_nvdr",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 12.76,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "gulf",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 9.99,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 5.85,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 4.29,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "state_street_bank_trust",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 3.90,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 2.89,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "cpb_equity",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 2.00,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_type_a_nominees",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 1.87,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 1.55,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "hsbc_saudi_central_bank",
+          "target": "kbank",
+          "relation": "shareholder_of",
+          "pctShares": 1.16,
+          "directness": "direct",
+          "asOfDate": "2026-04-22",
+          "sourceRefs": [
+            "kbank_shareholder_structure_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bbl_ownership_map",
+      "focusSymbol": "BBL",
+      "focusLabel": "Bangkok Bank Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "BBL is another simple incoming-ownership case because the investor-relations page publishes a compact top-10 register with a fresh April 2026 record date.",
+          "The ownership mix is mostly float and institutional custody, which makes this map useful as a contrast to concentrated-control names like PTT and DELTA.",
+          "A small listed-company cross-link appears through Bangkok Insurance, while the rest can remain as non-listed holder nodes for now."
+        ],
+        "recommendedDefaultFilters": [
+          "show listed and strategic holders first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a shareholder-register map until downstream structure is researched"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "bbl",
+          "label": "Bangkok Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BBL",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "banking"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "city_realty",
+          "label": "City Realty Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_bank_trust",
+          "label": "State Street Bank and Trust Company",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "uob_kay_hian_hk",
+          "label": "UOB Kay Hian (Hong Kong) Limited - Client Account",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bank_of_new_york_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bki",
+          "label": "Bangkok Insurance Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "BKI",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "institutional_owner",
+            "insurance"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "thai_nvdr",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 23.38,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "city_realty",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 4.70,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 4.00,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 2.73,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "state_street_bank_trust",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 2.51,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 2.23,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "uob_kay_hian_hk",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 2.06,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "bank_of_new_york_mellon",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 2.01,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "bki",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 1.81,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "bbl",
+          "relation": "shareholder_of",
+          "pctShares": 1.49,
+          "directness": "direct",
+          "asOfDate": "2026-04-23",
+          "sourceRefs": [
+            "bbl_shareholder_information_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scb_ownership_map",
+      "focusSymbol": "SCB",
+      "focusLabel": "SCB X Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "SCB is a clean ownership-register case because the SCBX investor page discloses an up-to-date April 2026 top-holder table in a simple format.",
+          "The ownership story is dominated by two very large blocks plus a conventional institutional custody layer, which reads well in the current relations layout.",
+          "This is a good benchmark for state-linked or royal-linked concentration without needing second-layer subsidiary edges yet."
+        ],
+        "recommendedDefaultFilters": [
+          "show the two dominant blocks first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a concentrated-shareholder map until operating-layer detail is added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "scb",
+          "label": "SCB X Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "SCB",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "king_vajiralongkorn",
+          "label": "His Majesty King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner",
+            "anchor_holder"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak 1 Mutual Fund",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bank_of_new_york_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bny_mellon_nominees",
+          "label": "BNY Mellon Nominees Limited",
+          "kind": "custodian_bank",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_type_a_nominees",
+          "label": "South East Asia UK (Type A) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bnp_paribas_new_york",
+          "label": "BNP Paribas New York Branch",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "king_vajiralongkorn",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 23.58,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 23.32,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 5.41,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 3.06,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 3.04,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 2.32,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bank_of_new_york_mellon",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 1.04,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bny_mellon_nominees",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 0.85,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_type_a_nominees",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 0.81,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bnp_paribas_new_york",
+          "target": "scb",
+          "relation": "shareholder_of",
+          "pctShares": 0.59,
+          "directness": "direct",
+          "asOfDate": "2026-04-21",
+          "sourceRefs": [
+            "scb_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tisco_ownership_map",
+      "focusSymbol": "TISCO",
+      "focusLabel": "TISCO Financial Group Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "TISCO is a strong low-complexity candidate because the investor page exposes a complete top-10 list with percentages and even clarifies the ownership chain behind the lead shareholder.",
+          "The map is useful because it combines one dominant foreign strategic block, one Thai listed-company cross-holding through TCAP, and a typical custody layer.",
+          "This gives the relations view another financial-sector example without needing any subsidiary expansion yet."
+        ],
+        "recommendedDefaultFilters": [
+          "show CDIB, Tokyo Century and TCAP first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a shareholder-register map until operating entities are added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "tisco",
+          "label": "TISCO Financial Group Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TISCO",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "cdib_partners_investment_holding",
+          "label": "CDIB & Partners Investment Holding Pte. Ltd.",
+          "kind": "private_company",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "tokyo_century",
+          "label": "Tokyo Century Corporation",
+          "kind": "listed_company",
+          "market": "TSE",
+          "country": "JP",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "tcap",
+          "label": "Thanachart Capital Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TCAP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bnp_paribas_new_york",
+          "label": "BNP Paribas New York Branch",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "veerawat_valaisathien",
+          "label": "Mr. Veerawat Valaisathien",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "social_security_fund",
+          "label": "Social Security Fund",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "thai_nvdr",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 11.957,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "cdib_partners_investment_holding",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 10.0,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ],
+          "notes": "The TISCO IR page notes that CDIB & Partners Investment Holding Pte. Ltd. is held through the KGI / CDIB ownership chain."
+        },
+        {
+          "source": "tokyo_century",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 4.931,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 3.277,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "tcap",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 1.684,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 1.682,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "bnp_paribas_new_york",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 1.389,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "veerawat_valaisathien",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 1.187,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 1.146,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        },
+        {
+          "source": "social_security_fund",
+          "target": "tisco",
+          "relation": "shareholder_of",
+          "pctShares": 1.040,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "tisco_shareholders_structure_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ttb_ownership_map",
+      "focusSymbol": "TTB",
+      "focusLabel": "TMBThanachart Bank Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "TTB is worth adding early because the official major-shareholders page already exposes the core control blocks clearly even without a full top-10 table.",
+          "This first-pass map focuses on the four dominant reported holders, which already explains most of the bank's ownership structure.",
+          "The model can be expanded later with the rest of the float and nominee layer, but the anchor ownership story is already visible."
+        ],
+        "recommendedDefaultFilters": [
+          "show anchor holders first",
+          "treat this as a concentrated-shareholder map",
+          "expand with the nominee layer in a later pass if needed"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "ttb",
+          "label": "TMBThanachart Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TTB",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "banking"
+          ]
+        },
+        {
+          "id": "tcap",
+          "label": "Thanachart Capital Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TCAP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "ing_bank_nv",
+          "label": "ING Bank N.V.",
+          "kind": "private_company",
+          "country": "NL",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "banking_group"
+          ]
+        },
+        {
+          "id": "ministry_of_finance",
+          "label": "Ministry of Finance",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "anchor_holder"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "tcap",
+          "target": "ttb",
+          "relation": "shareholder_of",
+          "pctShares": 24.37,
+          "directness": "direct",
+          "asOfDate": "2026-04-28",
+          "sourceRefs": [
+            "ttb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ing_bank_nv",
+          "target": "ttb",
+          "relation": "shareholder_of",
+          "pctShares": 21.69,
+          "directness": "direct",
+          "asOfDate": "2026-04-28",
+          "sourceRefs": [
+            "ttb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ministry_of_finance",
+          "target": "ttb",
+          "relation": "shareholder_of",
+          "pctShares": 11.65,
+          "directness": "direct",
+          "asOfDate": "2026-04-28",
+          "sourceRefs": [
+            "ttb_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "ttb",
+          "relation": "shareholder_of",
+          "pctShares": 3.59,
+          "directness": "direct",
+          "asOfDate": "2026-04-28",
+          "sourceRefs": [
+            "ttb_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kkp_ownership_map",
+      "focusSymbol": "KKP",
+      "focusLabel": "Kiatnakin Phatra Bank Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "KKP is another clean incoming-ownership case because the investor-relations page provides a full top-10 table with a fresh April 2026 record date.",
+          "The map is useful because it mixes one listed-company cross-holding through RAM, one self-holding line, and several family or private-company anchors.",
+          "This makes KKP a richer financial-sector example than a pure nominee-driven register."
+        ],
+        "recommendedDefaultFilters": [
+          "show private-company anchors first",
+          "keep the self-holding line visible but de-emphasized",
+          "hide nominee and custodian nodes by default"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "kkp",
+          "label": "Kiatnakin Phatra Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KKP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "banking"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "chodthanawat",
+          "label": "Chodthanawat Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "eastern_sugar",
+          "label": "Eastern Sugar Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "thitinan_wattanavekin",
+          "label": "Ms. Thitinan Wattanavekin",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "kkp_self",
+          "label": "Kiatnakin Phatra Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KKP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "treasury_or_self_holding"
+          ]
+        },
+        {
+          "id": "yp_inter",
+          "label": "YP Inter Company Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "ram",
+          "label": "Ramkhamhaeng Hospital Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "RAM",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "institutional_owner",
+            "healthcare"
+          ]
+        },
+        {
+          "id": "panida_thepkanjana",
+          "label": "Mrs. Panida Thepkanjana",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "thai_nvdr",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 14.63,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "chodthanawat",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 5.33,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "eastern_sugar",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 4.66,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thitinan_wattanavekin",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 4.09,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "kkp_self",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 4.01,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ],
+          "notes": "The IR page lists Kiatnakin Phatra Bank itself among major shareholders."
+        },
+        {
+          "source": "yp_inter",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 3.11,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 2.92,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 2.63,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ram",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 2.45,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "panida_thepkanjana",
+          "target": "kkp",
+          "relation": "shareholder_of",
+          "pctShares": 2.14,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "kkp_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tcap_ownership_map",
+      "focusSymbol": "TCAP",
+      "focusLabel": "Thanachart Capital Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "TCAP is a straightforward ownership-register candidate because the company IR page publishes a complete top-10 table with a current April 2026 snapshot.",
+          "The map is especially useful because it introduces a direct link from MBK into another SET50 financial name, while the rest of the register remains readable.",
+          "Compared with TTB, this gives a cleaner listed-parent view without needing any subsidiary expansion."
+        ],
+        "recommendedDefaultFilters": [
+          "show MBK first",
+          "hide nominee and custodian nodes by default",
+          "treat this as an incoming-shareholder map until downstream assets are added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "tcap",
+          "label": "Thanachart Capital Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TCAP",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "financial_group"
+          ]
+        },
+        {
+          "id": "mbk",
+          "label": "MBK Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "MBK",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "strategic_owner",
+            "conglomerate"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "somchai_limthilakun",
+          "label": "Mr. Somchai Limthilakun",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "dbs_nominees_pb",
+          "label": "DBS Bank Ltd. AC DBS Nominees-PB Clients",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "atinuj_tantivit",
+          "label": "Ms. Atinuj Tantivit",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "sommai_limthirakhun",
+          "label": "Mrs. Sommai Limthirakhun",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "atipong_tantivit",
+          "label": "Mr. Atipong Tantivit",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "niwes_hemvachiravarakorn",
+          "label": "Dr. Niwes Hemvachiravarakorn",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "mbk",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 24.9,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 8.033,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "somchai_limthilakun",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 2.546,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 2.432,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "dbs_nominees_pb",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 1.946,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 1.934,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "atinuj_tantivit",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 1.666,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sommai_limthirakhun",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 1.397,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "atipong_tantivit",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 1.354,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "niwes_hemvachiravarakorn",
+          "target": "tcap",
+          "relation": "shareholder_of",
+          "pctShares": 1.335,
+          "directness": "direct",
+          "asOfDate": "2026-04-17",
+          "sourceRefs": [
+            "tcap_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ktb_ownership_map",
+      "focusSymbol": "KTB",
+      "focusLabel": "Krung Thai Bank Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "KTB is a high-value ownership map because the bank has a very clear state-linked control structure, and the official shareholder page exposes a full top-10 register.",
+          "This map is useful as a contrast to more market-driven banks because the dominant owner block is far more concentrated.",
+          "The combination of state-linked funds, custodian nominees, and another Thai state bank gives the relations view a distinctive pattern."
+        ],
+        "recommendedDefaultFilters": [
+          "show state-linked holders first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a concentrated-control map until downstream entities are added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "ktb",
+          "label": "Krung Thai Bank Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "KTB",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "banking"
+          ]
+        },
+        {
+          "id": "fidf",
+          "label": "Financial Institutions Development Fund",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "anchor_holder"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bbhisl_nominees",
+          "label": "BBHISL Nominees Limited",
+          "kind": "custodian_bank",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "citibank_nominees_uob",
+          "label": "Citibank Nominees Singapore Pte Ltd-ART A/C United Overseas Bank Nominees (Private) Limited",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "government_savings_bank",
+          "label": "Government Savings Bank",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "nortrust_nominees_clients",
+          "label": "Nortrust Nominees Limited-NTC-Clients Account",
+          "kind": "custodian_bank",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bank_of_new_york_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "fidf",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 55.04,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 8.15,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 3.20,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 1.77,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 1.75,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "bbhisl_nominees",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 1.50,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "citibank_nominees_uob",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 1.28,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "government_savings_bank",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 0.79,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "nortrust_nominees_clients",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 0.78,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        },
+        {
+          "source": "bank_of_new_york_mellon",
+          "target": "ktb",
+          "relation": "shareholder_of",
+          "pctShares": 0.71,
+          "directness": "direct",
+          "asOfDate": "2026-04-16",
+          "sourceRefs": [
+            "ktb_shareholders_list_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cpn_ownership_map",
+      "focusSymbol": "CPN",
+      "focusLabel": "Central Pattana Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "CPN is easy to model because its IR page publishes a complete top-10 shareholder table with percentages and a concise overview block.",
+          "The ownership pattern is anchored by Central Holding and then transitions into the familiar Thai institutional and nominee layer.",
+          "This gives the relations view another consumer-facing group with a clear strategic parent."
+        ],
+        "recommendedDefaultFilters": [
+          "show Central Holding first",
+          "hide nominee and custodian nodes by default",
+          "treat this as an incoming-shareholder map until subsidiary detail is added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "cpn",
+          "label": "Central Pattana Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "CPN",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "retail_property"
+          ]
+        },
+        {
+          "id": "central_holding",
+          "label": "Central Holding Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "central_group"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "niti_osathanugrah",
+          "label": "Mr. Niti Osathanugrah",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "ubs_ag_sg",
+          "label": "UBS AG Singapore Branch",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "efg_bank_hk",
+          "label": "EFG Bank AG, Hong Kong Branch",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bank_of_new_york_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "central_holding",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 26.21,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 6.87,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 3.49,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 3.33,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "niti_osathanugrah",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 2.39,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 2.23,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ubs_ag_sg",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 1.93,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "efg_bank_hk",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 1.61,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bank_of_new_york_mellon",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 1.36,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "cpn",
+          "relation": "shareholder_of",
+          "pctShares": 1.22,
+          "directness": "direct",
+          "asOfDate": "2026-03-10",
+          "sourceRefs": [
+            "cpn_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lh_ownership_map",
+      "focusSymbol": "LH",
+      "focusLabel": "Land and Houses Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "LH is easy to model because the IR page publishes a full shareholder-structure table with percentages as of late April 2026.",
+          "The mix of a dominant founder, a linked private company, and a visible institutional layer creates a readable ownership map.",
+          "This also sets up a natural relationship bridge toward HMPRO for a later downstream-ownership pass."
+        ],
+        "recommendedDefaultFilters": [
+          "show founder and linked private company first",
+          "hide nominee and custodian nodes by default",
+          "add downstream property and retail affiliates in a later pass"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "lh",
+          "label": "Land and Houses Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "LH",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "property"
+          ]
+        },
+        {
+          "id": "anant_asavabhokin",
+          "label": "Mr. Anant Asavabhokin",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "anchor_holder",
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "mayland",
+          "label": "Mayland Co., Ltd.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "bank_of_new_york_mellon",
+          "label": "The Bank of New York Mellon",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "weerapat_punsak_udomsin",
+          "label": "Mr. Weerapat Punsak-Udomsin",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "adisorn_thananan_narapool",
+          "label": "Mr. Adisorn Thananan-narapool",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "kittipol_tuantong",
+          "label": "Mr. Kittipol Tuantong",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "state_street_europe",
+          "label": "State Street Europe Limited",
+          "kind": "custodian_bank",
+          "country": "IE",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "anant_asavabhokin",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 24.23,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 6.39,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "mayland",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 5.67,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 5.34,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "bank_of_new_york_mellon",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 2.60,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 1.60,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 0.98,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "weerapat_punsak_udomsin",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 0.85,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "adisorn_thananan_narapool",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 0.70,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "kittipol_tuantong",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 0.62,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        },
+        {
+          "source": "state_street_europe",
+          "target": "lh",
+          "relation": "shareholder_of",
+          "pctShares": 0.57,
+          "directness": "direct",
+          "asOfDate": "2026-04-30",
+          "sourceRefs": [
+            "lh_shareholder_structure_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "or_ownership_map",
+      "focusSymbol": "OR",
+      "focusLabel": "PTT Oil and Retail Business Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "OR is a clean control map because PTT remains the dominant strategic owner with a 75.00% stake.",
+          "The remaining top holders are mainly nominee, fund, cooperative, and state-linked accounts, which makes the ownership layer readable even without downstream holdings yet.",
+          "This gives the relations view a good example of a majority-controlled listed subsidiary inside the PTT ecosystem."
+        ],
+        "recommendedDefaultFilters": [
+          "show strategic parent and state-linked holders first",
+          "hide nominee and custodian nodes by default",
+          "treat this as an incoming-control map until OR downstream entities are added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "or",
+          "label": "PTT Oil and Retail Business Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "OR",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "energy",
+            "retail"
+          ]
+        },
+        {
+          "id": "ptt",
+          "label": "PTT Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "PTT",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "strategic_owner",
+            "listed_parent"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "federation_savings_credit_coops",
+          "label": "The Federation of Savings and Credit Cooperatives of Thailand Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cooperative",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "egat_saving_credit_coop",
+          "label": "Electricity Generating Authority of Thailand Saving and Credit Cooperative Limited",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cooperative",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "bnp_paribas_new_york_branch",
+          "label": "BNP Paribas New York Branch",
+          "kind": "custodian_bank",
+          "country": "US",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "weerapat_punsak_udomsin",
+          "label": "Mr. Weerapat Punsak-Udomsin",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "mea_union_saving_credit_coop",
+          "label": "Metropolitan Electricity Authority State Enterprise Union Saving and Credit Coop.",
+          "kind": "private_company",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "cooperative",
+            "institutional_owner"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "ptt",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 75.0,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 1.71,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 1.57,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.87,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "federation_savings_credit_coops",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.63,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "egat_saving_credit_coop",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.62,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.57,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "bnp_paribas_new_york_branch",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.35,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "weerapat_punsak_udomsin",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.24,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "mea_union_saving_credit_coop",
+          "target": "or",
+          "relation": "shareholder_of",
+          "pctShares": 0.24,
+          "directness": "direct",
+          "asOfDate": "2026-02-24",
+          "sourceRefs": [
+            "or_major_shareholders_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tu_ownership_map",
+      "focusSymbol": "TU",
+      "focusLabel": "Thai Union Group Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "TU works well because the official shareholder page separates family blocks, treasury shares, institutional holders, and nominee accounts clearly.",
+          "The map helps contrast a founder-influenced consumer exporter against the state-linked and bank-heavy names already in the dataset.",
+          "Even without downstream subsidiaries yet, the incoming layer already shows meaningful concentration and investor mix."
+        ],
+        "recommendedDefaultFilters": [
+          "show family and strategic blocks first",
+          "group treasury and company-held shares as internal capital",
+          "hide nominee and custodian nodes by default"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "tu",
+          "label": "Thai Union Group Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "TU",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "consumer",
+            "food_export"
+          ]
+        },
+        {
+          "id": "chansiri_family",
+          "label": "Chansiri Family",
+          "kind": "family",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "family_block",
+            "anchor_holder"
+          ]
+        },
+        {
+          "id": "tu_treasury",
+          "label": "Thai Union Group",
+          "kind": "listed_company",
+          "symbol": "TU",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "treasury_shares",
+            "internal_capital"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Co., Ltd.",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "niruttinanon_family",
+          "label": "Niruttinanon Family",
+          "kind": "family",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "family_block",
+            "strategic_owner"
+          ]
+        },
+        {
+          "id": "mufg_morgan_stanley_sec",
+          "label": "Mitsubishi UFJ Morgan Stanley Securities Co., Ltd.",
+          "kind": "custodian_bank",
+          "country": "JP",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "social_security_office",
+          "label": "Social Security Office",
+          "kind": "state_agency",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "boonmechote_family",
+          "label": "Boonmechote Family",
+          "kind": "family",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "family_block"
+          ]
+        },
+        {
+          "id": "tin_shu_chan",
+          "label": "Mr. Tin Shu Chan",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner"
+          ]
+        },
+        {
+          "id": "bank_of_ayudhya",
+          "label": "Bank of Ayudhya PCL.",
+          "kind": "listed_company",
+          "symbol": "BAY",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "institutional_owner",
+            "listed_company"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "chansiri_family",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 17.7,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "tu_treasury",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 9.4,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 8.7,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "niruttinanon_family",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 7.8,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "mufg_morgan_stanley_sec",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 5.6,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "social_security_office",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 3.4,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 2.5,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "boonmechote_family",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 1.8,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "tin_shu_chan",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 1.6,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        },
+        {
+          "source": "bank_of_ayudhya",
+          "target": "tu",
+          "relation": "shareholder_of",
+          "pctShares": 1.5,
+          "directness": "direct",
+          "asOfDate": "2026-03-04",
+          "sourceRefs": [
+            "tu_shareholding_structure_2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sawad_ownership_map",
+      "focusSymbol": "SAWAD",
+      "focusLabel": "Srisawad Corporation Public Company Limited",
+      "assessment": {
+        "worksForModel": true,
+        "why": [
+          "SAWAD fits the model because the official register shows a clear founder-family ownership block alongside multiple foreign nominee and custodian holders.",
+          "The map gives good variety relative to banks and state-linked names because the controlling layer is much more entrepreneur-led.",
+          "This is also a useful example where nominee and offshore custody nodes carry a large share of the free float."
+        ],
+        "recommendedDefaultFilters": [
+          "show founder-family holders first",
+          "hide nominee and custodian nodes by default",
+          "treat this as a concentrated family-control map until downstream entities are added"
+        ]
+      },
+      "nodes": [
+        {
+          "id": "sawad",
+          "label": "Srisawad Corporation Public Company Limited",
+          "kind": "listed_company",
+          "symbol": "SAWAD",
+          "market": "SET",
+          "country": "TH",
+          "displayShape": "circle",
+          "tags": [
+            "focus",
+            "finance"
+          ]
+        },
+        {
+          "id": "thida_kaewbootta",
+          "label": "Miss Thida Kaewbootta",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner",
+            "family_block"
+          ]
+        },
+        {
+          "id": "ubs_ag_sg_clients",
+          "label": "UBS AG Singapore Branch - For Clients' Accounts",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "duangjai_kaewbootta",
+          "label": "Ms. Duangjai Kaewbootta",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner",
+            "family_block"
+          ]
+        },
+        {
+          "id": "thai_nvdr",
+          "label": "Thai NVDR Company Limited",
+          "kind": "nominee",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "jariya_kaewbootta",
+          "label": "Mrs. Jariya Kaewbootta",
+          "kind": "person",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "individual_owner",
+            "family_block"
+          ]
+        },
+        {
+          "id": "citi_nominees_cathay",
+          "label": "CITI (Nominees) Limited-Cathay United Bank-Financial and Accounting",
+          "kind": "custodian_bank",
+          "country": "HK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees_type_a",
+          "label": "South East Asia UK (Type A) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "lgt_bank_singapore",
+          "label": "LGT Bank (Singapore) Ltd",
+          "kind": "custodian_bank",
+          "country": "SG",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        },
+        {
+          "id": "vayupak_1",
+          "label": "Vayupak Fund 1",
+          "kind": "fund",
+          "country": "TH",
+          "displayShape": "rect",
+          "tags": [
+            "state_linked",
+            "institutional_owner"
+          ]
+        },
+        {
+          "id": "sea_uk_nominees",
+          "label": "South East Asia UK (Type C) Nominees Limited",
+          "kind": "nominee",
+          "country": "UK",
+          "displayShape": "rect",
+          "tags": [
+            "intermediary"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "thida_kaewbootta",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 16.18,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "ubs_ag_sg_clients",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 11.74,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "duangjai_kaewbootta",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 8.14,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "thai_nvdr",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 6.89,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "jariya_kaewbootta",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 5.94,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "citi_nominees_cathay",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 4.6,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees_type_a",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 4.57,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "lgt_bank_singapore",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 2.91,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "vayupak_1",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 2.4,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
+        },
+        {
+          "source": "sea_uk_nominees",
+          "target": "sawad",
+          "relation": "shareholder_of",
+          "pctShares": 2.19,
+          "directness": "direct",
+          "asOfDate": "2026-03-13",
+          "sourceRefs": [
+            "sawad_major_shareholders_2026"
+          ]
         }
       ]
     }
