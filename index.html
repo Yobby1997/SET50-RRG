@@ -99,7 +99,6 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 .rel-note{font-size:11px;color:var(--text3);line-height:1.6}
 .rel-link{color:#9ec5ff;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(158,197,255,.4);text-underline-offset:2px}
 .rel-link:hover{color:#cfe1ff}
-.rel-pill{font-size:9px;padding:1px 5px;border-radius:999px;border:1px solid rgba(50,120,216,.35);color:#9ec5ff;background:rgba(50,120,216,.12)}
 
 /* Overlay */
 .ov{position:absolute;inset:0;background:rgba(15,17,23,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:50;border-radius:10px}
@@ -1250,8 +1249,7 @@ function buildSb(){
   document.getElementById('sbStocks').innerHTML=sorted.map(s=>{
     const q=quad(s.last.rsRatio,s.last.rsMom);
     const qc={Leading:'ql',Weakening:'qw',Lagging:'qg',Improving:'qi'}[q];
-    const rel=hasRelationships(s.name)?`<span class="rel-pill">Rel</span>`:'';
-    return`<div class="si${sel===s.name?' sel':''}" data-n="${s.name}" onclick="selStock('${s.name}')"><div class="sdot" style="background:${s.color}"></div><span class="stk">${s.name}</span>${rel}<span class="sq ${qc}">${q[0]}</span></div>`;
+    return`<div class="si${sel===s.name?' sel':''}" data-n="${s.name}" onclick="selStock('${s.name}')"><div class="sdot" style="background:${s.color}"></div><span class="stk">${s.name}</span><span class="sq ${qc}">${q[0]}</span></div>`;
   }).join('');
 
   const sm={};
