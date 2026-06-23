@@ -5,7 +5,7 @@ Static Relative Rotation Graph for the SET50 universe.
 ## How it works
 
 - `index.html` is the GitHub Pages frontend.
-- `generate_data.py` builds `data-daily.json`, `data-weekly.json`, and `data-monthly.json`.
+- `generate_data.py` builds `data-5m.json`, `data-15m.json`, `data-daily.json`, `data-weekly.json`, and `data-monthly.json`.
 - `.github/workflows/update-static-data.yml` refreshes those snapshots on schedule or on manual dispatch.
 
 ## Local refresh

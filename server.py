@@ -20,6 +20,8 @@ SET50 = [
 ]
 
 TF = {
+    "5m":      {"period": "10d",  "interval": "5m"},
+    "15m":     {"period": "30d",  "interval": "15m"},
     "daily":   {"period": "6mo",  "interval": "1d"},
     "weekly":  {"period": "2y",   "interval": "1wk"},
     "monthly": {"period": "5y",   "interval": "1mo"},

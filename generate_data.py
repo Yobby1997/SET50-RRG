@@ -9,6 +9,8 @@ from server import fetch_prices
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT_FILES = {
+    "5m": ROOT / "data-5m.json",
+    "15m": ROOT / "data-15m.json",
     "daily": ROOT / "data-daily.json",
     "weekly": ROOT / "data-weekly.json",
     "monthly": ROOT / "data-monthly.json",
@@ -46,7 +48,7 @@ def main() -> None:
     shared_sizes = daily_payload["data"].get("__sizes__", {})
     write_json(OUTPUT_FILES["daily"], daily_payload)
 
-    for tf in ("weekly", "monthly"):
+    for tf in ("5m", "15m", "weekly", "monthly"):
         payload = build_payload(tf, shared_sizes=shared_sizes)
         write_json(OUTPUT_FILES[tf], payload)
 

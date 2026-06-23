@@ -153,6 +153,8 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
     <div style="display:flex;align-items:center;gap:6px">
       <span class="cl">Timeframe</span>
       <div class="bg">
+        <button          id="tf-5m"     onclick="setTF('5m')">5m</button>
+        <button          id="tf-15m"    onclick="setTF('15m')">15m</button>
         <button class="on" id="tf-daily"   onclick="setTF('daily')">Daily</button>
         <button          id="tf-weekly"  onclick="setTF('weekly')">Weekly</button>
         <button          id="tf-monthly" onclick="setTF('monthly')">Monthly</button>
@@ -258,6 +260,8 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 
 <script>
 const DATA_FILES = {
+  '5m':'./data-5m.json',
+  '15m':'./data-15m.json',
   daily:'./data-daily.json',
   weekly:'./data-weekly.json',
   monthly:'./data-monthly.json'
@@ -290,7 +294,7 @@ const SC = {
 };
 const QC = {Leading:'#1a9e6e',Weakening:'#c47f12',Lagging:'#d84040',Improving:'#3278d8'};
 const QB = {Leading:'rgba(26,158,110,.07)',Weakening:'rgba(196,127,18,.07)',Lagging:'rgba(216,64,64,.07)',Improving:'rgba(50,120,216,.07)'};
-const TF_CONTEXT = {daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
+const TF_CONTEXT = {'5m':'5m · 10 days','15m':'15m · 30 days',daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
 const SIZE_META = {
   weight:{key:'set50_weight',label:'SET50 Weight',short:'Weight'},
   market_cap:{key:'market_cap',label:'Market Cap',short:'MCap'},
@@ -953,7 +957,7 @@ async function loadData(){
   resetChartZoom(false);
   await ensureRelationshipsLoaded().catch(()=>{});
 
-  const TF_LABEL={daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
+  const TF_LABEL={'5m':'5m · 10 days','15m':'15m · 30 days',daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
 
   ov.innerHTML=`
     <div class="spin" style="width:26px;height:26px;border-width:3px;display:block"></div>
