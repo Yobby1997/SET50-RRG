@@ -42,6 +42,25 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 .btn:disabled{opacity:.4;cursor:default}
 .spin{width:12px;height:12px;border:2px solid var(--text3);border-top-color:var(--blue);border-radius:50%;animation:rot .7s linear infinite;display:none}
 @keyframes rot{to{transform:rotate(360deg)}}
+.impact-wrap{position:relative}
+.impact-pop{position:fixed;top:102px;right:18px;width:min(390px,calc(100vw - 24px));max-height:min(620px,calc(100dvh - 130px));display:none;flex-direction:column;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);box-shadow:0 18px 48px rgba(0,0,0,.55);z-index:300;overflow:hidden}
+.impact-pop.open{display:flex}
+.impact-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.impact-title{font-size:13px;font-weight:600}
+.impact-summary{font-size:11px;color:var(--text2);margin-top:2px}
+.impact-close{margin-left:auto;width:28px;height:28px;padding:0;justify-content:center;font-size:18px}
+.impact-actions{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.impact-input{width:62px;height:29px;background:var(--bg);border:1px solid var(--border2);border-radius:5px;color:var(--text);padding:0 8px;font:inherit}
+.impact-list{overflow:auto;padding:5px 8px 9px}
+.impact-list::-webkit-scrollbar{width:4px}
+.impact-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.impact-row{display:grid;grid-template-columns:22px 28px 1fr auto;align-items:center;gap:7px;min-height:31px;padding:3px 6px;border-radius:5px;cursor:pointer}
+.impact-row:hover{background:var(--bg3)}
+.impact-row input{width:14px;height:14px;accent-color:var(--blue)}
+.impact-rank{font-size:10px;color:var(--text3);text-align:right}
+.impact-ticker{font-size:12px;font-weight:600}
+.impact-weight{font-size:11px;color:var(--text2);font-variant-numeric:tabular-nums}
+@media(max-width:720px){.impact-pop{top:116px;right:12px;max-height:calc(100dvh - 140px)}}
 
 /* Layout */
 .main{display:flex;flex:1;overflow:hidden;min-height:0}
@@ -196,6 +215,10 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
       </div>
     </div>
     <div class="sep"></div>
+    <div class="impact-wrap">
+      <button class="btn" id="impactBtn" type="button" onclick="toggleImpactPanel()" aria-expanded="false">Impact: Top 20</button>
+    </div>
+    <div class="sep"></div>
     <button class="btn" type="button" onclick="resetChartZoom()" style="color:var(--text)">Reset Zoom</button>
     <div class="sep"></div>
     <button class="btn" id="loadBtn" onclick="loadData()">
@@ -256,6 +279,24 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
   </div>
 </div>
 
+<div class="impact-pop" id="impactPop">
+  <div class="impact-head">
+    <div>
+      <div class="impact-title">SET50 Impact Universe</div>
+      <div class="impact-summary" id="impactSummary">Top 20 selected</div>
+    </div>
+    <button class="btn impact-close" type="button" title="Close" aria-label="Close" onclick="toggleImpactPanel(false)">×</button>
+  </div>
+  <div class="impact-actions">
+    <span class="cl">Top</span>
+    <input class="impact-input" id="impactTopInput" type="number" min="1" max="50" value="20" aria-label="Top impact count">
+    <button class="btn" type="button" onclick="applyImpactTop()">Apply</button>
+    <button class="btn" type="button" onclick="selectAllImpact()">All</button>
+    <button class="btn" type="button" onclick="clearImpactSelection()">None</button>
+  </div>
+  <div class="impact-list" id="impactList"></div>
+</div>
+
 <div class="tt" id="tt"></div>
 
 <script>
@@ -270,7 +311,7 @@ const REL_FILE = './relationships.json';
 const REL_VIEWBOX = {w:1200,h:720};
 
 const TICKERS = [
-  {t:'ADVANC',s:'Telecom'},{t:'AOT',s:'Transport'},{t:'AWC',s:'Property'},{t:'BANPU',s:'Energy'},
+  {t:'ADVANC',s:'Telecom'},{t:'AOT',s:'Transport'},{t:'AWC',s:'Property'},{t:'BCP',s:'Energy'},
   {t:'BBL',s:'Banking'},{t:'BDMS',s:'Healthcare'},{t:'BEM',s:'Transport'},{t:'BH',s:'Healthcare'},
   {t:'BJC',s:'Commerce'},{t:'BTS',s:'Transport'},{t:'CBG',s:'Food & Bev'},{t:'CCET',s:'Electronics'},
   {t:'CENTEL',s:'Hotels'},{t:'COM7',s:'Commerce'},{t:'CPALL',s:'Commerce'},{t:'CPF',s:'Food & Bev'},
@@ -294,6 +335,19 @@ const SC = {
 };
 const QC = {Leading:'#1a9e6e',Weakening:'#c47f12',Lagging:'#d84040',Improving:'#3278d8'};
 const QB = {Leading:'rgba(26,158,110,.07)',Weakening:'rgba(196,127,18,.07)',Lagging:'rgba(216,64,64,.07)',Improving:'rgba(50,120,216,.07)'};
+const IMPACT_RANK = [
+  {t:'DELTA',w:12.5},{t:'ADVANC',w:7.8},{t:'PTT',w:8.5},{t:'BDMS',w:4.8},{t:'AOT',w:7.4},
+  {t:'GULF',w:5.8},{t:'CPALL',w:5.4},{t:'PTTEP',w:4.4},{t:'SCB',w:3.8},{t:'KBANK',w:3.6},
+  {t:'BBL',w:3.4},{t:'SCC',w:3.2},{t:'CPN',w:2.8},{t:'TRUE',w:2.5},{t:'KTB',w:2.2},
+  {t:'CRC',w:1.8},{t:'BH',w:1.7},{t:'GPSC',w:1.6},{t:'MINT',w:1.5},{t:'HMPRO',w:1.4},
+  {t:'TOP',w:1.3},{t:'CPF',w:1.2},{t:'IVL',w:1.1},{t:'SCGP',w:1},{t:'BEM',w:.95},
+  {t:'EGCO',w:.9},{t:'WHA',w:.85},{t:'OR',w:.8},{t:'TTB',w:.75},{t:'PTTGC',w:.7},
+  {t:'TLI',w:.65},{t:'TU',w:.6},{t:'KTC',w:.55},{t:'LH',w:.5},{t:'TISCO',w:.48},
+  {t:'MTC',w:.45},{t:'BCP',w:.42},{t:'CENTEL',w:.4},{t:'CBG',w:.38},{t:'SAWAD',w:.35},
+  {t:'COM7',w:.32},{t:'BJC',w:.3},{t:'RATCH',w:.28},{t:'KKP',w:.25},{t:'TCAP',w:.22},
+  {t:'TIDLOR',w:.2},{t:'OSP',w:.18},{t:'AWC',w:.15},{t:'CCET',w:.12},{t:'BTS',w:.1}
+];
+const IMPACT_STORAGE_KEY = 'set50-rrg-impact-selection-v1';
 const TF_CONTEXT = {'5m':'5m · 10 days','15m':'15m · 30 days',daily:'Daily · 6 months',weekly:'Weekly · 2 years',monthly:'Monthly · 5 years'};
 const SIZE_META = {
   weight:{key:'set50_weight',label:'SET50 Weight',short:'Weight'},
@@ -311,6 +365,7 @@ const REL_SNAPSHOT_DATE = '2026-06-21';
 
 let tf='daily', tail=6, view='all', sizeMode='weight';
 let results=[], hidden=new Set(), sel=null, hov=null;
+let impactSelection=loadImpactSelection();
 let cv, cx;
 let relData=null, relMaps=new Map(), relMode=false, currentRel=null, currentRelSymbol=null;
 let relNodeGraphs=new Map(), relDerivedCache=new Map();
@@ -323,6 +378,74 @@ function setTF(v){tf=v;document.querySelectorAll('[id^="tf-"]').forEach(b=>b.cla
 function setTail(v){tail=v;resetChartZoom(false);document.querySelectorAll('[id^="tl-"]').forEach(b=>b.classList.remove('on'));document.getElementById('tl-'+v).classList.add('on');if(results.length){compute();draw();buildSb()}}
 function setView(v){view=v;resetChartZoom(false);document.querySelectorAll('[id^="vw-"]').forEach(b=>b.classList.remove('on'));document.getElementById('vw-'+v).classList.add('on');if(results.length)draw()}
 function setSizeMode(v){sizeMode=v;document.querySelectorAll('[id^="sz-"]').forEach(b=>b.classList.remove('on'));document.getElementById('sz-'+v).classList.add('on');updateTfNote();if(results.length)draw()}
+function loadImpactSelection(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(IMPACT_STORAGE_KEY));
+    if(Array.isArray(saved)) return new Set(saved.filter(t=>IMPACT_RANK.some(item=>item.t===t)));
+  }catch(_e){}
+  return new Set(IMPACT_RANK.slice(0,20).map(item=>item.t));
+}
+function saveImpactSelection(){
+  localStorage.setItem(IMPACT_STORAGE_KEY,JSON.stringify([...impactSelection]));
+}
+function getImpactPresetCount(){
+  for(let count=0;count<=IMPACT_RANK.length;count++){
+    const expected=new Set(IMPACT_RANK.slice(0,count).map(item=>item.t));
+    if(expected.size===impactSelection.size&&[...expected].every(t=>impactSelection.has(t))) return count;
+  }
+  return null;
+}
+function updateImpactControls(){
+  const preset=getImpactPresetCount();
+  const label=preset===0?'None':preset===IMPACT_RANK.length?'All':preset!=null?`Top ${preset}`:'Custom';
+  const available=results.filter(item=>impactSelection.has(item.name)).length;
+  document.getElementById('impactBtn').textContent=`Impact: ${label}`;
+  document.getElementById('impactSummary').textContent=results.length
+    ? `${impactSelection.size} selected · ${available} available in current data`
+    : `${impactSelection.size} selected`;
+  if(preset!=null&&preset>0) document.getElementById('impactTopInput').value=preset;
+  document.querySelectorAll('#impactList input[data-ticker]').forEach(input=>{
+    input.checked=impactSelection.has(input.dataset.ticker);
+  });
+}
+function buildImpactList(){
+  document.getElementById('impactList').innerHTML=IMPACT_RANK.map((item,index)=>`
+    <label class="impact-row">
+      <input type="checkbox" data-ticker="${item.t}" ${impactSelection.has(item.t)?'checked':''} onchange="toggleImpactTicker('${item.t}',this.checked)">
+      <span class="impact-rank">${index+1}</span>
+      <span class="impact-ticker">${item.t}</span>
+      <span class="impact-weight">${item.w.toFixed(item.w<1?2:1)}%</span>
+    </label>`).join('');
+  updateImpactControls();
+}
+function toggleImpactPanel(force){
+  const pop=document.getElementById('impactPop');
+  const open=typeof force==='boolean'?force:!pop.classList.contains('open');
+  pop.classList.toggle('open',open);
+  document.getElementById('impactBtn').setAttribute('aria-expanded',String(open));
+}
+function applyImpactSelection(next){
+  impactSelection=new Set(next);
+  saveImpactSelection();
+  if(sel&&!impactSelection.has(sel)) sel=null;
+  hov=null;
+  resetChartZoom(false);
+  updateImpactControls();
+  if(results.length){draw();buildSb();buildLeg();updateTfNote()}
+}
+function applyImpactTop(){
+  const input=document.getElementById('impactTopInput');
+  const count=Math.max(1,Math.min(50,Number.parseInt(input.value,10)||20));
+  input.value=count;
+  applyImpactSelection(IMPACT_RANK.slice(0,count).map(item=>item.t));
+}
+function selectAllImpact(){applyImpactSelection(IMPACT_RANK.map(item=>item.t))}
+function clearImpactSelection(){applyImpactSelection([])}
+function toggleImpactTicker(ticker,checked){
+  const next=new Set(impactSelection);
+  checked?next.add(ticker):next.delete(ticker);
+  applyImpactSelection(next);
+}
 function getMinHistoryPoints(){return tf==='monthly'?10:20}
 function getSeriesTimeKey(ts){
   if(tf!=='monthly') return String(ts);
@@ -334,7 +457,7 @@ function updateTfNote(){
   const note=document.getElementById('tfNote');
   const selected=sel?` • Selected: ${sel}`:'';
   const mode=relMode?` • Mode: Relations`:` • Mode: Price`;
-  if(note) note.textContent=`Size: ${SIZE_META[sizeMode].short}${selected}${mode}`;
+  if(note) note.textContent=`Impact: ${impactSelection.size} • Size: ${SIZE_META[sizeMode].short}${selected}${mode}`;
 }
 function updateModeButtons(){
   document.querySelectorAll('[id^="md-"]').forEach(b=>b.classList.remove('on'));
@@ -876,7 +999,7 @@ function makeRadiusScaler(items){
   };
 }
 function getVisibleResults(){
-  return results.filter(s=>!hidden.has(s.sector));
+  return results.filter(s=>impactSelection.has(s.name)&&!hidden.has(s.sector));
 }
 function getBaseExtents(vis){
   let ar=[],am=[];
@@ -1020,7 +1143,7 @@ async function loadData(){
     if(!results.length) throw new Error('ไม่มีหุ้นที่คำนวณได้');
 
     ov.classList.add('hide');
-    draw(); buildSb(); buildLeg();
+    draw(); buildSb(); buildLeg(); updateImpactControls();
     note.textContent='';
     const loaded=results.length;
     document.getElementById('lastUpd').textContent=`อัปเดต ${new Date().toLocaleTimeString('th-TH')} · ${TF_LABEL[tf]} · ${loaded} ตัว`;
@@ -1082,6 +1205,14 @@ function draw(){
   if(!results.length)return;
 
   const vis=getVisibleResults();
+  if(!vis.length){
+    cx.fillStyle='rgba(255,255,255,.42)';
+    cx.font='13px Inter,system-ui';
+    cx.textAlign='center';
+    cx.fillText('Select stocks from the Impact control',W/2,H/2);
+    ['cl','cw2','cg','ci'].forEach(id=>document.getElementById(id).textContent='0');
+    return;
+  }
   const ext=getCurrentExtents(vis);
   if(!ext)return;
   const {r0,r1,m0,m1}=ext;
@@ -1249,7 +1380,8 @@ async function onClick(){
 }
 
 function buildSb(){
-  const sorted=[...results].sort((a,b)=>{const o={Leading:0,Improving:1,Weakening:2,Lagging:3};return(o[quad(a.last.rsRatio,a.last.rsMom)]||0)-(o[quad(b.last.rsRatio,b.last.rsMom)]||0)});
+  const visible=getVisibleResults();
+  const sorted=[...visible].sort((a,b)=>{const o={Leading:0,Improving:1,Weakening:2,Lagging:3};return(o[quad(a.last.rsRatio,a.last.rsMom)]||0)-(o[quad(b.last.rsRatio,b.last.rsMom)]||0)});
   document.getElementById('sbStocks').innerHTML=sorted.map(s=>{
     const q=quad(s.last.rsRatio,s.last.rsMom);
     const qc={Leading:'ql',Weakening:'qw',Lagging:'qg',Improving:'qi'}[q];
@@ -1257,7 +1389,7 @@ function buildSb(){
   }).join('');
 
   const sm={};
-  for(const s of results){if(!sm[s.sector])sm[s.sector]={color:s.color,ct:{Leading:0,Weakening:0,Lagging:0,Improving:0},tks:[]};sm[s.sector].ct[quad(s.last.rsRatio,s.last.rsMom)]++;sm[s.sector].tks.push(s.name)}
+  for(const s of visible){if(!sm[s.sector])sm[s.sector]={color:s.color,ct:{Leading:0,Weakening:0,Lagging:0,Improving:0},tks:[]};sm[s.sector].ct[quad(s.last.rsRatio,s.last.rsMom)]++;sm[s.sector].tks.push(s.name)}
   document.getElementById('sbSectors').innerHTML=Object.entries(sm).map(([sec,d])=>{
     const tot=d.tks.length;
     const bars=Object.entries(d.ct).map(([q,n])=>n?`<div class="scbs" style="background:${QC[q]};width:${n/tot*100}%"></div>`:'').join('');
@@ -1284,7 +1416,7 @@ function selStock(n){
   document.querySelectorAll('.si').forEach(el=>{el.classList.remove('sel');if(sel&&el.dataset.n===sel)el.classList.add('sel')});
 }
 function buildLeg(){
-  const secs=[...new Set(results.map(s=>s.sector))];
+  const secs=[...new Set(results.filter(s=>impactSelection.has(s.name)).map(s=>s.sector))];
   document.getElementById('leg').innerHTML=secs.map(s=>`<span class="li${hidden.has(s)?' dim':''}" onclick="toggleSec('${s}')"><span class="ld" style="background:${SC[s]||'#888'}"></span>${s}</span>`).join('');
 }
 function toggleSec(s){hidden.has(s)?hidden.delete(s):hidden.add(s);buildLeg();draw()}
@@ -1808,6 +1940,12 @@ async function onClick(){
 }
 
 window.addEventListener('resize',handleResize);
+document.addEventListener('keydown',event=>{if(event.key==='Escape')toggleImpactPanel(false)});
+document.addEventListener('click',event=>{
+  const pop=document.getElementById('impactPop');
+  if(pop.classList.contains('open')&&!pop.contains(event.target)&&!document.getElementById('impactBtn').contains(event.target)) toggleImpactPanel(false);
+});
+buildImpactList();
 updateModeButtons();
 updateTfNote();
 checkServer();

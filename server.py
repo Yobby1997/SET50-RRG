@@ -10,7 +10,7 @@ from urllib.parse import urlparse, parse_qs
 import yfinance as yf
 
 SET50 = [
-    "ADVANC.BK","AOT.BK","AWC.BK","BANPU.BK","BBL.BK","BDMS.BK","BEM.BK","BH.BK",
+    "ADVANC.BK","AOT.BK","AWC.BK","BCP.BK","BBL.BK","BDMS.BK","BEM.BK","BH.BK",
     "BJC.BK","BTS.BK","CBG.BK","CCET.BK","CENTEL.BK","COM7.BK","CPALL.BK","CPF.BK",
     "CPN.BK","CRC.BK","DELTA.BK","EGCO.BK","GPSC.BK","GULF.BK","HMPRO.BK","IVL.BK",
     "KBANK.BK","KKP.BK","KTB.BK","KTC.BK","LH.BK","MINT.BK","MTC.BK","OR.BK",

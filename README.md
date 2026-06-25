@@ -2,6 +2,9 @@
 
 Static Relative Rotation Graph for the SET50 universe.
 
+The chart opens with the top 20 stocks from the configured SET50 impact ranking.
+Users can change the Top N value or select individual stocks from the Impact control.
+
 ## How it works
 
 - `index.html` is the GitHub Pages frontend.
