@@ -147,6 +147,46 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 .ttr{display:flex;justify-content:space-between;gap:18px;font-size:12px;margin-bottom:2px}
 .ttk{color:var(--text2)}.ttv{font-weight:500}
 
+/* Sector Power */
+.sp-panel{position:absolute;right:14px;bottom:14px;width:min(760px,calc(100% - 28px));max-height:min(78%,720px);display:none;flex-direction:column;background:rgba(24,28,37,.96);border:1px solid var(--border2);border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,.5);z-index:18;overflow:hidden}
+.sp-panel.open{display:flex}
+.sp-head{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.sp-title{font-size:14px;font-weight:700}
+.sp-sub{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.5}
+.sp-close{margin-left:auto;width:28px;height:28px;padding:0;justify-content:center}
+.sp-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px 14px;border-bottom:1px solid var(--border)}
+.sp-kpi{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:8px;padding:8px;min-width:0}
+.sp-k{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-v{font-size:14px;font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-list{overflow:auto;padding:6px 10px 10px}
+.sp-row,.sp-headrow{display:grid;grid-template-columns:34px minmax(92px,.75fr) minmax(150px,1.4fr) 58px 58px 58px 64px minmax(92px,.85fr);gap:8px;align-items:center}
+.sp-headrow{position:sticky;top:0;background:rgba(24,28,37,.98);z-index:1;color:var(--text2);font-size:10px;text-transform:uppercase;letter-spacing:.04em;padding:6px 4px;border-bottom:1px solid var(--border)}
+.sp-row{min-height:42px;padding:7px 4px;border-bottom:1px solid var(--border);font-size:11px}
+.sp-row:last-child{border-bottom:0}
+.sp-rank{color:var(--text3);font-variant-numeric:tabular-nums}
+.sp-sec{display:flex;align-items:center;gap:7px;min-width:0;font-weight:600}
+.sp-dot{width:8px;height:8px;border-radius:50%;background:var(--sec-color);flex-shrink:0}
+.sp-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-meter{display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:7px;align-items:center}
+.sp-track{height:11px;border-radius:999px;background:linear-gradient(90deg,rgba(216,64,64,.14) 0 50%,rgba(26,158,110,.15) 50% 100%);position:relative;overflow:hidden}
+.sp-zero{position:absolute;left:50%;top:0;width:1px;height:100%;background:var(--border2)}
+.sp-fill{position:absolute;top:0;height:100%;border-radius:999px;background:var(--sec-color)}
+.sp-fill.pos{left:50%}
+.sp-fill.neg{right:50%}
+.sp-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sp-good{color:#6bd6a3}.sp-bad{color:#e57b7b}.sp-muted{color:var(--text2)}
+.sp-leaders{color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-note{padding:8px 14px;border-top:1px solid var(--border);font-size:10px;color:var(--text3);line-height:1.5}
+@media(max-width:900px){
+  .sp-panel{left:8px;right:8px;bottom:8px;width:auto;max-height:82%}
+  .sp-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sp-headrow{display:none}
+  .sp-row{grid-template-columns:30px minmax(92px,1fr) 56px 56px;gap:7px}
+  .sp-meter{grid-column:1/-1;order:8}
+  .sp-row .sp-num:nth-of-type(n+4){display:none}
+  .sp-leaders{grid-column:1/-1}
+}
+
 /* Error box */
 .err-box{background:rgba(216,64,64,.1);border:1px solid rgba(216,64,64,.3);border-radius:var(--r);padding:12px 16px;max-width:340px;font-size:13px;color:var(--text2);line-height:1.7;text-align:center}
 .err-box b{color:var(--red)}
@@ -219,6 +259,8 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
       <button class="btn" id="impactBtn" type="button" onclick="toggleImpactPanel()" aria-expanded="false">Impact: Top 20</button>
     </div>
     <div class="sep"></div>
+    <button class="btn" id="sectorPowerBtn" type="button" onclick="toggleSectorPower()" aria-expanded="false">Sector Power</button>
+    <div class="sep"></div>
     <button class="btn" type="button" onclick="resetChartZoom()" style="color:var(--text)">Reset Zoom</button>
     <div class="sep"></div>
     <button class="btn" id="loadBtn" onclick="loadData()">
@@ -243,6 +285,23 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
     <div class="cp">
       <div class="cw" id="cw">
         <canvas id="cv"></canvas>
+        <div class="sp-panel" id="sectorPowerPanel">
+          <div class="sp-head">
+            <div>
+              <div class="sp-title">Sector Power Ranking</div>
+              <div class="sp-sub" id="sectorPowerSub">Load daily data to rank latest sector acceleration.</div>
+            </div>
+            <button class="btn sp-close" type="button" aria-label="Close Sector Power" onclick="toggleSectorPower(false)">x</button>
+          </div>
+          <div class="sp-kpis" id="sectorPowerKpis"></div>
+          <div class="sp-list">
+            <div class="sp-headrow">
+              <span>#</span><span>Sector</span><span>Power</span><span>1W</span><span>Accel</span><span>Breadth</span><span>Vol</span><span>Leaders</span>
+            </div>
+            <div id="sectorPowerRows"></div>
+          </div>
+          <div class="sp-note">Power = Heat + Breadth boost + Volume boost. Heat compares latest 5 bars with the 20-bar pace. Breadth checks how many stocks in the sector are positive. Volume thrust compares latest 5-bar value with the prior 20-bar average.</div>
+        </div>
         <div class="rel-view" id="relView">
           <div class="rel-top">
             <div class="rel-actions">
@@ -364,7 +423,7 @@ const REL_DEFAULT_LANES = {
 const REL_SNAPSHOT_DATE = '2026-06-21';
 
 let tf='daily', tail=6, view='all', sizeMode='weight';
-let results=[], hidden=new Set(), sel=null, hov=null;
+let results=[], sectorPowerData=[], hidden=new Set(), sel=null, hov=null;
 let impactSelection=loadImpactSelection();
 let cv, cx;
 let relData=null, relMaps=new Map(), relMode=false, currentRel=null, currentRelSymbol=null;
@@ -937,6 +996,7 @@ async function setPanelMode(mode,symbol){
       document.querySelector('.sb2').style.display='none';
       document.getElementById('leg').style.display='none';
       document.getElementById('tt').style.display='none';
+      toggleSectorPower(false);
       updateModeButtons();
       updateTfNote();
       renderRelationships();
@@ -1140,10 +1200,11 @@ async function loadData(){
       results.push({name,sector,tail:t2,last,color:SC[sector]||'#888',sizes:sizeMap[ticker]||{}});
     }
 
+    sectorPowerData=computeSectorPower(raw,sizeMap);
     if(!results.length) throw new Error('ไม่มีหุ้นที่คำนวณได้');
 
     ov.classList.add('hide');
-    draw(); buildSb(); buildLeg(); updateImpactControls();
+    draw(); buildSb(); buildLeg(); updateImpactControls(); renderSectorPower();
     note.textContent='';
     const loaded=results.length;
     document.getElementById('lastUpd').textContent=`อัปเดต ${new Date().toLocaleTimeString('th-TH')} · ${TF_LABEL[tf]} · ${loaded} ตัว`;
@@ -1180,6 +1241,131 @@ function calcRS(aligned){
   const rawM=ratio.map((v,i)=>i===0?100:100+(v-ratio[i-1])*5);
   const mom=ema(rawM,10);
   return aligned.map((p,i)=>({t:p.t,rsRatio:ratio[i],rsMom:mom[i]}));
+}
+
+function pctMove(points,bars){
+  if(!points||points.length<=bars)return null;
+  const last=points[points.length-1]?.c;
+  const prev=points[points.length-1-bars]?.c;
+  if(!Number.isFinite(last)||!Number.isFinite(prev)||prev===0)return null;
+  return (last/prev-1)*100;
+}
+function pctMoveWindow(points,startBarsAgo,endBarsAgo){
+  if(!points||points.length<=startBarsAgo)return null;
+  const start=points[points.length-1-startBarsAgo]?.c;
+  const end=points[points.length-1-endBarsAgo]?.c;
+  if(!Number.isFinite(start)||!Number.isFinite(end)||start===0)return null;
+  return (end/start-1)*100;
+}
+function avgTradingValue(points,startIndex,endIndex){
+  let sum=0,count=0;
+  for(let i=startIndex;i<endIndex;i++){
+    const p=points[i];
+    if(!p||!Number.isFinite(p.c)||!Number.isFinite(p.v))continue;
+    sum+=p.c*p.v;
+    count++;
+  }
+  return count?sum/count:null;
+}
+function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
+function computeSectorPower(raw,sizeMap){
+  const buckets={};
+  for(const {t:name,s:sector} of TICKERS){
+    const ticker=name+'.BK';
+    const prices=raw[ticker]||[];
+    if(prices.length<26)continue;
+    const oneWeek=pctMove(prices,5);
+    const previousWeek=pctMoveWindow(prices,10,5);
+    const fourWeek=pctMove(prices,20);
+    if(oneWeek==null||previousWeek==null||fourWeek==null)continue;
+    const weight=sizeMap[ticker]?.set50_weight||1;
+    const latestValue=avgTradingValue(prices,prices.length-5,prices.length);
+    const baseValue=avgTradingValue(prices,Math.max(0,prices.length-25),prices.length-5);
+    if(!buckets[sector])buckets[sector]={sector,color:SC[sector]||'#888',items:[],weightSum:0,oneWeek:0,previousWeek:0,fourWeek:0,latestValue:0,baseValue:0};
+    const b=buckets[sector];
+    b.items.push({symbol:name,oneWeek,previousWeek,fourWeek,weight,positive:oneWeek>0,latestValue:latestValue||0,baseValue:baseValue||0});
+    b.weightSum+=weight;
+    b.oneWeek+=oneWeek*weight;
+    b.previousWeek+=previousWeek*weight;
+    b.fourWeek+=fourWeek*weight;
+    b.latestValue+=(latestValue||0);
+    b.baseValue+=(baseValue||0);
+  }
+  return Object.values(buckets).map(b=>{
+    const oneWeek=b.oneWeek/b.weightSum;
+    const previousWeek=b.previousWeek/b.weightSum;
+    const fourWeek=b.fourWeek/b.weightSum;
+    const heat=oneWeek-(fourWeek/4);
+    const acceleration=oneWeek-previousWeek;
+    const breadth=b.items.filter(x=>x.positive).length/b.items.length*100;
+    const volumeThrust=b.baseValue>0?(b.latestValue/b.baseValue-1)*100:0;
+    const breadthBoost=(breadth-50)/10;
+    const volumeBoost=clamp(volumeThrust,-50,100)/25;
+    const power=heat+breadthBoost+volumeBoost;
+    const leaders=b.items.slice().sort((a,b)=>b.oneWeek-a.oneWeek).slice(0,3);
+    return {
+      sector:b.sector,color:b.color,count:b.items.length,
+      oneWeek,previousWeek,fourWeek,heat,acceleration,breadth,volumeThrust,power,
+      leaders
+    };
+  }).sort((a,b)=>b.power-a.power);
+}
+function signedPct(n,digits=1){
+  if(!Number.isFinite(n))return '-';
+  return `${n>0?'+':''}${n.toFixed(digits)}%`;
+}
+function signedNum(n,digits=1){
+  if(!Number.isFinite(n))return '-';
+  return `${n>0?'+':''}${n.toFixed(digits)}`;
+}
+function renderSectorPower(){
+  const panel=document.getElementById('sectorPowerPanel');
+  const rowsEl=document.getElementById('sectorPowerRows');
+  const kpis=document.getElementById('sectorPowerKpis');
+  const sub=document.getElementById('sectorPowerSub');
+  if(!panel||!rowsEl||!kpis||!sub)return;
+  if(!sectorPowerData.length){
+    sub.textContent='Load daily data to rank latest sector acceleration.';
+    kpis.innerHTML='';
+    rowsEl.innerHTML='<div class="sp-row" style="grid-template-columns:1fr;color:var(--text2)">No sector power data yet.</div>';
+    return;
+  }
+  const top=sectorPowerData[0];
+  const fastest=sectorPowerData.slice().sort((a,b)=>b.oneWeek-a.oneWeek)[0];
+  const broadest=sectorPowerData.slice().sort((a,b)=>b.breadth-a.breadth)[0];
+  const vol=sectorPowerData.slice().sort((a,b)=>b.volumeThrust-a.volumeThrust)[0];
+  sub.textContent=`Latest ${tf} snapshot · 5-bar pace vs 20-bar pace · ${sectorPowerData.length} sectors`;
+  kpis.innerHTML=[
+    ['Top power',`${top.sector} ${signedNum(top.power,1)}`,'ranked score'],
+    ['Fastest 1W',`${fastest.sector} ${signedPct(fastest.oneWeek,1)}`,'weighted move'],
+    ['Best breadth',`${broadest.sector} ${broadest.breadth.toFixed(0)}%`,'stocks positive'],
+    ['Volume thrust',`${vol.sector} ${signedPct(vol.volumeThrust,0)}`,'5-bar value surge']
+  ].map(([k,v,n])=>`<div class="sp-kpi"><div class="sp-k">${k}</div><div class="sp-v">${v}</div><div class="sp-sub">${n}</div></div>`).join('');
+  const maxAbs=Math.max(1,...sectorPowerData.map(r=>Math.abs(r.power)));
+  rowsEl.innerHTML=sectorPowerData.map((r,i)=>{
+    const width=Math.max(3,Math.min(50,Math.abs(r.power)/maxAbs*50));
+    const polarity=r.power>=0?'pos':'neg';
+    const leaders=r.leaders.map(x=>`${x.symbol} ${signedPct(x.oneWeek,1)}`).join(' · ');
+    return `<div class="sp-row" style="--sec-color:${r.color}">
+      <span class="sp-rank">#${i+1}</span>
+      <span class="sp-sec"><span class="sp-dot"></span><span class="sp-name">${r.sector}</span></span>
+      <span class="sp-meter"><span class="sp-track"><span class="sp-zero"></span><span class="sp-fill ${polarity}" style="width:${width}%"></span></span><span class="sp-num ${r.power>=0?'sp-good':'sp-bad'}">${signedNum(r.power,1)}</span></span>
+      <span class="sp-num ${r.oneWeek>=0?'sp-good':'sp-bad'}">${signedPct(r.oneWeek,1)}</span>
+      <span class="sp-num ${r.acceleration>=0?'sp-good':'sp-bad'}">${signedPct(r.acceleration,1)}</span>
+      <span class="sp-num ${r.breadth>=50?'sp-good':'sp-muted'}">${r.breadth.toFixed(0)}%</span>
+      <span class="sp-num ${r.volumeThrust>=0?'sp-good':'sp-bad'}">${signedPct(r.volumeThrust,0)}</span>
+      <span class="sp-leaders">${leaders}</span>
+    </div>`;
+  }).join('');
+}
+function toggleSectorPower(force){
+  const panel=document.getElementById('sectorPowerPanel');
+  const btn=document.getElementById('sectorPowerBtn');
+  if(!panel)return;
+  const open=typeof force==='boolean'?force:!panel.classList.contains('open');
+  panel.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',String(open));
+  if(open)renderSectorPower();
 }
 
 function compute(){
@@ -1769,6 +1955,7 @@ async function setPanelMode(mode,symbol){
       document.querySelector('.sb2').style.display='none';
       document.getElementById('leg').style.display='none';
       document.getElementById('tt').style.display='none';
+      toggleSectorPower(false);
       updateModeButtons();
       updateTfNote();
       const target=symbol&&hasRelationships(symbol)?symbol:null;
