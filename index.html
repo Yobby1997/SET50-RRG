@@ -163,6 +163,9 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 .sp-headrow{position:sticky;top:0;background:rgba(24,28,37,.98);z-index:1;color:var(--text2);font-size:10px;text-transform:uppercase;letter-spacing:.04em;padding:6px 4px;border-bottom:1px solid var(--border)}
 .sp-row{min-height:42px;padding:7px 4px;border-bottom:1px solid var(--border);font-size:11px}
 .sp-row:last-child{border-bottom:0}
+.sp-row{cursor:pointer}
+.sp-row:hover{background:rgba(255,255,255,.035)}
+.sp-row.sel{background:rgba(50,120,216,.1);outline:1px solid rgba(50,120,216,.32);outline-offset:-1px}
 .sp-rank{color:var(--text3);font-variant-numeric:tabular-nums}
 .sp-sec{display:flex;align-items:center;gap:7px;min-width:0;font-weight:600}
 .sp-dot{width:8px;height:8px;border-radius:50%;background:var(--sec-color);flex-shrink:0}
@@ -176,6 +179,18 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
 .sp-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .sp-good{color:#6bd6a3}.sp-bad{color:#e57b7b}.sp-muted{color:var(--text2)}
 .sp-leaders{color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-detail{display:none;border-bottom:1px solid var(--border);padding:10px 14px;background:rgba(255,255,255,.018)}
+.sp-detail.open{display:block}
+.sp-detail-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;min-width:0}
+.sp-detail-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px;min-width:0}
+.sp-detail-title span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-detail-meta{margin-left:auto;color:var(--text2);font-size:11px;white-space:nowrap}
+.sp-stock-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:7px}
+.sp-stock{border:1px solid var(--border);border-radius:8px;padding:7px;background:rgba(255,255,255,.02);min-width:0}
+.sp-stock-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.sp-stock-symbol{font-weight:700}
+.sp-stock-lines{display:grid;gap:3px;font-size:10px;color:var(--text2)}
+.sp-stock-line{display:flex;justify-content:space-between;gap:8px}
 .sp-note{padding:8px 14px;border-top:1px solid var(--border);font-size:10px;color:var(--text3);line-height:1.5}
 @media(max-width:900px){
   .sp-panel{left:8px;right:8px;bottom:8px;width:auto;max-height:82%}
@@ -185,6 +200,8 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
   .sp-meter{grid-column:1/-1;order:8}
   .sp-row .sp-num:nth-of-type(n+4){display:none}
   .sp-leaders{grid-column:1/-1}
+  .sp-detail-top{align-items:flex-start;flex-direction:column;gap:4px}
+  .sp-detail-meta{margin-left:0}
 }
 
 /* Error box */
@@ -294,6 +311,7 @@ html,body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,san
             <button class="btn sp-close" type="button" aria-label="Close Sector Power" onclick="toggleSectorPower(false)">x</button>
           </div>
           <div class="sp-kpis" id="sectorPowerKpis"></div>
+          <div class="sp-detail" id="sectorPowerDetail"></div>
           <div class="sp-list">
             <div class="sp-headrow">
               <span>#</span><span>Sector</span><span>Power</span><span>1W</span><span>Accel</span><span>Breadth</span><span>Vol</span><span>Leaders</span>
@@ -423,7 +441,7 @@ const REL_DEFAULT_LANES = {
 const REL_SNAPSHOT_DATE = '2026-06-21';
 
 let tf='daily', tail=6, view='all', sizeMode='weight';
-let results=[], sectorPowerData=[], hidden=new Set(), sel=null, hov=null;
+let results=[], sectorPowerData=[], sectorPowerSelected=null, hidden=new Set(), sel=null, hov=null;
 let impactSelection=loadImpactSelection();
 let cv, cx;
 let relData=null, relMaps=new Map(), relMode=false, currentRel=null, currentRelSymbol=null;
@@ -1283,7 +1301,8 @@ function computeSectorPower(raw,sizeMap){
     const baseValue=avgTradingValue(prices,Math.max(0,prices.length-25),prices.length-5);
     if(!buckets[sector])buckets[sector]={sector,color:SC[sector]||'#888',items:[],weightSum:0,oneWeek:0,previousWeek:0,fourWeek:0,latestValue:0,baseValue:0};
     const b=buckets[sector];
-    b.items.push({symbol:name,oneWeek,previousWeek,fourWeek,weight,positive:oneWeek>0,latestValue:latestValue||0,baseValue:baseValue||0});
+    const stockVolumeThrust=baseValue>0?(latestValue/baseValue-1)*100:0;
+    b.items.push({symbol:name,oneWeek,previousWeek,fourWeek,acceleration:oneWeek-previousWeek,volumeThrust:stockVolumeThrust,weight,positive:oneWeek>0,latestValue:latestValue||0,baseValue:baseValue||0});
     b.weightSum+=weight;
     b.oneWeek+=oneWeek*weight;
     b.previousWeek+=previousWeek*weight;
@@ -1302,11 +1321,12 @@ function computeSectorPower(raw,sizeMap){
     const breadthBoost=(breadth-50)/10;
     const volumeBoost=clamp(volumeThrust,-50,100)/25;
     const power=heat+breadthBoost+volumeBoost;
-    const leaders=b.items.slice().sort((a,b)=>b.oneWeek-a.oneWeek).slice(0,3);
+    const stocks=b.items.slice().sort((a,b)=>b.oneWeek-a.oneWeek);
+    const leaders=stocks.slice(0,3);
     return {
       sector:b.sector,color:b.color,count:b.items.length,
       oneWeek,previousWeek,fourWeek,heat,acceleration,breadth,volumeThrust,power,
-      leaders
+      leaders,stocks
     };
   }).sort((a,b)=>b.power-a.power);
 }
@@ -1322,18 +1342,25 @@ function renderSectorPower(){
   const panel=document.getElementById('sectorPowerPanel');
   const rowsEl=document.getElementById('sectorPowerRows');
   const kpis=document.getElementById('sectorPowerKpis');
+  const detail=document.getElementById('sectorPowerDetail');
   const sub=document.getElementById('sectorPowerSub');
-  if(!panel||!rowsEl||!kpis||!sub)return;
+  if(!panel||!rowsEl||!kpis||!detail||!sub)return;
   if(!sectorPowerData.length){
     sub.textContent='Load daily data to rank latest sector acceleration.';
     kpis.innerHTML='';
+    detail.classList.remove('open');
+    detail.innerHTML='';
     rowsEl.innerHTML='<div class="sp-row" style="grid-template-columns:1fr;color:var(--text2)">No sector power data yet.</div>';
     return;
+  }
+  if(!sectorPowerSelected||!sectorPowerData.some(r=>r.sector===sectorPowerSelected)){
+    sectorPowerSelected=sectorPowerData[0].sector;
   }
   const top=sectorPowerData[0];
   const fastest=sectorPowerData.slice().sort((a,b)=>b.oneWeek-a.oneWeek)[0];
   const broadest=sectorPowerData.slice().sort((a,b)=>b.breadth-a.breadth)[0];
   const vol=sectorPowerData.slice().sort((a,b)=>b.volumeThrust-a.volumeThrust)[0];
+  const selected=sectorPowerData.find(r=>r.sector===sectorPowerSelected)||top;
   sub.textContent=`Latest ${tf} snapshot · 5-bar pace vs 20-bar pace · ${sectorPowerData.length} sectors`;
   kpis.innerHTML=[
     ['Top power',`${top.sector} ${signedNum(top.power,1)}`,'ranked score'],
@@ -1341,12 +1368,27 @@ function renderSectorPower(){
     ['Best breadth',`${broadest.sector} ${broadest.breadth.toFixed(0)}%`,'stocks positive'],
     ['Volume thrust',`${vol.sector} ${signedPct(vol.volumeThrust,0)}`,'5-bar value surge']
   ].map(([k,v,n])=>`<div class="sp-kpi"><div class="sp-k">${k}</div><div class="sp-v">${v}</div><div class="sp-sub">${n}</div></div>`).join('');
+  detail.classList.add('open');
+  detail.style.setProperty('--sec-color',selected.color);
+  detail.innerHTML=`<div class="sp-detail-top">
+    <div class="sp-detail-title"><span class="sp-dot"></span><span>${selected.sector}</span></div>
+    <div class="sp-detail-meta">${selected.count} stocks Â· 1W ${signedPct(selected.oneWeek,1)} Â· Breadth ${selected.breadth.toFixed(0)}% Â· Vol ${signedPct(selected.volumeThrust,0)}</div>
+  </div>
+  <div class="sp-stock-grid">
+    ${selected.stocks.map((s,index)=>`<div class="sp-stock">
+      <div class="sp-stock-head"><span class="sp-stock-symbol">${index+1}. ${s.symbol}</span><span class="${s.oneWeek>=0?'sp-good':'sp-bad'}">${signedPct(s.oneWeek,1)}</span></div>
+      <div class="sp-stock-lines">
+        <div class="sp-stock-line"><span>Accel</span><span class="${s.acceleration>=0?'sp-good':'sp-bad'}">${signedPct(s.acceleration,1)}</span></div>
+        <div class="sp-stock-line"><span>Vol thrust</span><span class="${s.volumeThrust>=0?'sp-good':'sp-bad'}">${signedPct(s.volumeThrust,0)}</span></div>
+      </div>
+    </div>`).join('')}
+  </div>`;
   const maxAbs=Math.max(1,...sectorPowerData.map(r=>Math.abs(r.power)));
   rowsEl.innerHTML=sectorPowerData.map((r,i)=>{
     const width=Math.max(3,Math.min(50,Math.abs(r.power)/maxAbs*50));
     const polarity=r.power>=0?'pos':'neg';
     const leaders=r.leaders.map(x=>`${x.symbol} ${signedPct(x.oneWeek,1)}`).join(' · ');
-    return `<div class="sp-row" style="--sec-color:${r.color}">
+    return `<div class="sp-row ${r.sector===sectorPowerSelected?'sel':''}" style="--sec-color:${r.color}" onclick="selectSectorPower(${i})">
       <span class="sp-rank">#${i+1}</span>
       <span class="sp-sec"><span class="sp-dot"></span><span class="sp-name">${r.sector}</span></span>
       <span class="sp-meter"><span class="sp-track"><span class="sp-zero"></span><span class="sp-fill ${polarity}" style="width:${width}%"></span></span><span class="sp-num ${r.power>=0?'sp-good':'sp-bad'}">${signedNum(r.power,1)}</span></span>
@@ -1357,6 +1399,12 @@ function renderSectorPower(){
       <span class="sp-leaders">${leaders}</span>
     </div>`;
   }).join('');
+}
+function selectSectorPower(index){
+  const row=sectorPowerData[index];
+  if(!row)return;
+  sectorPowerSelected=row.sector;
+  renderSectorPower();
 }
 function toggleSectorPower(force){
   const panel=document.getElementById('sectorPowerPanel');
